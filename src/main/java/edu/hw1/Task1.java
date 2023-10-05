@@ -1,0 +1,24 @@
+package edu.hw1;
+
+import java.util.Arrays;
+
+class Task1 {
+    static int minutesToSeconds(String vLength) throws RuntimeException {
+        int secLimit = 60;
+        int[] minAndSec;
+        try {
+            minAndSec =
+                Arrays.stream(vLength.split(":"))
+                    .map(String::trim)
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+        } catch (RuntimeException e) {
+            return -1;
+        }
+        int answer = -1;
+        if (minAndSec[1] < secLimit) {
+            answer = minAndSec[0] * secLimit + minAndSec[1];
+        }
+        return answer;
+    }
+}
