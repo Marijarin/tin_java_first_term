@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class Task4 {
+public class Task4 {
     static String fixString(String broken) {
         List<Character> brokenList = new ArrayList<>();
         for (int i = 0; i < broken.length(); i++) {

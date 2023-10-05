@@ -1,4 +1,4 @@
 package edu.hw1;
-class Task5 {
-    
+public class Task5 {
+
 }

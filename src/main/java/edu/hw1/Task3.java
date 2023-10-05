@@ -3,7 +3,7 @@ package edu.hw1;
 import java.util.Arrays;
 import java.util.Collections;
 
-class Task3 {
+public class Task3 {
     static boolean isNestable(int[] into, int[] outer) {
         if (into.length == 0 || outer.length == 0) {
             return true;

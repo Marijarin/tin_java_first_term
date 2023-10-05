@@ -1,6 +1,6 @@
 package edu.hw1;
 
-class Task2 {
+public class Task2 {
     static int countDigits(long num1) {
         int counter = 1;
         long num = Math.abs(num1);
