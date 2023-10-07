@@ -32,6 +32,9 @@ public final class Main {
         Task3 task3 = new Task3();
         Task4 task4 = new Task4();
         Task5 task5 = new Task5();
+        Task6 task6 = new Task6();
+        Task7 task7 = new Task7();
+        Task8 task8 = new Task8();
 
         // Run Task0
         String hello = "Привет, мир!";
@@ -64,6 +67,11 @@ public final class Main {
         //Run Task5
         long parent = sc.nextLong();
         LOGGER.info(task5.isPalindromeDescendant(parent));
+
+
+        //Run Task6
+        int goToK = sc.nextInt();
+        LOGGER.info(task6.countKSteps(goToK));
         sc.close();
     }
 }
