@@ -26,30 +26,24 @@ public final class Main {
         // for you, but you can always add more by pressing Ctrl+F8.
         //LOGGER.info("i = {}", i);
         //}
+        Task0 task0 = new Task0();
+        Task1 task1 = new Task1();
+        Task2 task2 = new Task2();
+        Task3 task3 = new Task3();
+        Task4 task4 = new Task4();
+        Task5 task5 = new Task5();
 
         // Run Task0
         String hello = "Привет, мир!";
-        Task0.helloWorld(hello, LOGGER);
+        task0.helloWorld(hello, LOGGER);
 
         //Run Task1
-        String vLength1 = "13:11";
-        String vLength2 = "13:60";
-        String vLength3 = "a13:11";
-        String vLength4 = "13 : 11";
-        String vLength5 = "00:11";
-        String vLength6 = " 13 : 11 ";
         String vLength7 = " 01 : 11 ";
-        LOGGER.info(Task1.minutesToSeconds(vLength1));
-        LOGGER.info(Task1.minutesToSeconds(vLength2));
-        LOGGER.info(Task1.minutesToSeconds(vLength3));
-        LOGGER.info(Task1.minutesToSeconds(vLength4));
-        LOGGER.info(Task1.minutesToSeconds(vLength5));
-        LOGGER.info(Task1.minutesToSeconds(vLength6));
-        LOGGER.info(Task1.minutesToSeconds(vLength7));
+        LOGGER.info(task1.minutesToSeconds(vLength7));
 
         //Run Task2
         long num = -1000000000L;
-        LOGGER.info(Task2.countDigits(num));
+        LOGGER.info(task2.countDigits(num));
 
         //Run Task3
         Scanner sc = new Scanner(System.in);
@@ -58,14 +52,18 @@ public final class Main {
         try {
             into = Arrays.stream(sc.nextLine().split(".*")).map(String::trim).mapToInt(Integer::parseInt).toArray();
             outer = Arrays.stream(sc.nextLine().split(".*")).map(String::trim).mapToInt(Integer::parseInt).toArray();
-            LOGGER.info(Task3.isNestable(into, outer));
+            LOGGER.info(task3.isNestable(into, outer));
         } catch (Exception e) {
             LOGGER.info("Something went wrong: " + e);
         }
 
         //Run Task4
         String broken = sc.nextLine();
-        LOGGER.info(Task4.fixString(broken));
+        LOGGER.info(task4.fixString(broken));
+
+        //Run Task5
+        long parent = sc.nextLong();
+        LOGGER.info(task5.isPalindromeDescendant(parent));
         sc.close();
     }
 }

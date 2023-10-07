@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Task4 {
-    static String fixString(String broken) {
+    String fixString(String broken) {
         List<Character> brokenList = new ArrayList<>();
         for (int i = 0; i < broken.length(); i++) {
             brokenList.add(broken.toCharArray()[i]);

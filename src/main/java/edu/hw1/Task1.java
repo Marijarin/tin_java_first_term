@@ -3,7 +3,7 @@ package edu.hw1;
 import java.util.Arrays;
 
 public class Task1 {
-    static int minutesToSeconds(String vLength) throws RuntimeException {
+    int minutesToSeconds(String vLength) throws RuntimeException {
         int secLimit = 60;
         int[] minAndSec;
         try {

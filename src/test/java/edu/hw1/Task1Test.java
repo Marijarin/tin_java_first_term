@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
+    Task1 task1 = new Task1();
     @Test
     @DisplayName("Секунд слишком много")
     void tooManySec() {
         String vLength = "13:60";
         int answer = -1;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
     @Test
@@ -18,7 +19,7 @@ public class Task1Test {
     void wrongInput() {
         String vLength = "a13:11";
         int answer = -1;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
     @Test
@@ -26,7 +27,7 @@ public class Task1Test {
     void wrongInputEnd() {
         String vLength = "13:11 min";
         int answer = -1;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
     @Test
@@ -34,7 +35,7 @@ public class Task1Test {
     void wrongInputMinus() {
         String vLength = "-13:11";
         int answer = -1;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
     @Test
@@ -42,7 +43,7 @@ public class Task1Test {
     void correctInput() {
         String vLength = "13:50";
         int answer = 13 * 60 + 50;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
     @Test
@@ -50,7 +51,7 @@ public class Task1Test {
     void spacedInput() {
         String vLength = " 13 : 50 ";
         int answer = 13 * 60 + 50;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
     @Test
@@ -58,7 +59,7 @@ public class Task1Test {
     void zeroInput() {
         String vLength = " 00 : 00 ";
         int answer = 0;
-        int result = Task1.minutesToSeconds(vLength);
+        int result = task1.minutesToSeconds(vLength);
         assertThat(result).isEqualTo(answer);
     }
 

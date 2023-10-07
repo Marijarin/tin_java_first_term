@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Task3 {
-    static boolean isNestable(int[] into, int[] outer) {
+    boolean isNestable(int[] into, int[] outer) {
         if (into.length == 0 || outer.length == 0) {
             return true;
         }
