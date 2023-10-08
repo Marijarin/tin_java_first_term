@@ -16,7 +16,7 @@ public class Task1 {
             return -1;
         }
         int answer = -1;
-        if (minAndSec[1] < secLimit && minAndSec[0] >=0 && minAndSec[1] >= 0) {
+        if (minAndSec[1] < secLimit && minAndSec[0] >= 0 && minAndSec[1] >= 0) {
             answer = minAndSec[0] * secLimit + minAndSec[1];
         }
         return answer;

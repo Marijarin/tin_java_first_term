@@ -6,7 +6,7 @@ public class Task2 {
         long num = Math.abs(num1);
         while ((num - num % 10) >= 1) {
             num = num / 10;
-            counter ++;
+            counter++;
         }
         return counter;
     }

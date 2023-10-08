@@ -12,10 +12,10 @@ public class Task4 {
         }
         StringBuilder sb = new StringBuilder();
         int n = brokenList.size();
-        for (int i = 0; i < n; i+=2) {
+        for (int i = 0; i < n; i += 2) {
             if (i < n - 1) {
                 Collections.swap(brokenList, i, i + 1);
-                sb.append(brokenList.get(i)).append(brokenList.get(i+1));
+                sb.append(brokenList.get(i)).append(brokenList.get(i + 1));
             }
         }
         return sb.toString();
