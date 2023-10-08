@@ -7,8 +7,8 @@ public class Task6 {
 
     int countKSteps(int fourDigit) {
         int fLength = String.valueOf(fourDigit).chars().distinct().toArray().length;
-        int downL = 1000;
-        int upL = 9999;
+        final int downL = 1000;
+        final int upL = 9999;
         if (fourDigit < downL || fourDigit > upL || fLength == 1) {
             return -1;
         } else {
@@ -17,7 +17,7 @@ public class Task6 {
     }
 
     private int fK(int intoK) {
-        int k = 6174;
+        final int k = 6174;
         if (intoK == k) {
             return counter;
         }
