@@ -2,6 +2,7 @@ package edu.hw1;
 
 import java.util.Arrays;
 
+@SuppressWarnings("MagicNumber")
 public class Task6 {
     private int counter = 0;
 
@@ -21,12 +22,13 @@ public class Task6 {
         if (intoK == k) {
             return counter;
         }
-        int digits = 4;
+        int intoKOnceMore = intoK;
+        final int digits = 4;
         int[] ints = new int[digits];
         int c = 1000;
         for (int i = 0; i < digits; i++) {
-            ints[i] = intoK / c;
-            intoK -= (intoK / c) * c;
+            ints[i] = intoKOnceMore / c;
+            intoKOnceMore -= (intoKOnceMore / c) * c;
             c /= 10;
         }
         int[] sorted = Arrays.stream(ints).sorted().toArray();

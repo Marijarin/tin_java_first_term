@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class Task8 {
-
+@SuppressWarnings("MagicNumber")
     boolean knightBoardCapture(int[][] knightBC) {
         int size = knightBC.length;
         int[] iNum = new int[] {-1, -1, 1, 1, -2, -2, 2, 2};
