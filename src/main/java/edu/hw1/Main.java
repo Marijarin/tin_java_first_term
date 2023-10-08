@@ -1,10 +1,9 @@
 package edu.hw1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -68,10 +67,26 @@ public final class Main {
         long parent = sc.nextLong();
         LOGGER.info(task5.isPalindromeDescendant(parent));
 
-
         //Run Task6
         int goToK = sc.nextInt();
         LOGGER.info(task6.countKSteps(goToK));
         sc.close();
+
+        //Run Task7
+        LOGGER.info(task7.rotateRight(8, 1));
+        LOGGER.info(task7.rotateLeft(16, 1));
+        LOGGER.info(task7.rotateLeft(17, 2));
+        //Run Task8
+        int[][] board = {
+            {0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 1, 0, 0, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0}
+        };
+        LOGGER.info(task8.knightBoardCapture(board));
     }
 }
