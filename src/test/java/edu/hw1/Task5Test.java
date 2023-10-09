@@ -21,6 +21,13 @@ public class Task5Test {
         assertThat(result).isEqualTo(answer);
     }
 
+    @Test @DisplayName("Не палиндром двузначное") void inputTwoIsNotPalindrome() {
+        long parent = 12L;
+        boolean answer = false;
+        boolean result = task5.isPalindromeDescendant(parent);
+        assertThat(result).isEqualTo(answer);
+    }
+
     @Test @DisplayName("Не палиндром") void inputAndDescIsNotPalindrome() {
         long parent = 1000L;
         boolean answer = false;
