@@ -8,11 +8,12 @@ public class Task5 {
         String parentStr = String.valueOf(parent);
 
         return switch (parentStr.length()) {
-            case 0, 1 -> false;
+            case 1 -> false;
             case 2 -> parentStr.charAt(0) == parentStr.charAt(1);
             default -> {
                 String parentStrFromEnd = headToLegs(parentStr);
-                yield parentStrFromEnd.equals(parentStr) || checkDescForPalindrome(parent);
+                yield parentStrFromEnd.equals(parentStr)
+                    || (checkDescForPalindrome(parent) && parentStrFromEnd.charAt(0) != '0');
             }
         };
     }

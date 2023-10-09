@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Task4 {
     String fixString(String broken) {
+        if (broken.length() <= 1) {
+            return broken;
+        }
         List<Character> brokenList = new ArrayList<>();
         for (int i = 0; i < broken.length(); i++) {
             brokenList.add(broken.toCharArray()[i]);
