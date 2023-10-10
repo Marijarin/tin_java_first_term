@@ -1,6 +1,7 @@
 package edu.hw1;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Task5 {
 
@@ -26,9 +27,9 @@ public class Task5 {
         return sb.toString();
     }
 
-    private ArrayList<Integer> makeIntsFromNumber(long number) {
+    private List<Integer> makeIntsFromNumber(long number) {
         char[] chars = String.valueOf(number).toCharArray();
-        ArrayList<Integer> ints = new ArrayList<>(String.valueOf(number).length());
+        List<Integer> ints = new ArrayList<>(String.valueOf(number).length());
         for (char c : chars) {
             ints.add(Integer.parseInt(String.valueOf(c)));
         }
@@ -36,7 +37,7 @@ public class Task5 {
     }
 
     private long makeDescendant(long parent) {
-        ArrayList<Integer> intsMade = makeIntsFromNumber(parent);
+        List<Integer> intsMade = makeIntsFromNumber(parent);
         long result;
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < intsMade.size() - 1; i += 2) {

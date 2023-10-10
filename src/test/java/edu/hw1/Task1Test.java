@@ -15,6 +15,14 @@ public class Task1Test {
         assertThat(result).isEqualTo(answer);
     }
     @Test
+    @DisplayName("Минут слишком много")
+    void tooManyMin() {
+        String vLength = Integer.MAX_VALUE + ":05";
+        int answer = -1;
+        int result = task1.minutesToSeconds(vLength);
+        assertThat(result).isEqualTo(answer);
+    }
+    @Test
     @DisplayName("Некорректный ввод")
     void wrongInput() {
         String vLength = "a13:11";

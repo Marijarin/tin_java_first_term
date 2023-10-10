@@ -7,7 +7,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task7Test {
     Task7 task7 = new Task7();
 
-    @Test @DisplayName("Нулевой сдвиг вправо") void emptyShiftRight() {
+    @Test
+    @DisplayName("Нулевой сдвиг вправо")
+    void emptyShiftRight() {
         int shift = 0;
         int n = 8;
         int answer = 8;
@@ -15,7 +17,9 @@ public class Task7Test {
         assertThat(result).isEqualTo(answer);
     }
 
-    @Test @DisplayName("Нулевой сдвиг влево") void emptyShiftLeft() {
+    @Test
+    @DisplayName("Нулевой сдвиг влево")
+    void emptyShiftLeft() {
         int shift = 0;
         int n = 8;
         int answer = 8;
@@ -23,7 +27,9 @@ public class Task7Test {
         assertThat(result).isEqualTo(answer);
     }
 
-    @Test @DisplayName("Положительный сдвиг вправо") void posShiftRight() {
+    @Test
+    @DisplayName("Положительный сдвиг вправо")
+    void posShiftRight() {
         int shift = 1;
         int n = 8;
         int answer = 4;
@@ -31,7 +37,9 @@ public class Task7Test {
         assertThat(result).isEqualTo(answer);
     }
 
-    @Test @DisplayName("Положительный сдвиг влево") void posShiftLeft() {
+    @Test
+    @DisplayName("Положительный сдвиг влево")
+    void posShiftLeft() {
         int shift = 2;
         int n = 17;
         int answer = 6;
@@ -39,7 +47,9 @@ public class Task7Test {
         assertThat(result).isEqualTo(answer);
     }
 
-    @Test @DisplayName("Отрицательный сдвиг вправо") void negShiftRight() {
+    @Test
+    @DisplayName("Отрицательный сдвиг вправо")
+    void negShiftRight() {
         int shift = -2;
         int n = 17;
         int answer = 6;
@@ -47,7 +57,9 @@ public class Task7Test {
         assertThat(result).isEqualTo(answer);
     }
 
-    @Test @DisplayName("Отрицательный сдвиг влево") void negShiftLeft() {
+    @Test
+    @DisplayName("Отрицательный сдвиг влево")
+    void negShiftLeft() {
         int shift = -1;
         int n = 8;
         int answer = 4;

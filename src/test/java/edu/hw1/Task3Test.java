@@ -12,9 +12,8 @@ public class Task3Test {
     void emptyNestable() {
         int[] into = {};
         int[] outer = {0, 1};
-        boolean answer = true;
         boolean result = task3.isNestable(into, outer);
-        assertThat(result).isEqualTo(answer);
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -22,9 +21,8 @@ public class Task3Test {
     void inEmptyNestable() {
         int[] into = {0, 1};
         int[] outer = {};
-        boolean answer = false;
         boolean result = task3.isNestable(into, outer);
-        assertThat(result).isEqualTo(answer);
+        assertThat(result).isFalse();
     }
 
     @Test
@@ -32,9 +30,8 @@ public class Task3Test {
     void isNestableTrue() {
         int[] into = {0, 1};
         int[] outer = {-1, 2};
-        boolean answer = true;
         boolean result = task3.isNestable(into, outer);
-        assertThat(result).isEqualTo(answer);
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -42,9 +39,8 @@ public class Task3Test {
     void isNestableFalse() {
         int[] into = {-1, 2};
         int[] outer = {0, 1};
-        boolean answer = false;
         boolean result = task3.isNestable(into, outer);
-        assertThat(result).isEqualTo(answer);
+        assertThat(result).isFalse();
     }
 
 }

@@ -20,9 +20,8 @@ public class Task8Test {
             {1, 0, 0, 0, 1, 0, 1, 0},
             {0, 0, 0, 1, 0, 1, 0, 1}
         };
-        boolean answer = false;
         boolean result = task8.knightBoardCapture(data);
-        assertThat(result).isEqualTo(answer);
+        assertThat(result).isFalse();
     }
 
     @Test
@@ -38,9 +37,8 @@ public class Task8Test {
             {0, 1, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 1, 0, 0, 0}
         };
-        boolean answer = true;
         boolean result = task8.knightBoardCapture(data);
-        assertThat(result).isEqualTo(answer);
+        assertThat(result).isTrue();
 
     }
 }
