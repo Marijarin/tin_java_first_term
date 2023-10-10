@@ -6,7 +6,7 @@ public class Task1 {
 
     int minutesToSeconds(String vLength) throws RuntimeException {
         final int secLimit = 60;
-        final int minLimit = Integer.MAX_VALUE/secLimit;
+        final int minLimit = Integer.MAX_VALUE / secLimit;
         int[] minAndSec;
         try {
             minAndSec =
