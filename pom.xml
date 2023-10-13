@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>education</groupId>
-    <artifactId>essentials</artifactId>
+    <artifactId>homework</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
 
