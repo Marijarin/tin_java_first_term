@@ -1,7 +1,7 @@
 package edu.hw_2;
 
 public interface Task2 {
-    public class Rectangle {
+    class Rectangle {
         private int width;
         private int height;
 
@@ -32,9 +32,9 @@ public interface Task2 {
         }
     }
 
-    public class Square extends Rectangle {
+    class Square extends Rectangle {
 
-        private final RuntimeException warning = new RuntimeException("This is a square and sides must be equal");
+        private final IllegalArgumentException warning = new IllegalArgumentException("This is a square and sides must be equal");
 
         @Override public Rectangle setWidth(int width) {
             return super.setWidth(width);

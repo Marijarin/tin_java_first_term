@@ -1,6 +1,6 @@
 package edu.hw_2;
 
-public interface Task2_another {
+public interface Task2Variant2 {
     class Rectangle {
         private int width;
         private int height;
@@ -21,7 +21,7 @@ public interface Task2_another {
     class Square extends Rectangle {
         private int side = 0;
 
-        private final RuntimeException warning = new RuntimeException("This is a square and sides have been set");
+        private final IllegalArgumentException warning = new IllegalArgumentException("This is a square and sides have been set");
 
         @Override public void setWidth(int width) {
             if (this.side == 0) {

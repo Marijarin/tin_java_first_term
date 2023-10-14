@@ -21,7 +21,7 @@ public final class Main {
         var exp = new Exponent(mult, 2);
         var res = new Addition(exp, new Constant(1));
 
-        System.out.println(res + " = " + res.evaluate());
+        LOGGER.info(res + " = " + res.evaluate());
 
     }
 }
