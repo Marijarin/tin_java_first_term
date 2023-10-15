@@ -34,7 +34,9 @@ public interface Task2 {
 
     class Square extends Rectangle {
 
-        private final IllegalArgumentException warning = new IllegalArgumentException("This is a square and sides must be equal");
+        private final IllegalArgumentException warning = new IllegalArgumentException(
+            "This is a square and sides must be equal"
+        );
 
         @Override public Rectangle setWidth(int width) {
             return super.setWidth(width);

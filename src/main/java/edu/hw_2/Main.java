@@ -12,6 +12,7 @@ public final class Main {
     private Main() {
     }
 
+    @SuppressWarnings("Magic number")
     public static void main(String[] args) {
         var two = new Constant(2);
         var four = new Constant(4);

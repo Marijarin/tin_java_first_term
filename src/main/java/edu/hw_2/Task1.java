@@ -26,6 +26,7 @@ class Task1 {
             private Constant convert(int c) {
                 return new Constant(c);
             }
+
             @Override
             public double evaluate() {
                 return Math.pow(e.evaluate(), convert(c).evaluate());
