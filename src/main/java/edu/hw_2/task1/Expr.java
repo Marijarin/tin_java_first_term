@@ -1,7 +1,7 @@
-package edu.hw_2;
+package edu.hw_2.task1;
 
-class Task1 {
-    sealed interface Expr {
+
+    sealed public interface Expr {
         double evaluate();
 
         record Constant(int number) implements Expr {
@@ -47,4 +47,3 @@ class Task1 {
             }
         }
     }
-}

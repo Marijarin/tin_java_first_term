@@ -1,4 +1,4 @@
-package edu.hw_2;
+package edu.hw_2.task2;
 
 public interface Task2 {
     class Rectangle {
