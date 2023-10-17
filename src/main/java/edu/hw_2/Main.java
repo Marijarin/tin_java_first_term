@@ -1,6 +1,7 @@
 package edu.hw_2;
 
 import edu.hw_2.task1.Expr.*;
+import edu.hw_2.task3.StableConnection;
 import edu.hw_2.task4.CallingInfo;
 import edu.hw_2.task4.ClassToCall;
 import org.apache.logging.log4j.LogManager;

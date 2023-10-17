@@ -1,8 +1,13 @@
 package edu.hw_2.task3;
 
-public class DefaultConnectionManager implements ConnectionManager{
+public class DefaultConnectionManager implements ConnectionManager {
     @Override
     public Connection getConnection() {
-        return null;
+        int random = (int) (Math.random() * 10);
+        if (random % 3 == 0) {
+            return new FaultyConnection();
+        } else {
+            return new StableConnection();
+        }
     }
 }
