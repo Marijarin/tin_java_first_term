@@ -24,6 +24,6 @@ public final class Main {
             LOGGER.info("i = {}", i);
         }
         HangmanGame h = new HangmanGame();
-        h.startGame();
+       LOGGER.info(h.startNewSession());
     }
 }
