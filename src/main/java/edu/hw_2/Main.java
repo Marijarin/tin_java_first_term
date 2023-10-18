@@ -1,7 +1,14 @@
 package edu.hw_2;
 
-import edu.hw_2.task1.Expr.*;
-import edu.hw_2.task3.StableConnection;
+import edu.hw_2.task1.Expr.Addition;
+import edu.hw_2.task1.Expr.Constant;
+import edu.hw_2.task1.Expr.Exponent;
+import edu.hw_2.task1.Expr.Multiplication;
+import edu.hw_2.task1.Expr.Negate;
+import edu.hw_2.task3.ConnectionManager;
+import edu.hw_2.task3.DefaultConnectionManager;
+import edu.hw_2.task3.FaultyConnectionManager;
+import edu.hw_2.task3.PopularCommandExecutor;
 import edu.hw_2.task4.CallingInfo;
 import edu.hw_2.task4.ClassToCall;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +22,7 @@ public final class Main {
     private Main() {
     }
 
-    @SuppressWarnings("Magic number")
+    @SuppressWarnings("MagicNumber")
     public static void main(String[] args) throws Exception {
         var two = new Constant(2);
         var four = new Constant(4);
@@ -30,8 +37,19 @@ public final class Main {
         ClassToCall c = new ClassToCall();
         LOGGER.info(c.call());
         LOGGER.info(call());
+
+        ConnectionManager m1 = new DefaultConnectionManager();
+        ConnectionManager m2 = new FaultyConnectionManager();
+        int maxAttempts = 5;
+        PopularCommandExecutor p1 = new PopularCommandExecutor(m1, maxAttempts);
+        PopularCommandExecutor p2 = new PopularCommandExecutor(m2, maxAttempts);
+        //p1.updatePackages();
+        p2.updatePackages();
     }
-    public static CallingInfo call() throws Exception {
+
+    public static CallingInfo call() {
         return CallingInfo.callingInfo();
     }
+
+
 }

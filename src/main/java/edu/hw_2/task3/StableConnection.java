@@ -1,6 +1,5 @@
 package edu.hw_2.task3;
 
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class StableConnection implements Connection {
@@ -12,8 +11,12 @@ public class StableConnection implements Connection {
     }
 
     @Override
-    public void close() throws Exception {
-        logger.info("Stable connection is closed");
-        this.logger = null;
+    public void close() {
+        try {
+            logger.info("Stable connection is closed");
+            this.logger = null;
+        } catch (Exception e) {
+            Logger.getLogger(String.valueOf(e.getCause()));
+        }
     }
 }

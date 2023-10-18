@@ -8,7 +8,7 @@ public class FaultyConnection implements Connection {
 
     @Override
     public void execute(String command) {
-        if (command.contains("a")) {
+        if (command.contains("&&")) {
             logger.info("Executing: " + command);
         } else {
             String message = "Your command:" + command + " cannot be executed";
@@ -17,8 +17,12 @@ public class FaultyConnection implements Connection {
     }
 
     @Override
-    public void close() throws Exception {
-        logger.info("Faulty connection is closed");
-        this.logger = null;
+    public void close() {
+        try {
+            logger.info("Faulty connection is closed");
+            this.logger = null;
+        } catch (Exception e) {
+            Logger.getLogger(String.valueOf(e.getCause()));
+        }
     }
 }
