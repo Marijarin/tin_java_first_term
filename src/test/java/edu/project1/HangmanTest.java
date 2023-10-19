@@ -63,4 +63,11 @@ public class HangmanTest {
         GuessResult result = sn.startGame();
         assertThat(result).isEqualTo(new GuessResult.Defeat(2, 5));
     }
+    @Test
+    @DisplayName("Session test")
+    void sessionTest(){
+        Session sn = new Session(1);
+        String result = sn.getPuzzle();
+        assertThat(result.length()).isGreaterThan(1);
+    }
 }

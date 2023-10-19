@@ -13,6 +13,10 @@ class Session implements Printable {
         this.puzzle = dictionary.randomWord(level);
     }
 
+    String getPuzzle() {
+        return this.puzzle;
+    }
+
     GuessResult startGame() {
         if (puzzle.isEmpty() || puzzle.length() < 2) {
             GuessResult g = new GuessResult.Error(puzzle);
