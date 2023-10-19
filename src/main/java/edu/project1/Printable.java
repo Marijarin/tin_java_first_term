@@ -1,0 +1,8 @@
+package edu.project1;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+interface Printable {
+    Logger LOGGER = LogManager.getLogger();
+}

@@ -1,21 +1,16 @@
 package edu.project1;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-class Session {
+class Session implements Printable {
     private final String puzzle;
     private final int maxAttempts = 5;
-    private final static Logger LOGGER = LogManager.getLogger();
-    private final String toGiveUp = "end";
 
-    Session() {
-        Dictionary dictionary = new Dictionary();
-        this.puzzle = dictionary.randomWord();
+    Session(int level) {
+        Dictionary dictionary = new DictionaryImpl();
+        this.puzzle = dictionary.randomWord(level);
     }
 
     GuessResult startGame() {
@@ -27,9 +22,8 @@ class Session {
             LOGGER.info(
                 "\nYou can make only "
                     + maxAttempts
-                    + " mistakes.\nIf you want to finish the game, please, print "
-                    + toGiveUp
-                    + " or empty space in separate line.\n");
+                    +
+                    " mistakes.\nIf you want to finish the game, please, print end or empty space in separate line.\n");
             String response = "*".repeat(puzzle.length());
             return proceedGame(response);
         }
@@ -43,11 +37,16 @@ class Session {
         GuessResult g = new GuessResult.SuccessfulGuess(x, responseN.toString());
         while (x <= maxAttempts && !responseN.toString().equals(puzzle)) {
             LOGGER.info("\nGuess a letter: ");
-            String guess = String.valueOf(sc.nextLine().trim().charAt(0));
-            if (guess.equals(toGiveUp) || guess.isEmpty()) {
-                sc.close();
-                g = giveUp(x);
-                LOGGER.info(g.message());
+            String guess;
+            try {
+                guess = sc.nextLine().trim();
+                if (guess.length() != 1) {
+                    sc.close();
+                    g = giveUp(x);
+                    LOGGER.info(g.message());
+                    return giveUp(x);
+                }
+            } catch (NoSuchElementException e) {
                 return giveUp(x);
             }
             if (puzzle.contains(guess) && !responseN.toString().contains(guess)) {
@@ -79,21 +78,5 @@ class Session {
 
     @NotNull GuessResult giveUp(int currentAttempt) {
         return new GuessResult.Defeat(currentAttempt, maxAttempts);
-    }
-
-    private static class Dictionary implements edu.project1.Dictionary {
-        private final List<String> words = Arrays.asList(
-            "scratch",
-            "zipper",
-            "kilobyte",
-            "jelly",
-            "ivy",
-            "peekaboo"
-        );
-
-        public @NotNull String randomWord() {
-            int random = (int) (Math.random() * words.size());
-            return words.get(random);
-        }
     }
 }

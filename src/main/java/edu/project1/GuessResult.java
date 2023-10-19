@@ -72,14 +72,14 @@ sealed public interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "Hit!\nThe word is: " + word;
+            return "Hit!\nThe word is: " + state();
         }
     }
 
     record FailedGuess(int attempt, int maxAttempt, String word) implements GuessResult {
         @Override
         public String state() {
-            return null;
+            return word;
         }
 
         @Override
@@ -89,15 +89,16 @@ sealed public interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "Missed, mistake " + attempt + " out of " + maxAttempt + ".\nThe word is: " + word;
+            int mistake = attempt - 1;
+            return "Missed, mistake " + mistake + " out of " + maxAttempt + ".\nThe word is: " + state();
         }
     }
 
-    record Error(String word) implements GuessResult {
+    record Error(String error) implements GuessResult {
 
         @Override
         public String state() {
-            return word;
+            return error;
         }
 
         @Override
@@ -112,7 +113,7 @@ sealed public interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "Oh no, the word is bad. It is: " + word + " Please, rerun main";
+            return "Oh no, the word is bad. It is: " + state() + " Please, rerun main";
         }
     }
 }
