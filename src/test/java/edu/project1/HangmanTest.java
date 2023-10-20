@@ -70,4 +70,5 @@ public class HangmanTest {
         String result = sn.getPuzzle();
         assertThat(result.length()).isGreaterThan(1);
     }
+    
 }
