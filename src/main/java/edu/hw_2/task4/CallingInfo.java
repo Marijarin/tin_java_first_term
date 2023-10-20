@@ -11,8 +11,8 @@ public record CallingInfo(String className, String methodName) {
             StackTraceElement[] stacktrace
                 = throwable.getStackTrace();
             if (stacktrace.length >= 2) {
-                className = stacktrace[stacktrace.length - 2].getClassName();
-                methodName = stacktrace[stacktrace.length - 2].getMethodName();
+                className = stacktrace[1].getClassName();
+                methodName = stacktrace[1].getMethodName();
             } else {
                 className = stacktrace[stacktrace.length - 1].getClassName();
                 methodName = stacktrace[stacktrace.length - 1].getMethodName();

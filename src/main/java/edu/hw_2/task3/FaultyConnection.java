@@ -3,7 +3,8 @@ package edu.hw_2.task3;
 import java.util.logging.Logger;
 
 public class FaultyConnection implements Connection {
-    Throwable throwable = new RuntimeException("Faulty connection failed");
+    Throwable throwable = new Throwable("**** Faulty connection failed ****");
+
     Logger logger = Logger.getLogger("Faulty connection");
 
     @Override
@@ -11,7 +12,7 @@ public class FaultyConnection implements Connection {
         if (command.contains("&&")) {
             logger.info("Executing: " + command);
         } else {
-            String message = "Your command:" + command + " cannot be executed";
+            String message = "Your command: " + command + " cannot be executed";
             throw new ConnectionException(message, throwable);
         }
     }

@@ -23,7 +23,7 @@ public final class Main {
     }
 
     @SuppressWarnings("MagicNumber")
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         var two = new Constant(2);
         var four = new Constant(4);
         var negOne = new Negate(new Constant(1));
@@ -35,19 +35,19 @@ public final class Main {
         LOGGER.info(res + " = " + res.evaluate());
         LOGGER.info(CallingInfo.callingInfo());
         ClassToCall c = new ClassToCall();
-        LOGGER.info(c.call());
-        LOGGER.info(call());
+        LOGGER.info(c.callCallingInfo());
+        LOGGER.info(callFromMain());
 
-        ConnectionManager m1 = new DefaultConnectionManager();
-        ConnectionManager m2 = new FaultyConnectionManager();
+        ConnectionManager md = new DefaultConnectionManager();
+        ConnectionManager mf = new FaultyConnectionManager();
         int maxAttempts = 5;
-        PopularCommandExecutor p1 = new PopularCommandExecutor(m1, maxAttempts);
-        PopularCommandExecutor p2 = new PopularCommandExecutor(m2, maxAttempts);
-        //p1.updatePackages();
+        PopularCommandExecutor p1 = new PopularCommandExecutor(md, maxAttempts);
+        PopularCommandExecutor p2 = new PopularCommandExecutor(mf, maxAttempts);
+        p1.updatePackages();
         p2.updatePackages();
     }
 
-    public static CallingInfo call() {
+    public static CallingInfo callFromMain() {
         return CallingInfo.callingInfo();
     }
 

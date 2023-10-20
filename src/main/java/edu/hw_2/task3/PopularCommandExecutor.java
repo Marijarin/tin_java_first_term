@@ -1,5 +1,7 @@
 package edu.hw_2.task3;
 
+import java.util.logging.Logger;
+
 public class PopularCommandExecutor {
     private final ConnectionManager manager;
     private final int maxAttempts;
@@ -16,20 +18,23 @@ public class PopularCommandExecutor {
         tryExecute(command);
     }
 
-    void tryExecute(String command) {
+    public void tryExecute(String command) {
         int attemptsDone = 0;
         Throwable cause = new Throwable();
-        while (attemptsDone < maxAttempts) {
+        while (attemptsDone <= maxAttempts) {
             try (Connection connection = this.manager.getConnection()) {
                 connection.execute(command);
+                break;
             } catch (Exception e) {
                 cause = e.getCause();
-            } finally {
                 attemptsDone++;
             }
         }
         if (attemptsDone > maxAttempts) {
-            throw new ConnectionException("Attempts limit exceeded", cause);
+            ConnectionException ce = new ConnectionException("Attempts limit exceeded", cause);
+            Logger l = Logger.getLogger("Connection Exception");
+            l.warning(ce.message);
+            throw ce;
         }
     }
 }
