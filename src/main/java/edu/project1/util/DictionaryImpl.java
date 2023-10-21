@@ -1,4 +1,4 @@
-package edu.project1;
+package edu.project1.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 import static java.util.Map.entry;
 
-public class DictionaryImpl implements edu.project1.Dictionary {
+public class DictionaryImpl implements Dictionary {
     private final Map<String, Integer> words = Map.ofEntries(
         entry("scratch", 2),
         entry("zipper", 2),
@@ -22,9 +22,9 @@ public class DictionaryImpl implements edu.project1.Dictionary {
         entry("I", 1)
     );
 
-    List<String> getWords(int level) {
+    public List<String> getWords(int level) {
         List<String> selectedWords = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : words.entrySet()) {
+        for (var entry : words.entrySet()) {
             if (entry.getValue() == level && entry.getKey().length() > 1) {
                 selectedWords.add(entry.getKey());
             }

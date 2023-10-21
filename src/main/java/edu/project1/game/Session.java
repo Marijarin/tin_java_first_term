@@ -1,25 +1,30 @@
-package edu.project1;
+package edu.project1.game;
 
+import edu.project1.result.Defeat;
+import edu.project1.result.ErrorResult;
+import edu.project1.result.FailedGuess;
+import edu.project1.result.GuessResult;
+import edu.project1.result.SuccessfulGuess;
+import edu.project1.result.Win;
+import edu.project1.util.Dictionary;
+import edu.project1.util.DictionaryImpl;
+import edu.project1.util.Printable;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import org.jetbrains.annotations.NotNull;
 
-class Session implements Printable {
+public class Session implements Printable {
     private final String puzzle;
     private final int maxAttempts = 5;
 
-    Session(int level) {
+    public Session(int level) {
         Dictionary dictionary = new DictionaryImpl();
         this.puzzle = dictionary.randomWord(level);
     }
 
-    String getPuzzle() {
-        return this.puzzle;
-    }
-
-    GuessResult startGame() {
+    public GuessResult startGame() {
         if (puzzle.isEmpty() || puzzle.length() < 2) {
-            GuessResult g = new GuessResult.Error(puzzle);
+            GuessResult g = new ErrorResult(puzzle);
             LOGGER.info(g.message());
             return g;
         } else {
@@ -38,7 +43,7 @@ class Session implements Printable {
         int x = 1;
         StringBuilder responseN = new StringBuilder();
         responseN.append(response);
-        GuessResult g = new GuessResult.SuccessfulGuess(x, responseN.toString());
+        GuessResult g = new SuccessfulGuess(x, responseN.toString());
         while (x <= maxAttempts && !responseN.toString().equals(puzzle)) {
             LOGGER.info("\nGuess a letter: ");
             String guess;
@@ -59,28 +64,28 @@ class Session implements Printable {
                         responseN.replace(i, i + 1, guess);
                     }
                 }
-                g = new GuessResult.SuccessfulGuess(x, responseN.toString());
+                g = new SuccessfulGuess(x, responseN.toString());
                 LOGGER.info(g.message());
                 if (g.state().equals(puzzle)) {
-                    g = new GuessResult.Win(x, maxAttempts, puzzle);
+                    g = new Win(x, maxAttempts, puzzle);
                     LOGGER.info(g.message());
                     sc.close();
                 }
             } else {
                 x++;
-                g = new GuessResult.FailedGuess(x, maxAttempts, responseN.toString());
+                g = new FailedGuess(x, maxAttempts, responseN.toString());
                 LOGGER.info(g.message());
             }
         }
         if (x > maxAttempts) {
             sc.close();
-            g = new GuessResult.Defeat(x, maxAttempts);
+            g = new Defeat(x, maxAttempts);
             LOGGER.info(g.message());
         }
         return g;
     }
 
     @NotNull GuessResult giveUp(int currentAttempt) {
-        return new GuessResult.Defeat(currentAttempt, maxAttempts);
+        return new Defeat(currentAttempt, maxAttempts);
     }
 }

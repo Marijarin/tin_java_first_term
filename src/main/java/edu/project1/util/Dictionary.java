@@ -1,7 +1,7 @@
-package edu.project1;
+package edu.project1.util;
 
 import org.jetbrains.annotations.NotNull;
 
-interface Dictionary {
+public interface Dictionary {
     @NotNull String randomWord(int level);
 }

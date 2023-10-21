@@ -2,7 +2,14 @@ package edu.project1;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Random;
+import edu.project1.game.HangmanGame;
+import edu.project1.game.Session;
+import edu.project1.result.ErrorResult;
+import edu.project1.util.DictionaryImpl;
+import edu.project1.result.Defeat;
+import edu.project1.result.GuessResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -18,7 +25,7 @@ public class HangmanTest {
         System.setIn(in);
         HangmanGame h = new HangmanGame();
         GuessResult result = h.startNewSession();
-        assertThat(result).isNotInstanceOf(GuessResult.Error.class);
+        assertThat(result).isNotInstanceOf(ErrorResult.class);
     }
 
     @Test
@@ -30,7 +37,7 @@ public class HangmanTest {
         System.setIn(in);
         HangmanGame h = new HangmanGame();
         GuessResult result = h.startNewSession();
-        assertThat(result).isInstanceOf(GuessResult.Error.class);
+        assertThat(result).isInstanceOf(ErrorResult.class);
     }
 
     @Test
@@ -40,7 +47,7 @@ public class HangmanTest {
         System.setIn(in);
         Session sn = new Session(1);
         GuessResult result = sn.startGame();
-        assertThat(result).isEqualTo(new GuessResult.Defeat(1, 5));
+        assertThat(result).isEqualTo(new Defeat(1, 5));
     }
 
     @Test
@@ -50,7 +57,7 @@ public class HangmanTest {
         System.setIn(in);
         Session sn = new Session(1);
         GuessResult result = sn.startGame();
-        assertThat(result).isEqualTo(new GuessResult.Defeat(1, 5));
+        assertThat(result).isEqualTo(new Defeat(1, 5));
     }
 
     @Test
@@ -61,14 +68,17 @@ public class HangmanTest {
         int levelInput = new Random().nextBoolean() ? 1 : 2;
         Session sn = new Session(levelInput);
         GuessResult result = sn.startGame();
-        assertThat(result).isEqualTo(new GuessResult.Defeat(2, 5));
+        assertThat(result).isEqualTo(new Defeat(2, 5));
     }
+
     @Test
-    @DisplayName("Session test")
-    void sessionTest(){
-        Session sn = new Session(1);
-        String result = sn.getPuzzle();
-        assertThat(result.length()).isGreaterThan(1);
+    @DisplayName("Words' length must be more than 1")
+    void dicTest() {
+        DictionaryImpl d = new DictionaryImpl();
+        List<String> words = d.getWords(1);
+        List<String> result = words.stream().filter(it -> it.length() == 1).toList();
+        var empty = 0;
+        assertThat(result.size()).isEqualTo(empty);
     }
-    
+
 }
