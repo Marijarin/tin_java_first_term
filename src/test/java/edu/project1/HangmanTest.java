@@ -78,7 +78,7 @@ public class HangmanTest {
         Scanner sc = new Scanner("o");
         SessionManager sm = new SessionManager("no", 5, sc);
         GuessResult result = sm.checkGuess("**", 1);
-        assertThat(result).isEqualTo(new SuccessfulGuess(1, "*o"));
+        assertThat(result).isEqualTo(new SuccessfulGuess(0, "*o"));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class HangmanTest {
         Scanner sc = new Scanner("a");
         SessionManager sm = new SessionManager("a", 5, sc);
         GuessResult result = sm.checkGuess("*", 1);
-        assertThat(result).isEqualTo(new Win(1, 5, "a"));
+        assertThat(result).isEqualTo(new Win(0, 5, "a"));
     }
 
     @Test

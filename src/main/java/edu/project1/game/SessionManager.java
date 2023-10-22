@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class SessionManager implements Printable {
     private final String puzzle;
     private final int maxAttempts;
-    private int attempt = 0;
+    private int attempt = 1;
     private final Scanner sc;
     private GuessResult result;
 
@@ -85,15 +85,15 @@ public class SessionManager implements Printable {
                     responseN.replace(i, i + 1, guess);
                 }
             }
-            g = new SuccessfulGuess(attempt, responseN.toString());
+            g = new SuccessfulGuess(attempt-1, responseN.toString());
             LOGGER.info(g.message());
             if (g.state().equals(puzzle)) {
-                g = new Win(attempt, maxAttempts, puzzle);
+                g = new Win(attempt-1, maxAttempts, puzzle);
                 LOGGER.info(g.message());
             }
         } else {
             attempt++;
-            g = new FailedGuess(attempt, maxAttempts, responseN.toString());
+            g = new FailedGuess(attempt-1, maxAttempts, responseN.toString());
             LOGGER.info(g.message());
 
         }
@@ -103,7 +103,7 @@ public class SessionManager implements Printable {
     public void proceedGame(GuessResult g) {
         GuessResult intermediate;
         if (g.getClass().equals(SuccessfulGuess.class) || g.getClass().equals(FailedGuess.class)) {
-            if (g.attempt() < maxAttempts) {
+            if (g.attempt() <= maxAttempts) {
                 intermediate = checkGuess(g.state(), g.attempt());
                 proceedGame(intermediate);
             } else {
