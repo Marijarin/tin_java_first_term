@@ -5,14 +5,14 @@ import edu.project1.result.GuessResult;
 import edu.project1.util.Printable;
 
 public class HangmanGame implements Printable {
-    public GuessResult startNewSession() {
+    public GuessResult startNewGame() {
         Session s = new Session();
         GuessResult g;
         try {
             s.initSession();
             g = s.takeResult();
-        } catch (RuntimeException r) {
-            g = new ErrorResult(r.getLocalizedMessage());
+        } catch (RuntimeException e) {
+            g = new ErrorResult(e.getLocalizedMessage());
         }
         return g;
     }

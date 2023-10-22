@@ -7,15 +7,16 @@ import edu.project1.result.GuessResult;
 import edu.project1.result.SuccessfulGuess;
 import edu.project1.result.Win;
 import edu.project1.util.Printable;
-import org.jetbrains.annotations.NotNull;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import org.jetbrains.annotations.NotNull;
 
 public class SessionManager implements Printable {
     private final String puzzle;
     private final int maxAttempts;
-    private final Scanner sc;
     private int attempt = 1;
+
+    private final Scanner sc;
     private GuessResult result;
 
     public SessionManager(String puzzle, int maxAttempts, Scanner sc) {
@@ -25,7 +26,6 @@ public class SessionManager implements Printable {
     }
 
     public void startGame() {
-
         if (puzzle.isEmpty() || puzzle.length() < 2) {
             GuessResult g = new ErrorResult(puzzle);
             LOGGER.info(g.message());
@@ -41,13 +41,13 @@ public class SessionManager implements Printable {
         }
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     public String validateInput() {
         LOGGER.info("\nGuess a letter:");
         String guess;
         try {
             guess = sc.nextLine().trim();
-            String toGiveUp = "end";
-            if (guess.length() != 1 && !guess.equals(toGiveUp)) {
+            if (guess.length() != 1 && !guess.equals("end")) {
                 sc.close();
                 guess = "";
             }
@@ -58,6 +58,7 @@ public class SessionManager implements Printable {
         return guess;
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     @NotNull public GuessResult checkGuess(String response, int attempt) {
         String input = validateInput();
         switch (input) {
@@ -92,9 +93,9 @@ public class SessionManager implements Printable {
                 LOGGER.info(g.message());
             }
         } else {
-            attempt++;
             g = new FailedGuess(attempt, maxAttempts, responseN.toString());
             LOGGER.info(g.message());
+            attempt++;
         }
         return g;
     }
@@ -102,11 +103,11 @@ public class SessionManager implements Printable {
     public void proceedGame(GuessResult g) {
         GuessResult intermediate;
         if (g.getClass().equals(SuccessfulGuess.class) || g.getClass().equals(FailedGuess.class)) {
-            if (g.attempt() <= maxAttempts) {
+            if (g.attempt() < maxAttempts) {
                 intermediate = checkGuess(g.state(), g.attempt());
                 proceedGame(intermediate);
             }
-            if (g.attempt() > 5) {
+            if (g.attempt() >= maxAttempts) {
                 result = new Defeat(g.attempt(), maxAttempts);
                 LOGGER.info(result.message());
             }

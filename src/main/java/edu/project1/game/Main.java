@@ -13,6 +13,6 @@ public final class Main {
 
     public static void main(String[] args) {
         HangmanGame h = new HangmanGame();
-       LOGGER.info(h.startNewSession());
+       LOGGER.info(h.startNewGame());
     }
 }

@@ -10,13 +10,13 @@ import org.jetbrains.annotations.NotNull;
 public class Session implements Printable {
     private final Scanner sc;
     private final SessionManager sm;
+    private final int maxAttempts = 5;
 
     public Session() {
         sc = new Scanner(System.in);
         int level = chooseLevel();
         Dictionary dictionary = new DictionaryImpl();
         String puzzle = dictionary.randomWord(level);
-        int maxAttempts = 5;
         sm = new SessionManager(puzzle, maxAttempts, sc);
     }
 
@@ -25,8 +25,8 @@ public class Session implements Printable {
         int level = 0;
         try {
             level = Integer.parseInt(sc.nextLine().trim());
-        } catch (NumberFormatException n) {
-            LOGGER.info(n);
+        } catch (NumberFormatException e) {
+            LOGGER.info(e);
         }
         if (level == 1 || level == 2) {
             return level;
