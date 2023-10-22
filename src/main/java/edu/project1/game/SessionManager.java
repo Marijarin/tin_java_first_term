@@ -85,15 +85,15 @@ public class SessionManager implements Printable {
                     responseN.replace(i, i + 1, guess);
                 }
             }
-            g = new SuccessfulGuess(attempt-1, responseN.toString());
+            g = new SuccessfulGuess(attempt - 1, responseN.toString());
             LOGGER.info(g.message());
             if (g.state().equals(puzzle)) {
-                g = new Win(attempt-1, maxAttempts, puzzle);
+                g = new Win(attempt - 1, maxAttempts, puzzle);
                 LOGGER.info(g.message());
             }
         } else {
             attempt++;
-            g = new FailedGuess(attempt-1, maxAttempts, responseN.toString());
+            g = new FailedGuess(attempt - 1, maxAttempts, responseN.toString());
             LOGGER.info(g.message());
 
         }
