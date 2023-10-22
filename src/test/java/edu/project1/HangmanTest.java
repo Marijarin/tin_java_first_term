@@ -45,7 +45,7 @@ public class HangmanTest {
     void giveUpInput() {
         InputStream in = new ByteArrayInputStream("end".getBytes());
         System.setIn(in);
-        Session sn = new Session(1);
+        Session sn = new Session();
         GuessResult result = sn.startGame();
         assertThat(result).isEqualTo(new Defeat(1, 5));
     }
@@ -55,7 +55,7 @@ public class HangmanTest {
     void notCorrectInput() {
         InputStream in = new ByteArrayInputStream("cat".getBytes());
         System.setIn(in);
-        Session sn = new Session(1);
+        Session sn = new Session();
         GuessResult result = sn.startGame();
         assertThat(result).isEqualTo(new Defeat(1, 5));
     }
@@ -66,7 +66,7 @@ public class HangmanTest {
         InputStream in = new ByteArrayInputStream("я".getBytes());
         System.setIn(in);
         int levelInput = new Random().nextBoolean() ? 1 : 2;
-        Session sn = new Session(levelInput);
+        Session sn = new Session();
         GuessResult result = sn.startGame();
         assertThat(result).isEqualTo(new Defeat(2, 5));
     }

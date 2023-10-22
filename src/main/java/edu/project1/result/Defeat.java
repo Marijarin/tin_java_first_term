@@ -20,7 +20,7 @@ public record Defeat(int currentAttempt, int maxAttempt) implements GuessResult 
 
     @Override
     public @NotNull String message() {
-        if (currentAttempt <= maxAttempt) {
+        if (currentAttempt < maxAttempt) {
             return "Game over";
         } else {
             return "You lost!";
