@@ -15,7 +15,6 @@ public class SessionManager implements Printable {
     private final String puzzle;
     private final int maxAttempts;
     private int attempt = 1;
-
     private final Scanner sc;
     private GuessResult result;
 
@@ -27,8 +26,8 @@ public class SessionManager implements Printable {
 
     public void startGame() {
         if (puzzle.isEmpty() || puzzle.length() < 2) {
-            GuessResult g = new ErrorResult(puzzle);
-            LOGGER.info(g.message());
+            result = new ErrorResult(puzzle);
+            LOGGER.info(result.message());
         } else {
             LOGGER.info(
                 "\nYou can make only "

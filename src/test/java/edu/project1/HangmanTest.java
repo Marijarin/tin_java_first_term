@@ -45,6 +45,16 @@ public class HangmanTest {
     }
 
     @Test
+    @DisplayName("Short word")
+    void gameWithNotCorrectWord() {
+        Scanner sc = new Scanner(System.in);
+        SessionManager sm = new SessionManager("o", 5, sc);
+        sm.startGame();
+        GuessResult result = sm.getResult();
+        assertThat(result).isInstanceOf(ErrorResult.class);
+    }
+
+    @Test
     @DisplayName("Give up case")
     void giveUpInput() {
         Scanner sc = new Scanner("end");
