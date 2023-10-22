@@ -15,6 +15,6 @@ public record FailedGuess(int attempt, int maxAttempt, String word) implements G
 
     @Override
     public @NotNull String message() {
-        return "Missed, mistake " + attempt + " out of " + maxAttempt + ".\nThe word is: " + state();
+        return String.format("Missed, mistake %d out of %d.\nThe word is: %s", attempt, maxAttempts(), state());
     }
 }

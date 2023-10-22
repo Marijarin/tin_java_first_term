@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class SessionManager implements Printable {
     private final String puzzle;
     private final int maxAttempts;
-    private int attempt = 1;
+    private int attempt = 0;
     private final Scanner sc;
     private GuessResult result;
 
@@ -30,10 +30,10 @@ public class SessionManager implements Printable {
             LOGGER.info(result.message());
         } else {
             LOGGER.info(
-                "\nYou can make only "
-                    + maxAttempts
-                    +
-                    " mistakes.\nIf you want to finish the game, please, print end or empty space in separate line.\n");
+                "\nYou can make only {} mistakes."
+                    + "\nIf you want to finish the game, please, print end or empty space in separate line.\n",
+                maxAttempts
+            );
             String response = "*".repeat(puzzle.length());
             GuessResult g = checkGuess(response, attempt);
             proceedGame(g);
@@ -92,9 +92,10 @@ public class SessionManager implements Printable {
                 LOGGER.info(g.message());
             }
         } else {
+            attempt++;
             g = new FailedGuess(attempt, maxAttempts, responseN.toString());
             LOGGER.info(g.message());
-            attempt++;
+
         }
         return g;
     }
@@ -105,8 +106,7 @@ public class SessionManager implements Printable {
             if (g.attempt() < maxAttempts) {
                 intermediate = checkGuess(g.state(), g.attempt());
                 proceedGame(intermediate);
-            }
-            if (g.attempt() >= maxAttempts) {
+            } else {
                 result = new Defeat(g.attempt(), maxAttempts);
                 LOGGER.info(result.message());
             }

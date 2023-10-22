@@ -20,6 +20,6 @@ public record ErrorResult(String error) implements GuessResult {
 
     @Override
     public @NotNull String message() {
-        return "Oh no, the word is bad. It is: " + state() + " Please, rerun main";
+        return String.format("Oh no, the word is too short. It is >> %s << Please, rerun main", error);
     }
 }

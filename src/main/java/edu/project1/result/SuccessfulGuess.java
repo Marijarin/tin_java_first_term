@@ -15,7 +15,7 @@ public record SuccessfulGuess(int attempt, String word) implements GuessResult {
 
     @Override
     public @NotNull String message() {
-        return "Hit!\nThe word is: " + state();
+        return String.format("Hit!\nThe word is: %s", state());
     }
 }
 
