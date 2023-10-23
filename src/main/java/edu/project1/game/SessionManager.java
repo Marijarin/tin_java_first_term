@@ -102,7 +102,7 @@ public class SessionManager implements Printable {
 
     public void proceedGame(GuessResult g) {
         GuessResult intermediate;
-        if (g.getClass().equals(SuccessfulGuess.class) || g.getClass().equals(FailedGuess.class)) {
+        if (g instanceof SuccessfulGuess || g instanceof FailedGuess) {
             if (g.attempt() <= maxAttempts) {
                 intermediate = checkGuess(g.state(), g.attempt());
                 proceedGame(intermediate);
