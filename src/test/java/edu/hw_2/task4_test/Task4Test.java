@@ -11,13 +11,16 @@ public class Task4Test {
     @Test
     void callHere() {
         var result = CallingInfo.callingInfo();
+
         assertThat(result).isEqualTo(new CallingInfo("edu.hw_2.task4_test.Task4Test", "callHere"));
     }
 
     @Test
     void classToCallCallsCallingInfo(){
         ClassToCall ctc = new ClassToCall();
+
         var result = ctc.callCallingInfo();
+
         assertThat(result).isEqualTo(new CallingInfo("edu.hw_2.task4.ClassToCall", "callCallingInfo"));
     }
 

@@ -1,10 +1,5 @@
 package edu.hw_2;
 
-import edu.hw_2.task1.Expr.Addition;
-import edu.hw_2.task1.Expr.Constant;
-import edu.hw_2.task1.Expr.Exponent;
-import edu.hw_2.task1.Expr.Multiplication;
-import edu.hw_2.task1.Expr.Negate;
 import edu.hw_2.task3.ConnectionManager;
 import edu.hw_2.task3.DefaultConnectionManager;
 import edu.hw_2.task3.FaultyConnectionManager;
@@ -24,15 +19,7 @@ public final class Main {
 
     @SuppressWarnings("MagicNumber")
     public static void main(String[] args) {
-        var two = new Constant(2);
-        var four = new Constant(4);
-        var negOne = new Negate(new Constant(1));
-        var sumTwoFour = new Addition(two, four);
-        var mult = new Multiplication(sumTwoFour, negOne);
-        var exp = new Exponent(mult, 2);
-        var res = new Addition(exp, new Constant(1));
 
-        LOGGER.info(res + " = " + res.evaluate());
         LOGGER.info(CallingInfo.callingInfo());
         ClassToCall c = new ClassToCall();
         LOGGER.info(c.callCallingInfo());

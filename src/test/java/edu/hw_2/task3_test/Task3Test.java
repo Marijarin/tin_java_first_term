@@ -18,18 +18,21 @@ public class Task3Test {
      @Test
     void executeDefaultManager(){
          PopularCommandExecutor p = new PopularCommandExecutor(md, maxAttempts);
+
          assertThatNoException().isThrownBy(p::updatePackages);
      }
 
      @Test
      void executeFaultyManagerThrowsException(){
          PopularCommandExecutor p = new PopularCommandExecutor(mf, 1);
+
          assertThatException().isThrownBy(() -> p.tryExecute("apt update"));
      }
 
     @Test
     void executeFaultyManagerNotThrowsException(){
         PopularCommandExecutor p = new PopularCommandExecutor(mf, maxAttempts);
+
         assertThatNoException().isThrownBy(() -> p.tryExecute("apt update && upgrade"));
     }
 }

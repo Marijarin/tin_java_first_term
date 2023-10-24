@@ -7,8 +7,7 @@ public class DefaultConnectionManager implements ConnectionManager {
         int random = (int) (Math.random() * 10);
         if (random % 2 == 0) {
             return new FaultyConnection();
-        } else {
-            return new StableConnection();
         }
+            return new StableConnection();
     }
 }
