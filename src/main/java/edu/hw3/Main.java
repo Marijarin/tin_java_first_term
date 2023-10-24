@@ -11,6 +11,7 @@ public final class Main {
     private Main() {
     }
 
+    @SuppressWarnings("MagicNumber")
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
@@ -22,9 +23,9 @@ public final class Main {
         Task2 t2 = new Task2();
         LOGGER.info(t2.clusterize("((())())(()"));
         Task3 t3 = new Task3();
-        LOGGER.info(t3.freqDict(new Integer[]{1, 1, 2, 2}));
+        LOGGER.info(t3.freqDict(new Integer[] {1, 1, 2, 2}));
         Task4 t4 = new Task4();
-        LOGGER.info(t4.convertToRoman(-1));
+        LOGGER.info(t4.convertToRoman(99));
 
     }
 }

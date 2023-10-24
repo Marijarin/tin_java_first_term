@@ -3,7 +3,9 @@ package edu.hw3;
 import java.util.LinkedHashMap;
 
 public class Task4 {
-    public String convertToRoman (int toDo) {
+    @SuppressWarnings("MagicNumber")
+    public String convertToRoman(int input) {
+        int toDo = input;
         if (toDo <= 0) {
             return "Can not be converted!";
         }
@@ -23,8 +25,8 @@ public class Task4 {
         romans.put("I", 1);
         StringBuilder sb;
         sb = new StringBuilder();
-        for(var entry : romans.entrySet()) {
-            int matches = toDo/entry.getValue();
+        for (var entry : romans.entrySet()) {
+            int matches = toDo / entry.getValue();
             if (matches > 0) {
                 sb.repeat(entry.getKey(), matches);
             }
