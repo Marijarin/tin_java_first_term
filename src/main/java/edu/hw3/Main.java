@@ -6,7 +6,10 @@ import edu.hw3.task5.SortingType;
 import edu.hw3.task6.Stock;
 import edu.hw3.task6.StockMarket;
 import edu.hw3.task6.StockMarketImpl;
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeMap;
+import edu.hw3.task7.NullComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,5 +53,12 @@ public final class Main {
         s.add(new Stock("AAA", 2.0));
         s.add(new Stock("YHY", 1.8));
         LOGGER.info(s.mostValuableStock());
+        TreeMap<String, String> tm = new TreeMap<>(new NullComparator<>(Comparator.naturalOrder()));
+        tm.put(null,null);
+        tm.put("am", "am");
+        tm.put(null, "ff");
+        tm.put("bb","ff");
+        LOGGER.info(tm.lastKey());
+        LOGGER.info(tm.firstKey());
     }
 }
