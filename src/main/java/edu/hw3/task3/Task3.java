@@ -1,10 +1,10 @@
-package edu.hw3;
+package edu.hw3.task3;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Task3 {
-    <T> HashMap<T, Integer> freqDict(T[] ts) {
+    public <T> HashMap<T, Integer> freqDict(T[] ts) {
         HashMap<T, Integer> freqDict = new HashMap<>(Map.of());
         for (T t : ts) {
             if (!freqDict.containsKey(t)) {
