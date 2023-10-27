@@ -57,4 +57,17 @@ public class Task4Test {
         assertThat(result).isEqualTo(output);
 
     }
+
+    @Test
+    @DisplayName("Not correct")
+    void convertBig() {
+        int input = 4000;
+        Task4 t4 = new Task4();
+
+        String result = t4.convertToRoman(input);
+        String output = "Can not be converted!";
+
+        assertThat(result).isEqualTo(output);
+
+    }
 }

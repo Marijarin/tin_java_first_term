@@ -6,7 +6,7 @@ public class Task4 {
     @SuppressWarnings("MagicNumber")
     public String convertToRoman(int input) {
         int toDo = input;
-        if (toDo <= 0) {
+        if (toDo <= 0 || toDo > 3999) {
             return "Can not be converted!";
         }
         LinkedHashMap<String, Integer> romans = new LinkedHashMap<>();
