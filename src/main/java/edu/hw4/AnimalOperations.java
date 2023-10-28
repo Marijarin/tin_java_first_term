@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.Map.entry;
 
-public class AnimalOperations {
+public abstract class AnimalOperations {
 
     public static final List<Animal> ANIMALS_EXAMPLE = List.of(
         new Animal("Murka", Animal.Type.CAT, Animal.Sex.M, 4, 40, 6, false),
