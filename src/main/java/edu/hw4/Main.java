@@ -1,8 +1,8 @@
 package edu.hw4;
 
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
 import static edu.hw4.AnimalOperations.ANIMALS_EXAMPLE;
 import static edu.hw4.AnimalOperations.ANIMALS_EXAMPLE_SECOND;
 import static edu.hw4.AnimalOperations.ageNumberNotPawsNumber;
@@ -32,6 +32,7 @@ public final class Main {
     private Main() {
     }
 
+    @SuppressWarnings("MagicNumber")
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.

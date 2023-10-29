@@ -2,11 +2,9 @@ package edu.hw4;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.Map.entry;
 
@@ -23,14 +21,14 @@ public abstract class AnimalOperations {
         new Animal("Sharik", Animal.Type.DOG, Animal.Sex.M, 8, 100, 35, true)
     );
     public static final List<Animal> ANIMALS_EXAMPLE_SECOND = List.of(
-        new Animal("Murka", Animal.Type.CAT, Animal.Sex.M, 4, 40, 6, false),
+        new Animal("Murka5", Animal.Type.CAT, Animal.Sex.M, 4, 40, 6, false),
         new Animal("Zazz", Animal.Type.FISH, Animal.Sex.F, 1, 300, 350, false),
-        new Animal("Popka Durak Pervyi", Animal.Type.BIRD, Animal.Sex.M, 1, 10, 2, false),
-        new Animal("Guppy", Animal.Type.FISH, Animal.Sex.F, 2, 5, 1, false),
-        new Animal("Spider", Animal.Type.SPIDER, Animal.Sex.M, 11, 1, 1, true),
-        new Animal("Dangerous Spider", Animal.Type.SPIDER, Animal.Sex.F, 0, 35, 3, true),
-        new Animal("Shark", Animal.Type.FISH, Animal.Sex.F, 20, 1000, 1000, true),
-        new Animal("Sharik", Animal.Type.DOG, Animal.Sex.M, 8, 100, 35, true)
+        new Animal("Popka Durak", Animal.Type.BIRD, Animal.Sex.M, 1, 10, 2, false),
+        new Animal("Guppy&", Animal.Type.FISH, Animal.Sex.F, 2, 5, 1, false),
+        new Animal("Spider(", Animal.Type.SPIDER, Animal.Sex.M, 11, 1, 1, true),
+        new Animal("Dangerous SpiderAAA", Animal.Type.SPIDER, Animal.Sex.F, 0, 35, 3, true),
+        new Animal("Shark Shark", Animal.Type.FISH, Animal.Sex.F, 20, 1000, 1000, true),
+        new Animal("Sharig", Animal.Type.DOG, Animal.Sex.M, 8, 100, 35, true)
     );
 
     //#1
@@ -107,6 +105,7 @@ public abstract class AnimalOperations {
     }
 
     //#11
+    @SuppressWarnings("MagicNumber")
     public static List<Animal> canByteAndMoreThan100(List<Animal> animals) {
         return animals.stream().filter(animal -> animal.bites() && animal.height() > 100).toList();
     }
@@ -146,8 +145,8 @@ public abstract class AnimalOperations {
     public static boolean spidersBitesMoreDogs(List<Animal> animals) {
         return animals.stream()
             .filter(animal ->
-                animal.type() == Animal.Type.DOG && animal.bites() ||
-                    animal.type() == Animal.Type.SPIDER && animal.bites())
+                animal.type() == Animal.Type.DOG && animal.bites()
+                    || animal.type() == Animal.Type.SPIDER && animal.bites())
             .collect(Collectors.groupingBy(Animal::type))
             .entrySet()
             .stream()
