@@ -1,6 +1,7 @@
 package edu.hw3.task4;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Task4 {
     @SuppressWarnings("MagicNumber")
@@ -9,6 +10,21 @@ public class Task4 {
         if (toDo <= 0 || toDo > 3999) {
             return "Can not be converted!";
         }
+        var romans = makeRomansTable();
+        StringBuilder sb;
+        sb = new StringBuilder();
+        for (var entry : romans.entrySet()) {
+            int matches = toDo / entry.getValue();
+            if (matches > 0) {
+                sb.repeat(entry.getKey(), matches);
+            }
+            toDo = toDo % entry.getValue();
+        }
+        return sb.toString();
+    }
+
+    @SuppressWarnings("MagicNumber")
+    public Map<String, Integer> makeRomansTable() {
         LinkedHashMap<String, Integer> romans = new LinkedHashMap<>();
         romans.put("M", 1000);
         romans.put("CM", 900);
@@ -23,15 +39,6 @@ public class Task4 {
         romans.put("V", 5);
         romans.put("IV", 4);
         romans.put("I", 1);
-        StringBuilder sb;
-        sb = new StringBuilder();
-        for (var entry : romans.entrySet()) {
-            int matches = toDo / entry.getValue();
-            if (matches > 0) {
-                sb.repeat(entry.getKey(), matches);
-            }
-            toDo = toDo % entry.getValue();
-        }
-        return sb.toString();
+        return romans;
     }
 }
