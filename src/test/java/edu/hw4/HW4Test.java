@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class AnimalOperationsTest {
+public class HW4Test {
     @Test
     void biggestSorting() {
         List<Animal> ans = List.of(
@@ -335,4 +335,28 @@ public class AnimalOperationsTest {
         assertThat(result.get("Zazz").toString()).isEqualTo(partialResult.toString());
     }
 
+    @Test
+    void errorFieldsWithKeyAndValue() {
+        List<Animal> ans = List.of(
+            new Animal("Murka5", Animal.Type.CAT, Animal.Sex.M, -4, 400, 6, false),
+            new Animal("Zazz", Animal.Type.FISH, Animal.Sex.F, -1, 300, 350, false),
+            new Animal("Popka Durak", Animal.Type.BIRD, Animal.Sex.M, 1, 10, 2, false)
+        );
+
+        var result = AnimalOperations.errorFields(ans);
+
+        assertThat(result.get("Zazz")).isEqualTo("-1");
+    }
+
+    @Test
+    void errorFieldsSize() {
+        List<Animal> ans = List.of(
+            new Animal("Murka5", Animal.Type.CAT, Animal.Sex.M, -4, 400, 6, false),
+            new Animal("Zazz", Animal.Type.FISH, Animal.Sex.F, -1, 300, 350, false),
+            new Animal("Popka Durak", Animal.Type.BIRD, Animal.Sex.M, 1, 10, 2, false)
+        );
+        var result = AnimalOperations.errorFields(ans);
+
+        assertThat(result.size()).isEqualTo(2);
+    }
 }
