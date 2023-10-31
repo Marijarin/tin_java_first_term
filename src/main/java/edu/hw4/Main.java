@@ -38,7 +38,7 @@ public final class Main {
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
-      /*  LOGGER.info("Hello and welcome!");
+        LOGGER.info("Hello and welcome!");
         LOGGER.info(fromSmallToBig(ANIMALS_EXAMPLE));
         LOGGER.info(fromHeavyToLight(ANIMALS_EXAMPLE, 3));
         LOGGER.info(speciesRange(ANIMALS_EXAMPLE));
@@ -56,7 +56,7 @@ public final class Main {
         LOGGER.info(sumWeightFromKToLAge(ANIMALS_EXAMPLE, 0, 2));
         LOGGER.info(tripleSorting(ANIMALS_EXAMPLE));
         LOGGER.info(spidersBitesMoreDogs(ANIMALS_EXAMPLE));
-        LOGGER.info(heaviestFishEver(List.of(ANIMALS_EXAMPLE, ANIMALS_EXAMPLE_SECOND)));*/
+        LOGGER.info(heaviestFishEver(List.of(ANIMALS_EXAMPLE, ANIMALS_EXAMPLE_SECOND)));
         LOGGER.info(animalRecordsErrors(ANIMALS_EXAMPLE_SECOND));
         LOGGER.info(errorFields(ANIMALS_EXAMPLE_SECOND));
     }

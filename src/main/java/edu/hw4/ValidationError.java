@@ -13,8 +13,6 @@ public class ValidationError {
     ValidationError() {
     }
 
-    ;
-
     private ValidationError(Error error) {
         this.error = error;
     }

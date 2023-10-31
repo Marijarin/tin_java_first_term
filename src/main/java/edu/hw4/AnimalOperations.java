@@ -1,6 +1,5 @@
 package edu.hw4;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -126,7 +125,7 @@ public abstract class AnimalOperations {
 
     //#14
     public static boolean isDogMoreKHeight(List<Animal> animals, int k) {
-        return animals.stream().filter(animal -> animal.type() == Animal.Type.DOG && animal.height() > k).toList()
+        return !animals.stream().filter(animal -> animal.type() == Animal.Type.DOG && animal.height() > k).toList()
             .isEmpty();
     }
 
@@ -154,6 +153,7 @@ public abstract class AnimalOperations {
             .collect(groupingBy(Animal::type))
             .entrySet()
             .stream()
+            .sorted(Map.Entry.comparingByKey())
             .max(Comparator.comparing(typeListEntry -> typeListEntry.getValue().size()))
             .map(Map.Entry::getKey)
             .orElse(Animal.Type.DOG) == Animal.Type.SPIDER;
@@ -162,12 +162,9 @@ public abstract class AnimalOperations {
     //#18
     public static Animal heaviestFishEver(List<List<Animal>> animalLists) {
         return animalLists.stream()
-            .filter(animalList ->
-                !animalList.stream()
-                    .filter(animal -> animal.type() == Animal.Type.FISH)
-                    .toList()
-                    .isEmpty())
             .flatMap(Collection::stream)
+            .filter(animal ->
+                animal.type() == Animal.Type.FISH)
             .max(Comparator.comparing(Animal::weight))
             .orElseThrow();
     }
@@ -176,7 +173,12 @@ public abstract class AnimalOperations {
     public static Map<String, Set<ValidationError>> animalRecordsErrors(List<Animal> animals) {
         ValidationError ve = new ValidationError();
         return animals.stream()
-            .collect(toMap(Animal::name, ve::checkAnimal));
+            .collect(toMap(Animal::name, ve::checkAnimal))
+            .entrySet()
+            .stream()
+            .filter(entry ->
+                !entry.getValue().isEmpty())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     //#20
@@ -186,7 +188,8 @@ public abstract class AnimalOperations {
             .stream()
             .filter(stringSetEntry -> !stringSetEntry.getValue().isEmpty())
             .map(k ->
-                entry(k.getKey(),
+                entry(
+                    k.getKey(),
                     k.getValue().stream().map(it -> it.toString().split(":")[0]).distinct()
                         .collect(Collectors.joining(", next error field: "))
                 ))
