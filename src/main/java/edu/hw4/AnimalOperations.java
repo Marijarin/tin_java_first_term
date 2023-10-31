@@ -69,6 +69,7 @@ public abstract class AnimalOperations {
             .collect(groupingBy(Animal::sex))
             .entrySet()
             .stream()
+            .sorted(Map.Entry.comparingByKey())
             .max(Comparator.comparing(sexListEntry -> sexListEntry.getValue().size()))
             .orElseThrow()
             .getKey();
