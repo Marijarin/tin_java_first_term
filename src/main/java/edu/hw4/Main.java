@@ -7,7 +7,9 @@ import static edu.hw4.AnimalOperations.ANIMALS_EXAMPLE;
 import static edu.hw4.AnimalOperations.ANIMALS_EXAMPLE_SECOND;
 import static edu.hw4.AnimalOperations.ageNumberNotPawsNumber;
 import static edu.hw4.AnimalOperations.allPawsNumber;
+import static edu.hw4.AnimalOperations.animalRecordsErrors;
 import static edu.hw4.AnimalOperations.canByteAndMoreThan100;
+import static edu.hw4.AnimalOperations.errorFields;
 import static edu.hw4.AnimalOperations.fromHeavyToLight;
 import static edu.hw4.AnimalOperations.fromSmallToBig;
 import static edu.hw4.AnimalOperations.heaviestAnimal;
@@ -36,7 +38,7 @@ public final class Main {
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
-        LOGGER.info("Hello and welcome!");
+      /*  LOGGER.info("Hello and welcome!");
         LOGGER.info(fromSmallToBig(ANIMALS_EXAMPLE));
         LOGGER.info(fromHeavyToLight(ANIMALS_EXAMPLE, 3));
         LOGGER.info(speciesRange(ANIMALS_EXAMPLE));
@@ -54,6 +56,8 @@ public final class Main {
         LOGGER.info(sumWeightFromKToLAge(ANIMALS_EXAMPLE, 0, 2));
         LOGGER.info(tripleSorting(ANIMALS_EXAMPLE));
         LOGGER.info(spidersBitesMoreDogs(ANIMALS_EXAMPLE));
-        LOGGER.info(heaviestFishEver(List.of(ANIMALS_EXAMPLE, ANIMALS_EXAMPLE_SECOND)));
+        LOGGER.info(heaviestFishEver(List.of(ANIMALS_EXAMPLE, ANIMALS_EXAMPLE_SECOND)));*/
+        LOGGER.info(animalRecordsErrors(ANIMALS_EXAMPLE_SECOND));
+        LOGGER.info(errorFields(ANIMALS_EXAMPLE_SECOND));
     }
 }

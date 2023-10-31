@@ -1,11 +1,19 @@
 package edu.hw4;
 
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ValidationError {
 
-    private final Error error;
+    private Error error;
+
+    ValidationError() {
+    }
+
+    ;
 
     private ValidationError(Error error) {
         this.error = error;
@@ -16,12 +24,15 @@ public class ValidationError {
     }
 
     public String toString() {
-        return "Error data is: " + this.error.toString();
+        if (this.error != null) {
+            return this.error.errorValue + ":" + this.error.errorMessage;
+        }
+        return null;
     }
 
-    public ValidationError checkNegMeasurement(Number number) {
-        if (number.longValue() <= 0 || number.doubleValue() <= 0) {
-            return new ValidationError(new Error("parameter must be > 0", number.toString()));
+    public ValidationError checkNegMeasurement(int number) {
+        if (number <= 0) {
+            return new ValidationError(new Error("parameter must be > 0", String.valueOf(number)));
         }
         return new ValidationError(null);
     }
@@ -41,13 +52,19 @@ public class ValidationError {
 
     @SuppressWarnings("MagicNumber")
     public ValidationError checkFirstNamePattern(String name) {
-        Pattern letterCap = Pattern.compile("[A-Z]");
-        Matcher hasLetterCap0 = letterCap.matcher(name.substring(0, 1));
-        Matcher hasLetterCapOthers = letterCap.matcher(name.substring(1));
-        if (hasLetterCap0.find() && !hasLetterCapOthers.find()) {
-            return new ValidationError(null);
+        List<String> names = List.of(name.split(" "));
+        if (names.isEmpty()) {
+            return new ValidationError(new Error("empty name", name));
         }
-        return new ValidationError(new Error("parameter must match first name pattern", name));
+        Pattern letterCap = Pattern.compile("[A-Z]");
+        for (String item : names) {
+            Matcher hasLetterCap0 = letterCap.matcher(item.substring(0, 1));
+            Matcher hasLetterCapOthers = letterCap.matcher(item.substring(1));
+            if (!hasLetterCap0.find() && hasLetterCapOthers.find()) {
+                return new ValidationError(new Error("parameter must match first name pattern", name));
+            }
+        }
+        return new ValidationError(null);
     }
 
     @SuppressWarnings("MagicNumber")
@@ -60,7 +77,7 @@ public class ValidationError {
                 }
             }
             case SPIDER -> {
-                if (animal.weight() > 5 || animal.height() > 40) {
+                if (animal.weight() > 5 || animal.height() > 30) {
                     return tooBig;
                 }
             }
@@ -69,6 +86,24 @@ public class ValidationError {
             }
         }
         return new ValidationError(null);
+    }
+
+    public Set<ValidationError> checkAnimal(Animal animal) {
+        var namePatternCheck = checkFirstNamePattern(animal.name());
+        var specialCharacters = checkNumbersAndSpecialsInName(animal.name());
+        var negAge = checkNegMeasurement(animal.age());
+        var negWeight = checkNegMeasurement(animal.weight());
+        var negHeight = checkNegMeasurement(animal.height());
+        var tooBig = checkTooBigAnimals(animal);
+        var errorSet = new java.util.HashSet<>(Set.of(
+            negAge,
+            negHeight,
+            namePatternCheck,
+            specialCharacters,
+            negWeight,
+            tooBig
+        ));
+        return errorSet.stream().filter(validationError -> !validationError.isEmpty()).collect(Collectors.toSet());
     }
 
     public static class Error {

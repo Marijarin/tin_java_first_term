@@ -1,12 +1,16 @@
 package edu.hw4;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.Map.entry;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimalOperations {
 
@@ -21,12 +25,12 @@ public abstract class AnimalOperations {
         new Animal("Sharik", Animal.Type.DOG, Animal.Sex.M, 8, 100, 35, true)
     );
     public static final List<Animal> ANIMALS_EXAMPLE_SECOND = List.of(
-        new Animal("Murka5", Animal.Type.CAT, Animal.Sex.M, 4, 40, 6, false),
+        new Animal("Murka5", Animal.Type.CAT, Animal.Sex.M, -4, 400, 6, false),
         new Animal("Zazz", Animal.Type.FISH, Animal.Sex.F, 1, 300, 350, false),
         new Animal("Popka Durak", Animal.Type.BIRD, Animal.Sex.M, 1, 10, 2, false),
         new Animal("Guppy&", Animal.Type.FISH, Animal.Sex.F, 2, 5, 1, false),
         new Animal("Spider(", Animal.Type.SPIDER, Animal.Sex.M, 11, 1, 1, true),
-        new Animal("Dangerous SpiderAAA", Animal.Type.SPIDER, Animal.Sex.F, 0, 35, 3, true),
+        new Animal("Dangerous SpiderAAA", Animal.Type.SPIDER, Animal.Sex.F, 0, 35, 300, true),
         new Animal("Shark Shark", Animal.Type.FISH, Animal.Sex.F, 20, 1000, 1000, true),
         new Animal("Sharig", Animal.Type.DOG, Animal.Sex.M, 8, 100, 35, true)
     );
@@ -44,7 +48,7 @@ public abstract class AnimalOperations {
 
     //#3
     public static Map<Animal.Type, Integer> speciesRange(List<Animal> animals) {
-        return animals.stream().collect(Collectors.groupingBy(Animal::type))
+        return animals.stream().collect(groupingBy(Animal::type))
             .entrySet()
             .stream()
             .map(k ->
@@ -63,7 +67,7 @@ public abstract class AnimalOperations {
     //#5
     public static Animal.Sex mostFrequent(List<Animal> animals) {
         return animals.stream()
-            .collect(Collectors.groupingBy(Animal::sex))
+            .collect(groupingBy(Animal::sex))
             .entrySet()
             .stream()
             .max(Comparator.comparing(sexListEntry -> sexListEntry.getValue().size()))
@@ -72,13 +76,13 @@ public abstract class AnimalOperations {
     }
 
     //#6
-    public static Map<Animal.Type, Integer> heaviestAnimal(List<Animal> animals) {
+    public static Map<Animal.Type, Animal> heaviestAnimal(List<Animal> animals) {
         return animals.stream().sorted(Comparator.comparing(Animal::weight).reversed())
-            .collect(Collectors.groupingBy(Animal::type))
+            .collect(groupingBy(Animal::type))
             .entrySet()
             .stream()
             .map(k ->
-                entry(k.getKey(), k.getValue().getFirst().weight())).collect(Collectors.toMap(
+                entry(k.getKey(), k.getValue().getFirst())).collect(Collectors.toMap(
                 Map.Entry::getKey,
                 Map.Entry::getValue
             ));
@@ -86,7 +90,7 @@ public abstract class AnimalOperations {
 
     //#7
     public static Animal mostOldKAnimal(List<Animal> animals, int k) {
-        return animals.stream().sorted(Comparator.comparing(Animal::age)).toList().get(k);
+        return animals.stream().sorted(Comparator.comparing(Animal::age)).toList().get(k + 1);
     }
 
     //#8
@@ -147,7 +151,7 @@ public abstract class AnimalOperations {
             .filter(animal ->
                 animal.type() == Animal.Type.DOG && animal.bites()
                     || animal.type() == Animal.Type.SPIDER && animal.bites())
-            .collect(Collectors.groupingBy(Animal::type))
+            .collect(groupingBy(Animal::type))
             .entrySet()
             .stream()
             .max(Comparator.comparing(typeListEntry -> typeListEntry.getValue().size()))
@@ -169,5 +173,23 @@ public abstract class AnimalOperations {
     }
 
     //#19
+    public static Map<String, Set<ValidationError>> animalRecordsErrors(List<Animal> animals) {
+        ValidationError ve = new ValidationError();
+        return animals.stream()
+            .collect(toMap(Animal::name, ve::checkAnimal));
+    }
 
+    //#20
+    public static Map<String, String> errorFields(List<Animal> animals) {
+        return animalRecordsErrors(animals)
+            .entrySet()
+            .stream()
+            .filter(stringSetEntry -> !stringSetEntry.getValue().isEmpty())
+            .map(k ->
+                entry(k.getKey(),
+                    k.getValue().stream().map(it -> it.toString().split(":")[0]).distinct()
+                        .collect(Collectors.joining(", next error field: "))
+                ))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 }
