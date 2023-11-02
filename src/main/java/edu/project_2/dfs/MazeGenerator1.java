@@ -1,11 +1,11 @@
-package edu.project_2.swing_impl;
+package edu.project_2.dfs;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class MazeGenerator {
+public class MazeGenerator1 {
     private static final int WALL = 1;
     private static final int EMPTY = 0;
     private static final int START = 0;
@@ -17,7 +17,7 @@ public class MazeGenerator {
 
     private final Random random;
 
-    public MazeGenerator(int n, int m, int[] start, int[] end) {
+    public MazeGenerator1(int n, int m, int[] start, int[] end) {
         this.n = n;
         this.m = m;
         this.random = new Random();
