@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Random;
 
-class MazeGenerator {
-
+public class MazeGenerator {
     private final Deque<Cell> q = new ArrayDeque<>();
     private final Random random = new Random();
     int[][] maze;
@@ -35,7 +34,7 @@ class MazeGenerator {
         int numNeighboringOnes = 0;
         for (int y = cell.y - 1; y < cell.y + 2; y++) {
             for (int x = cell.x - 1; x < cell.x + 2; x++) {
-                if (pointOnGrid(x, y) && pointNotCell(cell, x, y) && maze[y][x] == 1) {
+                if (isAvailable(x, y) && isNotVisited(cell, x, y) && maze[y][x] == 1) {
                     numNeighboringOnes++;
                 }
             }
@@ -55,8 +54,8 @@ class MazeGenerator {
         ArrayList<Cell> neighbors = new ArrayList<>();
         for (int y = cell.y - 1; y < cell.y + 2; y++) {
             for (int x = cell.x - 1; x < cell.x + 2; x++) {
-                if (pointOnGrid(x, y) && pointNotCorner(cell, x, y)
-                    && pointNotCell(cell, x, y)) {
+                if (isAvailable(x, y) && isNotCorner(cell, x, y)
+                    && isNotVisited(cell, x, y)) {
                     neighbors.add(new Cell(x, y));
                 }
             }
@@ -64,15 +63,15 @@ class MazeGenerator {
         return neighbors;
     }
 
-    private Boolean pointOnGrid(int x, int y) {
+    private Boolean isAvailable(int x, int y) {
         return x >= 0 && y >= 0 && x < dimension && y < dimension;
     }
 
-    private Boolean pointNotCorner(Cell cell, int x, int y) {
+    private Boolean isNotCorner(Cell cell, int x, int y) {
         return (x == cell.x || y == cell.y);
     }
 
-    private Boolean pointNotCell(Cell cell, int x, int y) {
+    private Boolean isNotVisited(Cell cell, int x, int y) {
         return !(x == cell.x && y == cell.y);
     }
 }

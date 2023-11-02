@@ -12,15 +12,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Maze extends JPanel implements ActionListener {
-    MazeGenerator mg = new MazeGenerator(40);
-    final private int[][] maze = mg.maze;
+    private final  int[][] maze;
     private final int blockSize = 20;
-    private final int numRows = maze.length;
-    private final int numCols = maze[0].length;
     private final Player player;
 
-    public Maze() {
-        setPreferredSize(new Dimension(numCols * blockSize, numRows * blockSize));
+    public Maze(MazeGenerator mg) {
+        maze = mg.maze;
+        setPreferredSize(new Dimension(maze[0].length * blockSize, maze.length * blockSize));
         setFocusable(true);
         addKeyListener(new TAdapter());
         setBackground(Color.CYAN);
@@ -35,6 +33,17 @@ public class Maze extends JPanel implements ActionListener {
             for (int j = 0; j < maze.length; j++) {
                 sb.append(ints[j] == 1 ? "**" : "  ");
                 sb.append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+    public String printMaze() {
+        StringBuilder sb = new StringBuilder();
+        for (int[] ints : maze) {
+            for (int j = 0; j < maze.length; j++) {
+                sb.append(ints[j] == 1 ? "1" : "0");
+                sb.append("  ");
             }
             sb.append("\n");
         }
@@ -55,7 +64,7 @@ public class Maze extends JPanel implements ActionListener {
         g.setColor(Color.MAGENTA);
         g.fillOval(player.x, player.y, blockSize, blockSize);
         g.setColor(Color.GREEN);
-        g.fillRect((numCols - 1) * blockSize, (numRows - 1) * blockSize, blockSize, blockSize);
+        g.fillRect((maze[0].length - 1) * blockSize, (maze.length - 1) * blockSize, blockSize, blockSize);
     }
 
     @Override
