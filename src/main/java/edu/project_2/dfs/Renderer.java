@@ -2,11 +2,10 @@ package edu.project_2.dfs;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class GameMaze {
+public class Renderer {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Лабиринт");
         JLabel label = new JLabel("Найдите выход, он зеленый");
