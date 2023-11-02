@@ -2,6 +2,7 @@ package edu.project_2.dfs;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -16,7 +17,7 @@ public class GameMaze {
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
-        label.setFont(new Font("Arial", Font.BOLD, 13));
+        label.setFont(new Font("Arial", Font.BOLD, 14));
         label.setHorizontalAlignment(JLabel.CENTER);
         System.out.println(maze.getPrintableMaze());
     }

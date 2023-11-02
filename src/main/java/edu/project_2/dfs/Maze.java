@@ -12,11 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Maze extends JPanel implements ActionListener {
-
-    MazeGenerator1 mg = new MazeGenerator1(40, 40, new int[] {0, 0}, new int[] {39, 39});
-
-    MazeGenerator mg2 = new MazeGenerator(40);
-    final private int[][] maze = mg2.maze;
+    MazeGenerator mg = new MazeGenerator(40);
+    final private int[][] maze = mg.maze;
     private final int blockSize = 20;
     private final int numRows = maze.length;
     private final int numCols = maze[0].length;
@@ -36,8 +33,8 @@ public class Maze extends JPanel implements ActionListener {
         StringBuilder sb = new StringBuilder();
         for (int[] ints : maze) {
             for (int j = 0; j < maze.length; j++) {
-                sb.append(ints[j] == 1 ? "*" : " ");
-                sb.append("  ");
+                sb.append(ints[j] == 1 ? "**" : "  ");
+                sb.append(" ");
             }
             sb.append("\n");
         }
@@ -48,14 +45,14 @@ public class Maze extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int row = 0; row < maze.length; row++) {
-            for (int col = 0; col < maze[0].length; col++) {
+            for (int col = 0; col < maze.length; col++) {
                 if (maze[row][col] != 1) {
                     g.setColor(Color.BLACK);
                     g.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
                 }
             }
         }
-        g.setColor(Color.ORANGE);
+        g.setColor(Color.MAGENTA);
         g.fillOval(player.x, player.y, blockSize, blockSize);
         g.setColor(Color.GREEN);
         g.fillRect((numCols - 1) * blockSize, (numRows - 1) * blockSize, blockSize, blockSize);
@@ -75,7 +72,7 @@ public class Maze extends JPanel implements ActionListener {
         }
 
         public void won() {
-            JOptionPane.showMessageDialog(null, "You Won!", "Congratulation", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Выиграл!", "Молодец", JOptionPane.INFORMATION_MESSAGE);
         }
 
         public void move(int dx, int dy) {
