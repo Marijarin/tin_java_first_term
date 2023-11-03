@@ -10,9 +10,10 @@ public class Renderer {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Лабиринт");
         JLabel label = new JLabel("Найдите выход, он зеленый");
-        Maze maze = new Maze(new MazeGenerator(50));
+        Maze maze = new Maze(new MazeGenerator(10));
         BFSSolver bfsSolver = new BFSSolver(maze.maze);
         DFSSolver dfsSolver = new DFSSolver(maze.maze);
+        DFSSolverRec dfsSolverRec = new DFSSolverRec(maze.maze);
         frame.add(label, BorderLayout.NORTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(maze);
@@ -25,6 +26,7 @@ public class Renderer {
         System.out.println(maze.printMaze());
         System.out.println(maze.showExitPath(bfsSolver.solve()));
         System.out.println(maze.showExitPath(dfsSolver.solve()));
+        System.out.println(maze.showExitPath(dfsSolverRec.solve()));
     }
 }
 
