@@ -1,5 +1,6 @@
 package edu.project_2.dfs;
 
+import edu.project_2.Cell;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -22,7 +23,7 @@ public class MazeGenerator {
         while (!q.isEmpty()) {
             Cell next = q.pop();
             if (validNextCell(next)) {
-                maze[next.y][next.x] = 1;
+                maze[next.y()][next.x()] = 1;
                 ArrayList<Cell> neighbors = findNeighbors(next);
                 randomlyAddCellsToStack(neighbors);
             }
@@ -32,14 +33,14 @@ public class MazeGenerator {
 
     private boolean validNextCell(Cell cell) {
         int numNeighboringOnes = 0;
-        for (int y = cell.y - 1; y < cell.y + 2; y++) {
-            for (int x = cell.x - 1; x < cell.x + 2; x++) {
+        for (int y = cell.y() - 1; y < cell.y() + 2; y++) {
+            for (int x = cell.x() - 1; x < cell.x() + 2; x++) {
                 if (isAvailable(x, y) && isNotVisited(cell, x, y) && maze[y][x] == 1) {
                     numNeighboringOnes++;
                 }
             }
         }
-        return (numNeighboringOnes < 3) && maze[cell.y][cell.x] != 1;
+        return (numNeighboringOnes < 3) && maze[cell.y()][cell.x()] != 1;
     }
 
     private void randomlyAddCellsToStack(ArrayList<Cell> cells) {
@@ -52,8 +53,8 @@ public class MazeGenerator {
 
     private ArrayList<Cell> findNeighbors(Cell cell) {
         ArrayList<Cell> neighbors = new ArrayList<>();
-        for (int y = cell.y - 1; y < cell.y + 2; y++) {
-            for (int x = cell.x - 1; x < cell.x + 2; x++) {
+        for (int y = cell.y() - 1; y < cell.y() + 2; y++) {
+            for (int x = cell.x() - 1; x < cell.x() + 2; x++) {
                 if (isAvailable(x, y) && isNotCorner(cell, x, y)
                     && isNotVisited(cell, x, y)) {
                     neighbors.add(new Cell(x, y));
@@ -68,10 +69,10 @@ public class MazeGenerator {
     }
 
     private Boolean isNotCorner(Cell cell, int x, int y) {
-        return (x == cell.x || y == cell.y);
+        return (x == cell.x() || y == cell.y());
     }
 
     private Boolean isNotVisited(Cell cell, int x, int y) {
-        return !(x == cell.x && y == cell.y);
+        return !(x == cell.x() && y == cell.y());
     }
 }

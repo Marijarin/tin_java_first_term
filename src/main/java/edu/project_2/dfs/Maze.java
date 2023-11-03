@@ -1,5 +1,7 @@
 package edu.project_2.dfs;
 
+import edu.project_2.Cell;
+import edu.project_2.Coordinate;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -10,9 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class Maze extends JPanel implements ActionListener {
-    private final  int[][] maze;
+    final int[][] maze;
     private final int blockSize = 20;
     private final Player player;
 
@@ -31,13 +34,30 @@ public class Maze extends JPanel implements ActionListener {
         StringBuilder sb = new StringBuilder();
         for (int[] ints : maze) {
             for (int j = 0; j < maze.length; j++) {
-                sb.append(ints[j] == 1 ? "**" : "  ");
+                sb.append(ints[j] == 1 ? "  " : "██");
                 sb.append(" ");
             }
             sb.append("\n");
         }
         return sb.toString();
     }
+
+    public String showExitPath(List<Cell> backtrackPath) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze.length; j++) {
+                if (backtrackPath.contains(new Cell(i, j))) {
+                    sb.append(" ◌");
+                } else {
+                    sb.append(maze[i][j] == 1 ? "  " : "██");
+                }
+                sb.append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     public String printMaze() {
         StringBuilder sb = new StringBuilder();
         for (int[] ints : maze) {
@@ -89,7 +109,9 @@ public class Maze extends JPanel implements ActionListener {
             int nextY = y + dy;
             int row = nextY / blockSize;
             int col = nextX / blockSize;
-            if(!isAvailable(row, col)) {return;}
+            if (!isAvailable(row, col)) {
+                return;
+            }
             if (maze[row][col] == 1) {
                 x = nextX;
                 y = nextY;
@@ -98,6 +120,7 @@ public class Maze extends JPanel implements ActionListener {
                 won();
             }
         }
+
         public boolean isAvailable(int x, int y) {
             return x >= 0 && x < maze.length && y >= 0 && y < maze[0].length;
         }
