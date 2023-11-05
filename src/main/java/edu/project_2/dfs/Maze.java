@@ -1,10 +1,6 @@
 package edu.project_2.dfs;
 
 import edu.project_2.Cell;
-import edu.project_2.Coordinate;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,12 +9,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class Maze extends JPanel implements ActionListener {
     final int[][] maze;
     private final int blockSize = 20;
     private final Player player;
 
+    @SuppressWarnings("MagicNumber")
     public Maze(MazeGenerator mg) {
         maze = mg.maze;
         setPreferredSize(new Dimension(maze[0].length * blockSize, maze.length * blockSize));
@@ -30,11 +30,26 @@ public class Maze extends JPanel implements ActionListener {
         timer.start();
     }
 
+    @SuppressWarnings("MagicNumber")
+    public Maze(int[][] maze) {
+        this.maze = maze;
+        setPreferredSize(new Dimension(maze[0].length * blockSize, maze.length * blockSize));
+        setFocusable(true);
+        addKeyListener(new TAdapter());
+        setBackground(Color.CYAN);
+        player = new Player();
+        Timer timer = new Timer(25, this);
+        timer.start();
+    }
+
     public String getPrintableMaze() {
         StringBuilder sb = new StringBuilder();
-        for (int[] ints : maze) {
+        for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze.length; j++) {
-                sb.append(ints[j] == 1 ? "  " : "██");
+                if ((i == 0 && j == 0) || (i == maze.length - 1 && j == maze.length - 1)) {
+                    sb.append("->");
+                }
+                sb.append(maze[i][j] == 1 ? "  " : "██");
                 sb.append(" ");
             }
             sb.append("\n");
@@ -46,6 +61,9 @@ public class Maze extends JPanel implements ActionListener {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze.length; j++) {
+                if ((i == 0 && j == 0) || (i == maze.length - 1 && j == maze.length - 1)) {
+                    sb.append("->");
+                }
                 if (backtrackPath.contains(new Cell(i, j))) {
                     sb.append(" ◌");
                 } else {
@@ -93,7 +111,8 @@ public class Maze extends JPanel implements ActionListener {
     }
 
     private class Player {
-        int x, y;
+        int x;
+        int y;
 
         Player() {
             x = 0;

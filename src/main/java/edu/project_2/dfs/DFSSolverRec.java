@@ -33,8 +33,8 @@ public class DFSSolverRec implements Solver {
             return true;
         }
         for (int[] direction : DIRECTIONS) {
-            Cell Cell = getNextCell(x, y, direction[0], direction[1]);
-            if (explore(Cell.x(), Cell.y(), path)) {
+            Cell cell = getNextCell(x, y, direction[0], direction[1]);
+            if (explore(cell.x(), cell.y(), path)) {
                 return true;
             }
         }

@@ -1,32 +1,31 @@
 package edu.project_2.dfs;
 
 import edu.project_2.Cell;
-import edu.project_2.Cell;
 import edu.project_2.Solver;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class BFSSolver implements Solver {
     private final int[][] maze;
     private final boolean[][] visited;
     private final Cell[][] backtrackPath;
+
     public BFSSolver(int[][] maze) {
         this.maze = maze;
         visited = new boolean[maze.length][maze.length];
         backtrackPath = new Cell[maze.length][maze.length];
     }
+
     @Override
     public List<Cell> solve() {
         Deque<Cell> nextToVisit = new ArrayDeque<>();
         Cell start = getEntry();
         nextToVisit.add(start);
-        setVisited(getEntry().x(), getEntry().y());
-        backtrackPath[getEntry().x()][getEntry().y()] = getEntry();
+        setVisited(start.x(), start.y());
+        backtrackPath[start.x()][start.y()] = start;
         while (!nextToVisit.isEmpty()) {
             Cell current = nextToVisit.pollFirst();
 
@@ -46,8 +45,10 @@ public class BFSSolver implements Solver {
             path.addFirst(now);
             now = backtrackPath[now.x()][now.y()];
         }
-        if (now == null) return Collections.emptyList();
-        List<Cell> plist = new LinkedList<>(path);
+        if (now == null) {
+            return Collections.emptyList();
+        }
+        List<Cell> plist = new ArrayList<>(path);
         plist.addAll(path);
         return plist;
     }
@@ -67,8 +68,9 @@ public class BFSSolver implements Solver {
     private void setVisited(int x, int y) {
         visited[x][y] = true;
     }
+
     private boolean isValidLocation(int x, int y) {
-        return x >= 0 && x <= maze.length-1 && y >= 0 && y <= maze.length-1;
+        return x >= 0 && x <= maze.length - 1 && y >= 0 && y <= maze.length - 1;
     }
 
 }

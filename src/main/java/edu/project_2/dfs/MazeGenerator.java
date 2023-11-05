@@ -12,10 +12,14 @@ public class MazeGenerator {
     int[][] maze;
     private final int dimension;
 
-    MazeGenerator(int dimension) {
-        maze = new int[dimension][dimension];
-        this.dimension = dimension;
-        generateMaze();
+    public MazeGenerator(int dimension) {
+        if (dimension > 1) {
+            maze = new int[dimension][dimension];
+            this.dimension = dimension;
+            generateMaze();
+        } else {
+            throw new RuntimeException("not valid dimension");
+        }
     }
 
     private void generateMaze() {
@@ -28,11 +32,13 @@ public class MazeGenerator {
                 randomlyAddCellsToStack(neighbors);
             }
         }
-        maze[dimension-1][dimension-1] = 1;
+        maze[dimension - 1][dimension - 1] = 1;
     }
 
+    @SuppressWarnings("MagicNumber")
     private boolean validNextCell(Cell cell) {
         int numNeighboringOnes = 0;
+        int neighborLimit = 3;
         for (int y = cell.y() - 1; y < cell.y() + 2; y++) {
             for (int x = cell.x() - 1; x < cell.x() + 2; x++) {
                 if (isAvailable(x, y) && isNotVisited(cell, x, y) && maze[y][x] == 1) {
@@ -40,7 +46,7 @@ public class MazeGenerator {
                 }
             }
         }
-        return (numNeighboringOnes < 3) && maze[cell.y()][cell.x()] != 1;
+        return (numNeighboringOnes < neighborLimit) && maze[cell.y()][cell.x()] != 1;
     }
 
     private void randomlyAddCellsToStack(ArrayList<Cell> cells) {
