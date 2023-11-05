@@ -3,19 +3,17 @@ package edu.project_2.dfs;
 import edu.project_2.Cell;
 import edu.project_2.Solver;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BFSSolver implements Solver {
     private final int[][] maze;
-    private final boolean[][] visited;
     private final Cell[][] backtrackPath;
 
     public BFSSolver(int[][] maze) {
         this.maze = maze;
-        visited = new boolean[maze.length][maze.length];
         backtrackPath = new Cell[maze.length][maze.length];
     }
 
@@ -23,19 +21,18 @@ public class BFSSolver implements Solver {
     public List<Cell> solve() {
         Deque<Cell> nextToVisit = new ArrayDeque<>();
         Cell start = getEntry();
-        nextToVisit.add(start);
-        setVisited(start.x(), start.y());
+        nextToVisit.addLast(start);
         backtrackPath[start.x()][start.y()] = start;
         while (!nextToVisit.isEmpty()) {
             Cell current = nextToVisit.pollFirst();
 
             for (int[] direction : DIRECTIONS) {
                 Cell next = new Cell(current.x() + direction[0], current.y() + direction[1]);
-                if (!isValidLocation(next.x(), next.y()) || isWall(next.x(), next.y()) || visited[next.x()][next.y()]) {
+                if (!isValidLocation(next.x(), next.y()) || isWall(next.x(), next.y())
+                    || backtrackPath[next.x()][next.y()] != null) {
                     continue;
                 }
                 nextToVisit.addLast(next);
-                setVisited(next.x(), next.y());
                 backtrackPath[next.x()][next.y()] = current;
             }
         }
@@ -45,12 +42,11 @@ public class BFSSolver implements Solver {
             path.addFirst(now);
             now = backtrackPath[now.x()][now.y()];
         }
+        path.addFirst(getEntry());
         if (now == null) {
             return Collections.emptyList();
         }
-        List<Cell> plist = new ArrayList<>(path);
-        plist.addAll(path);
-        return plist;
+        return new LinkedList<>(path);
     }
 
     private Cell getEntry() {
@@ -63,10 +59,6 @@ public class BFSSolver implements Solver {
 
     private boolean isWall(int x, int y) {
         return maze[x][y] == 0;
-    }
-
-    private void setVisited(int x, int y) {
-        visited[x][y] = true;
     }
 
     private boolean isValidLocation(int x, int y) {

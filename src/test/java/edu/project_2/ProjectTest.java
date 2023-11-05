@@ -34,8 +34,10 @@ public class ProjectTest {
             {1, 1}
         };
         BFSSolver bfs = new BFSSolver(m);
+
         var result = bfs.solve();
-        assertThat(result.getLast()).isEqualTo(new Cell(1, 1));
+
+        assertThat(result).isEqualTo(List.of(new Cell(0, 0), new Cell(1, 0), new Cell(1, 1)));
     }
 
     @Test
@@ -45,7 +47,9 @@ public class ProjectTest {
             {0, 1}
         };
         BFSSolver bfs = new BFSSolver(m);
+
         var result = bfs.solve();
+
         assertThat(result).isEqualTo(List.of());
     }
 
@@ -56,7 +60,9 @@ public class ProjectTest {
             {1, 1}
         };
         DFSSolverRec dfs = new DFSSolverRec(m);
+
         var result = dfs.solve();
+
         assertThat(result).isEqualTo(List.of(new Cell(0, 0), new Cell(1, 0), new Cell(1, 1)));
     }
 
@@ -67,7 +73,9 @@ public class ProjectTest {
             {0, 1}
         };
         DFSSolverRec bfs = new DFSSolverRec(m);
+
         var result = bfs.solve();
+
         assertThat(result).isEqualTo(List.of());
     }
 }
