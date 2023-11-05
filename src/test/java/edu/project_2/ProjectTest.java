@@ -19,7 +19,7 @@ public class ProjectTest {
         Maze maze = new Maze(m);
         String mToPrint = maze.getPrintableMaze();
 
-        assertThat(mToPrint).isEqualTo("   ██ \n██    \n");
+        assertThat(mToPrint).isEqualTo("->   ██ \n██ ->   \n");
     }
 
     @Test
