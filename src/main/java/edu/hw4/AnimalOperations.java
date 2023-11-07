@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.Map.entry;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
 import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimalOperations {
@@ -47,14 +48,7 @@ public abstract class AnimalOperations {
 
     //#3
     public static Map<Animal.Type, Integer> speciesRange(List<Animal> animals) {
-        return animals.stream().collect(groupingBy(Animal::type))
-            .entrySet()
-            .stream()
-            .map(k ->
-                entry(k.getKey(), k.getValue().size())).collect(Collectors.toMap(
-                Map.Entry::getKey,
-                Map.Entry::getValue
-            ));
+        return animals.stream().collect(groupingBy(Animal::type, summingInt(animal -> 1)));
     }
 
     //#4
@@ -116,7 +110,7 @@ public abstract class AnimalOperations {
 
     //#12
     public static int numberAnimalsWeightMoreHeight(List<Animal> animals) {
-        return animals.stream().filter(animal -> animal.weight() > animal.height()).toList().size();
+        return (int) animals.stream().filter(animal -> animal.weight() > animal.height()).count();
     }
 
     //#13
@@ -132,8 +126,8 @@ public abstract class AnimalOperations {
 
     //#15
     public static int sumWeightFromKToLAge(List<Animal> animals, int k, int l) {
-        return animals.stream().filter(animal -> animal.age() < l && animal.age() > k).map(Animal::weight)
-            .reduce(0, Integer::sum);
+        return animals.stream().filter(animal -> animal.age() < l && animal.age() > k)
+            .mapToInt(Animal::weight).sum();
     }
 
     //#16
@@ -147,17 +141,12 @@ public abstract class AnimalOperations {
 
     //#17
     public static boolean spidersBitesMoreDogs(List<Animal> animals) {
-        return animals.stream()
+        Map<Animal.Type, List<Animal>> spAndDogs = animals.stream()
             .filter(animal ->
                 animal.type() == Animal.Type.DOG && animal.bites()
                     || animal.type() == Animal.Type.SPIDER && animal.bites())
-            .collect(groupingBy(Animal::type))
-            .entrySet()
-            .stream()
-            .sorted(Map.Entry.comparingByKey())
-            .max(Comparator.comparing(typeListEntry -> typeListEntry.getValue().size()))
-            .map(Map.Entry::getKey)
-            .orElse(Animal.Type.DOG) == Animal.Type.SPIDER;
+            .collect(groupingBy(Animal::type));
+        return spAndDogs.get(Animal.Type.DOG).size() > spAndDogs.get(Animal.Type.SPIDER).size();
     }
 
     //#18
