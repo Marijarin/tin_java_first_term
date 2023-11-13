@@ -15,7 +15,8 @@ public class RegExpUtil {
         Pattern.compile("^(0)(?:[0,1]{2})*?$|^(1)([0,1])(?:[0,1]{2})*?$"),
         Pattern.compile("^((1*)(0)(1*)(0)(1*)(0)(1*))+?$"),
         Pattern.compile("^(?!111$)[0,1]*^(?!11$)[0,1]*"),
-        Pattern.compile("^(1)(?:[0,1](1))*?[0,1]?$")
+        Pattern.compile("^(1)(?:[0,1](1))*?[0,1]?$"),
+        Pattern.compile("^(?:0+10+|100+|00+1)$")
     );
 
     //#4

@@ -148,4 +148,26 @@ public class Task8Test {
         assertThat(result).isFalse();
     }
 
+    @Test
+    void sixthPattern() {
+        String check = "0100";
+
+        RegExpUtil r = new RegExpUtil();
+
+        var result = r.isThisPattern(check, r.others.get(5));
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void sixthPatternNot() {
+        String check = "0101";
+
+        RegExpUtil r = new RegExpUtil();
+
+        var result = r.isThisPattern(check, r.others.get(5));
+
+        assertThat(result).isFalse();
+    }
+
 }
