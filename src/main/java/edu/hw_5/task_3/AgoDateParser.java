@@ -8,8 +8,11 @@ public class AgoDateParser extends DateParser {
     @Override
     public Optional<LocalDate> check(String toCheck) {
 
-        if (toCheck.contains("ago")) return process(toCheck);
-        else return checkNext(toCheck);
+        if (toCheck.contains("ago")) {
+            return process(toCheck);
+        } else {
+            return checkNext(toCheck);
+        }
     }
 
     @Override

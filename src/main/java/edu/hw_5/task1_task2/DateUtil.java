@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class DateUtil {
-    public final List<String> INTERVAL_EXAMPLES = List.of(
+    public final List<String> intervals = List.of(
         "2022-03-12, 20:20 - 2022-03-12, 23:50",
         "2022-04-01, 21:30 - 2022-04-02, 01:20",
         "2022-02-11, 20:20 - 2022-02-11, 23:50",
@@ -19,10 +20,10 @@ public class DateUtil {
         "2022-01-23, 20:20 - 2022-01-23, 23:50",
         "2022-10-24, 21:30 - 2022-10-25, 01:20"
     );
-    final int THIRTEEN = 13;
-    final int FRIDAY = 5;
+    final int exactDay = 13;
+    final int exactDayWeek = 5;
 
-    final int MONTHS_NUMBER = 12;
+    final int monthsNumber = 12;
 
     //#1
     public String showAverageTime(List<String> intervals) {
@@ -54,7 +55,9 @@ public class DateUtil {
 
     //#2
     public List<LocalDate> fridays13(int year) {
-        return makeDates13Day(year).stream().filter(it -> getDayNumber(it) == FRIDAY && it.getDayOfMonth() == THIRTEEN)
+        return makeDates13Day(year)
+            .stream()
+            .filter(it -> getDayNumber(it) == exactDayWeek && it.getDayOfMonth() == exactDay)
             .toList();
     }
 
@@ -65,8 +68,8 @@ public class DateUtil {
 
     private List<LocalDate> makeDates13Day(int year) {
         List<LocalDate> ldList = new ArrayList<>();
-        for (int i = 1; i <= MONTHS_NUMBER; i++) {
-            LocalDate ld = LocalDate.of(year, i, THIRTEEN);
+        for (int i = 1; i <= monthsNumber; i++) {
+            LocalDate ld = LocalDate.of(year, i, exactDay);
             ldList.add(ld);
         }
         return ldList;
@@ -80,9 +83,9 @@ public class DateUtil {
     }
 
     private LocalDate findFriday13(int year, int month) {
-        for (int i = month; i <= MONTHS_NUMBER; i++) {
-            LocalDate ld = LocalDate.of(year, i, THIRTEEN);
-            if (getDayNumber(ld) == FRIDAY) {
+        for (int i = month; i <= monthsNumber; i++) {
+            LocalDate ld = LocalDate.of(year, i, exactDay);
+            if (getDayNumber(ld) == exactDayWeek) {
                 return ld;
             }
         }
@@ -90,10 +93,10 @@ public class DateUtil {
     }
 
     private LocalDate goTo13(LocalDate localDate) {
-        if (localDate.getDayOfMonth() > THIRTEEN) {
+        if (localDate.getDayOfMonth() > exactDay) {
             return localDate.with(TemporalAdjusters.firstDayOfNextMonth()).withDayOfMonth(13);
         } else {
-            return localDate.withDayOfMonth(THIRTEEN);
+            return localDate.withDayOfMonth(exactDay);
         }
     }
 

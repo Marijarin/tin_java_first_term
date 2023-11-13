@@ -10,8 +10,11 @@ public class WordsDateParser extends DateParser {
     public Optional<LocalDate> check(String toCheck) {
         Pattern digit = Pattern.compile("[0-9]");
         Matcher hasLetter = digit.matcher(toCheck);
-        if(!hasLetter.find()) return process(toCheck);
-        else return checkNext(toCheck);
+        if (!hasLetter.find()) {
+            return process(toCheck);
+        } else {
+            return checkNext(toCheck);
+        }
     }
 
     @Override

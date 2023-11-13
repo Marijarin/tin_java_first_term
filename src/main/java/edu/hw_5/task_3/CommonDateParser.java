@@ -1,9 +1,6 @@
 package edu.hw_5.task_3;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +8,7 @@ import java.util.regex.Pattern;
 public class CommonDateParser extends DateParser {
     @Override
     public Optional<LocalDate> check(String toCheck) {
-        if (toCheck.contains("-") || toCheck.contains("/")){
+        if (toCheck.contains("-") || toCheck.contains("/")) {
             return process(toCheck);
         } else {
             return checkNext(toCheck);

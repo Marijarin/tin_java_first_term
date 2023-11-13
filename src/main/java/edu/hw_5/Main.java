@@ -17,7 +17,7 @@ public final class Main {
     public static void main(String[] args) {
 
         DateUtil du = new DateUtil();
-        LOGGER.info(du.showAverageTime(du.INTERVAL_EXAMPLES));
+        LOGGER.info(du.showAverageTime(du.intervals));
         LOGGER.info(du.fridays13(2013));
         LOGGER.info(du.nextFriday13(LocalDate.of(2012, 8, 13)));
     }
