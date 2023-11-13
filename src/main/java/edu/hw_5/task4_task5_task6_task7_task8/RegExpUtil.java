@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public class RegExpUtil {
 
-    public final Pattern first = Pattern.compile("^([0,1][^*]{2})(0)");
-    public final Pattern second = Pattern.compile("^(?<start>[0,1][^*])([^*][0,1]*)(\\k<start>)$");
+    public final Pattern first = Pattern.compile("^([0,1]{2})(0)");
+    public final Pattern second = Pattern.compile("^(?<start>[0,1])([0,1]*)(\\k<start>)$");
     public final Pattern third = Pattern.compile("^[0,1][^*]{1,3}$");
 
     public final List<Pattern> others = List.of(

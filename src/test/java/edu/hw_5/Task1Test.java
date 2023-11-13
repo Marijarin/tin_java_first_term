@@ -1,9 +1,8 @@
 package edu.hw_5;
 
 import edu.hw_5.task1_task2.DateUtil;
-import org.junit.jupiter.api.Test;
-import java.time.LocalDate;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
