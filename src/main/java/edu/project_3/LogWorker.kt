@@ -2,6 +2,7 @@ package edu.project_3
 
 import java.nio.file.Path
 import java.time.LocalDate
+import java.util.regex.Pattern
 
 class LogWorker {
     private val testUrl = "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"
@@ -22,6 +23,12 @@ class LogWorker {
             quantityOfCodes = frCodesQuantity,
         )
         logReport.formatReport(format)
+    }
+    private fun fileToStringList(filePath: Path): List<String> {
+
+    }
+    private fun makeLogRecords(list: List<String>): List <LogRecord> {
+        val pattern = Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
     }
 
     private fun calculateNumberOfResponses(filePath: Path, from: LocalDate, to: LocalDate): Int {
