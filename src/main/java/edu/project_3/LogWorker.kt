@@ -53,6 +53,12 @@ class LogWorker {
         return File(fileName).useLines { it.toList() }
     }
 
+    /*** In fun makeLogRecords the regular expression to get info from nginx log is used.
+     *  It suits for all logs having scheme like that:
+     *  '$remote_address - $remote_user \\[$time_local] ' '"$request" $status $body_bytes_sent ' '"$http_referer" "$http_user_agent"'
+     *  All fields listed in the scheme are captured into pattern groups and are available as MatcherResult
+     *  To check these groups in detail, please, visit https://regex101.com/
+     * ***/
     private fun makeLogRecords(list: List<String>): List<LogRecord> {
         val logRecords = mutableListOf<LogRecord>()
         val pattern = Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
