@@ -11,8 +11,7 @@ fun main() {
     val fileName = "logs.txt"
     val lw = LogWorker()
     val from = LocalDate.of(2015, 5, 18)
-    val to = LocalDate.now()
-    lw.logAnalytics(fileName, from, to)
+    lw.logAnalytics(fileName, from)
 }
 
 @Suppress("RegExpRedundantEscape")
@@ -25,7 +24,7 @@ class LogWorker {
         Pair(5, "server error")
     )
 
-    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate, format: OutFormat = OutFormat.CONSOLE) {
+    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat = OutFormat.CONSOLE) {
         val logRecords = makeLogRecords(fileToStringList(fileName))
 
         val numberOfResponses = calculateNumberOfRequests(logRecords, from, to)
@@ -33,17 +32,21 @@ class LogWorker {
         val mostFrCodes = mostFrequentCodes(logRecords, from, to)
         val frCodesQuantity = codesStats(logRecords, from, to)
         val responseAverageSize = averageResponseBytes(logRecords, from, to)
+        val successfulAndFailed = errorAndNotErrorResponses(logRecords, from, to)
+        val mostFreqUA = mostFrequentUA(logRecords, from, to)
         val logReport = LogReport(
             fileName = fileName,
             startDate = from,
             endDate = to,
             numberOfRequests = numberOfResponses,
             averageResponseSize = responseAverageSize,
-            resources = mostFrequentResources,
+            resources = mostFrequentResources.toSortedMap(),
             codeNames = mostFrCodes,
             quantityOfCodes = frCodesQuantity,
+            successfulAndFailedResponses = successfulAndFailed,
+            mostFrequentUAgent = mostFreqUA
         )
-        logReport.formatReport(format)
+        logReport.formatReport(OutFormat.MARCDOWN)
     }
 
     private fun fileToStringList(fileName: String): List<String> {
@@ -79,8 +82,7 @@ class LogWorker {
 
     private fun mostFrequentResources(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<String, Int> {
         return logRecords.filter { logRecord ->
-            logRecord.httpReferer != "-"
-                && logRecord.httpReferer.isNotBlank()
+            logRecord.httpReferer.isNotBlank()
                 && logRecord.httpReferer.isNotEmpty()
                 && logRecord.dateLocal.isAfter(from)
                 && logRecord.dateLocal.isBefore(to)
@@ -89,7 +91,7 @@ class LogWorker {
     }
 
     private fun convertCode(code: Int): String {
-        val strCode = codes[code/100]
+        val strCode = codes[code / 100]
         if (strCode != null) {
             return strCode
         }
@@ -112,10 +114,32 @@ class LogWorker {
     private fun averageResponseBytes(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Int {
         return logRecords
             .filter { logRecord -> logRecord.bytesSent > 0 }
-            .filter{lrd -> lrd.dateLocal.isAfter(from) && lrd.dateLocal.isBefore(to)}
+            .filter { lrd -> lrd.dateLocal.isAfter(from) && lrd.dateLocal.isBefore(to) }
             .map { it.bytesSent }
             .average().toInt()
     }
+
+    private fun errorAndNotErrorResponses(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<String, Int> {
+        return logRecords.filter { logRecord ->
+            logRecord.dateLocal.isAfter(from)
+                && logRecord.dateLocal.isBefore(to)
+        }.groupingBy { explainCode(it.code) }.eachCount().toSortedMap()
+    }
+
+    private fun explainCode(code: Int) =
+        when (code / 100) {
+            1, 2, 3 -> "successful request"
+            4, 5 -> "request failed"
+            else -> "unknown code of response"
+        }
+
+    private fun mostFrequentUA(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Pair<String, Int> {
+        return logRecords.filter { logRecord ->
+            logRecord.dateLocal.isAfter(from)
+                && logRecord.dateLocal.isBefore(to)
+        }.groupingBy { it.userAgent }.eachCount().toSortedMap().maxBy { it.value }.toPair()
+    }
+
 }
 
 
