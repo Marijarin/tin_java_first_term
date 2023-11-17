@@ -24,7 +24,7 @@ class LogWorker {
         Pair(5, "server error")
     )
 
-    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat = OutFormat.CONSOLE) {
+    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat = OutFormat.MARCDOWN) {
         val logRecords = makeLogRecords(fileToStringList(fileName))
 
         val numberOfResponses = calculateNumberOfRequests(logRecords, from, to)
@@ -46,10 +46,10 @@ class LogWorker {
             successfulAndFailedResponses = successfulAndFailed,
             mostFrequentUAgent = mostFreqUA
         )
-        logReport.formatReport(OutFormat.MARCDOWN)
+        logReport.formatReport(format)
     }
 
-    private fun fileToStringList(fileName: String): List<String> {
+    fun fileToStringList(fileName: String): List<String> {
         return File(fileName).useLines { it.toList() }
     }
 
@@ -59,7 +59,7 @@ class LogWorker {
      *  All fields listed in the scheme are captured into pattern groups and are available as MatcherResult
      *  To check these groups in detail, please, visit https://regex101.com/
      * ***/
-    private fun makeLogRecords(list: List<String>): List<LogRecord> {
+    fun makeLogRecords(list: List<String>): List<LogRecord> {
         val logRecords = mutableListOf<LogRecord>()
         val pattern = Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
         for (string in list) {
@@ -82,11 +82,11 @@ class LogWorker {
         return logRecords.toList()
     }
 
-    private fun calculateNumberOfRequests(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Int {
+    fun calculateNumberOfRequests(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Int {
         return logRecords.filter { it.dateLocal.isAfter(from) && it.dateLocal.isBefore(to) }.size
     }
 
-    private fun mostFrequentResources(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<String, Int> {
+    fun mostFrequentResources(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<String, Int> {
         return logRecords.filter { logRecord ->
             logRecord.httpReferer.isNotBlank()
                 && logRecord.httpReferer.isNotEmpty()
@@ -104,20 +104,20 @@ class LogWorker {
         return "code is unknown"
     }
 
-    private fun mostFrequentCodes(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<Int, String> {
+    fun mostFrequentCodes(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<Int, String> {
         return codesStats(logRecords, from, to).mapValues {
             convertCode(it.key)
         }
     }
 
-    private fun codesStats(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<Int, Int> {
+    fun codesStats(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<Int, Int> {
         return logRecords.filter { logRecord ->
             logRecord.dateLocal.isAfter(from)
                 && logRecord.dateLocal.isBefore(to)
         }.groupingBy { it.code }.eachCount().toSortedMap()
     }
 
-    private fun averageResponseBytes(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Int {
+    fun averageResponseBytes(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Int {
         return logRecords
             .filter { logRecord -> logRecord.bytesSent > 0 }
             .filter { lrd -> lrd.dateLocal.isAfter(from) && lrd.dateLocal.isBefore(to) }
@@ -125,7 +125,7 @@ class LogWorker {
             .average().toInt()
     }
 
-    private fun errorAndNotErrorResponses(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<String, Int> {
+    fun errorAndNotErrorResponses(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Map<String, Int> {
         return logRecords.filter { logRecord ->
             logRecord.dateLocal.isAfter(from)
                 && logRecord.dateLocal.isBefore(to)
@@ -134,12 +134,12 @@ class LogWorker {
 
     private fun explainCode(code: Int) =
         when (code / 100) {
-            1, 2, 3 -> "successful request"
+            1, 2, 3 -> "OK request"
             4, 5 -> "request failed"
             else -> "unknown code of response"
         }
 
-    private fun mostFrequentUA(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Pair<String, Int> {
+    fun mostFrequentUA(logRecords: List<LogRecord>, from: LocalDate, to: LocalDate): Pair<String, Int> {
         return logRecords.filter { logRecord ->
             logRecord.dateLocal.isAfter(from)
                 && logRecord.dateLocal.isBefore(to)

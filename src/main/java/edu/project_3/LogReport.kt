@@ -84,8 +84,8 @@ ${formatTwoMaps()}
     }
 
     private fun makeMarcDown() {
-        Files.deleteIfExists(Path("report.md"))
-        val file = Files.createFile(Path("report.md"))
+        Files.deleteIfExists(Path("report_${this.fileName}.md"))
+        val file = Files.createFile(Path("report_${this.fileName}.md"))
         file.writeText(prettyPrint())
     }
 }
