@@ -7,11 +7,15 @@ import java.util.*
 import java.util.regex.Pattern
 
 
-fun main() {
-    val fileName = "logs.txt"
-    val lw = LogWorker()
-    val from = LocalDate.of(2015, 5, 18)
-    lw.logAnalytics(fileName, from)
+fun main(args: Array<String>) {
+        fun parseFormat(format: String) =
+        when (format) {
+            "marcdown" -> OutFormat.MARCDOWN
+            "console" -> OutFormat.CONSOLE
+            "console plain" -> OutFormat.CONSOLE_PLAIN
+            else -> OutFormat.CONSOLE_PLAIN
+        }
+    LogWorker().logAnalytics(args[0], LocalDate.parse(args[1]), format = parseFormat(args[2]))
 }
 
 @Suppress("RegExpRedundantEscape")
@@ -24,7 +28,7 @@ class LogWorker {
         Pair(5, "server error")
     )
 
-    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat = OutFormat.MARCDOWN) {
+    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat) {
         val logRecords = makeLogRecords(fileToStringList(fileName))
 
         val numberOfResponses = calculateNumberOfRequests(logRecords, from, to)

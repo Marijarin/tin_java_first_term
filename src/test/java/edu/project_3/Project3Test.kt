@@ -10,10 +10,11 @@ class Project3Test {
     private val fileName = "test_logs.txt"
     val from = LocalDate.of(2023, 5, 16)
     val to = LocalDate.now()
+    val format = OutFormat.MARCDOWN
 
     @Test
     fun canMakeReportMD() {
-        logWorker.logAnalytics(fileName, from)
+        logWorker.logAnalytics(fileName, from, to, format)
 
         assertThat(File("report_test_logs.md").exists())
     }
