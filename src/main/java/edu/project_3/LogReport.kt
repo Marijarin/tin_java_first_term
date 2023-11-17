@@ -1,11 +1,10 @@
 package edu.project_3
 
-import java.nio.file.Files
 import java.nio.file.Path
 import java.time.LocalDate
 
 data class LogReport(
-    val filePath: Path,
+    val fileName: String,
     val startDate: LocalDate,
     val endDate: LocalDate,
     val numberOfRequests: Int,
@@ -14,4 +13,10 @@ data class LogReport(
     val codeNames: Map<Int, String>,
     val quantityOfCodes: Map<Int, Int>,
 )
-fun LogReport.formatReport(outFormat: OutFormat){}
+fun LogReport.formatReport(outFormat: OutFormat){
+    if (outFormat == OutFormat.CONSOLE) {
+        println(this)
+    } else if (outFormat == OutFormat.MARCDOWN){
+        Unit
+    }
+}
