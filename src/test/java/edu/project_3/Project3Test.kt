@@ -8,9 +8,9 @@ import java.io.File
 class Project3Test {
     private val logWorker = LogWorker()
     private val fileName = "test_logs.txt"
-    val from = LocalDate.of(2023, 5, 16)
-    val to = LocalDate.now()
-    val format = OutFormat.MARCDOWN
+    private val from: LocalDate = LocalDate.of(2023, 5, 16)
+    private val to: LocalDate = LocalDate.now()
+    private val format = OutFormat.MARKDOWN
 
     @Test
     fun canMakeReportMD() {

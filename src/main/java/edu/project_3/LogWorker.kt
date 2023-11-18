@@ -8,14 +8,18 @@ import java.util.regex.Pattern
 
 
 fun main(args: Array<String>) {
-        fun parseFormat(format: String) =
+    fun parseFormat(format: String) =
         when (format) {
-            "marcdown" -> OutFormat.MARCDOWN
+            "markdown" -> OutFormat.MARKDOWN
             "console" -> OutFormat.CONSOLE
             "console plain" -> OutFormat.CONSOLE_PLAIN
             else -> OutFormat.CONSOLE_PLAIN
         }
-    LogWorker().logAnalytics(args[0], LocalDate.parse(args[1]), format = parseFormat(args[2]))
+    if (args.isNotEmpty()) {
+        LogWorker().logAnalytics(args[0], LocalDate.parse(args[1]), format = parseFormat(args[2]))
+    } else {
+        LogWorker().logAnalytics("logs.txt", LocalDate.of(2015, 5, 16), format = OutFormat.MARKDOWN)
+    }
 }
 
 @Suppress("RegExpRedundantEscape")
@@ -65,7 +69,8 @@ class LogWorker {
      * ***/
     fun makeLogRecords(list: List<String>): List<LogRecord> {
         val logRecords = mutableListOf<LogRecord>()
-        val pattern = Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
+        val pattern =
+            Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
         for (string in list) {
             val m = pattern.matcher(string)
             if (m.matches()) {

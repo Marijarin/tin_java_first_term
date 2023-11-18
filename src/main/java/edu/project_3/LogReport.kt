@@ -1,10 +1,8 @@
 package edu.project_3
 
-import java.io.File
-import java.lang.StringBuilder
 import java.nio.file.Files
 import java.time.LocalDate
-import java.util.SortedMap
+import java.util.*
 import kotlin.io.path.Path
 import kotlin.io.path.writeText
 
@@ -23,12 +21,12 @@ data class LogReport(
     fun formatReport(outFormat: OutFormat) {
         when (outFormat) {
             OutFormat.CONSOLE_PLAIN -> println(this)
-            OutFormat.MARCDOWN -> makeMarcDown()
+            OutFormat.MARKDOWN -> makeMarcDown()
             OutFormat.CONSOLE -> println(prettyPrint())
         }
     }
 
-    fun prettyPrint() =
+    private fun prettyPrint() =
         """#### Общая информация
 |        Метрика            |     Значение |
 |:-------------------------:|-------------:|
@@ -40,6 +38,8 @@ data class LogReport(
 
 ${formatMap()}
 ${formatTwoMaps()}
+${showCodesStats()}
+${showUserAgentMostFreq()}
             """
 
     //`${}`
@@ -87,5 +87,32 @@ ${formatTwoMaps()}
         Files.deleteIfExists(Path("report_${this.fileName}.md"))
         val file = Files.createFile(Path("report_${this.fileName}.md"))
         file.writeText(prettyPrint())
+    }
+
+    private fun showUserAgentMostFreq(): String{
+        val sb = StringBuilder()
+        sb.append(
+            """#### Самый распространенный user agent
+
+|     user agent  | Частота    |
+|:---------------:|-----------:|
+"""
+        )
+        sb.append("""|    ${String.format("%-10s", mostFrequentUAgent.first)}   |  ${String.format("%-10s", mostFrequentUAgent.second)}|""")
+        sb.append("\n")
+        return sb.toString()
+    }
+    private fun showCodesStats(): String {
+        val sb = StringBuilder()
+        sb.append("""#### Сколько успешных и неуспешных
+
+| Код |          Количество   |
+|:---:|:---------------------:|
+""")
+        for (entry in successfulAndFailedResponses) {
+            sb.append("| ${entry.key} |    ${String.format("%-15s", entry.value)}    |")
+            sb.append("\n")
+        }
+        return sb.toString()
     }
 }
