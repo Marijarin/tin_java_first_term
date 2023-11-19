@@ -1,20 +1,22 @@
 package edu.hw_6;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings({"MultipleStringLiterals", "MagicNumber"})
 public class DiskMap implements Map<String, String> {
     public final String fileName = System.getenv("HOME") + "/diskMap.txt";
     Map<String, String> inMemoryStorage = new HashMap<>();
@@ -156,8 +158,8 @@ public class DiskMap implements Map<String, String> {
         } else if (Files.exists(targetNext)) {
             try (Stream<Path> pathStream = Files.find(Path.of(System.getenv("HOME")), 1, (p, basicFileAttributes) -> {
                 File file = p.toFile();
-                return !file.isDirectory() &&
-                    file.getName().contains("копия");
+                return !file.isDirectory()
+                    && file.getName().contains("копия");
             }).sorted()) {
                 List<Path> paths = pathStream.toList();
                 Path last = paths.get(paths.size() - 2);
