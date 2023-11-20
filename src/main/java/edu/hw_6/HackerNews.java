@@ -6,9 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 import static java.net.http.HttpClient.newHttpClient;
 
 @SuppressWarnings({"MagicNumber", "LineLength"})
