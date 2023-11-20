@@ -40,6 +40,12 @@ public class HackerNews {
             .toList().toArray(Long[]::new);
     }
 
+    /**
+     * In function under this comment two short regular expressions are used.
+     * They cut response body in two separate strings each time, using json variable names which we know in advance.
+     * These are "title" and "type".
+     * This regular expression chain suits to take a value of variable title from json string.
+     **/
     @SuppressWarnings("RegexpSingleLine")
     String news(long id) {
         var request = HttpRequest.newBuilder()

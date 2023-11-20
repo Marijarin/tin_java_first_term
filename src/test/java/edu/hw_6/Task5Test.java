@@ -1,10 +1,6 @@
 package edu.hw_6;
 
 import org.junit.jupiter.api.Test;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task5Test {
