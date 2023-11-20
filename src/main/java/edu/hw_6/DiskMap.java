@@ -55,7 +55,7 @@ public class DiskMap implements Map<String, String> {
         return this.inMemoryStorage;
     }
 
-    public void writeToFile() {
+    public void writeToFile(){
         try (RandomAccessFile writer = new RandomAccessFile(fileName, "rw");
              FileChannel channel = writer.getChannel()) {
             if (!inMemoryStorage.isEmpty()) {

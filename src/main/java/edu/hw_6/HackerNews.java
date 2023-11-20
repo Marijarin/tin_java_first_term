@@ -6,6 +6,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 import static java.net.http.HttpClient.newHttpClient;
 
@@ -34,9 +36,10 @@ public class HackerNews {
     }
 
     private Long[] idsFromResponse(String responseBody) {
-        return responseBody.lines().filter(line -> line.equals("[") || line.equals("]")).map(
-            it -> Long.parseLong(it.split(",")[0])
-        ).toList().toArray(new Long[0]);
+        return Arrays.stream(responseBody.substring(1, responseBody.length() - 1)
+                .split(","))
+            .map(Long::parseLong)
+            .toList().toArray(Long[]::new);
     }
 
     @SuppressWarnings("RegexpSingleLine")
@@ -46,17 +49,10 @@ public class HackerNews {
             .GET()
             .timeout(Duration.of(5, ChronoUnit.SECONDS))
             .build();
-        var pattern = Pattern.compile(
-            "^(\\{[\\s\\S]*\\].\\n)(..\\\".+\\\"..\\d+\\,\\n)(..\\\".+\\\"..\\d+\\,\\n)(..\\\"\\w+\\\"..\\\"(?<title>(.+)\\\"\\,\\n))(..\\\"\\w+\\\"..\\\"(.+)\\\"\\,\\n)(.+)\\n");
         try (var client = newHttpClient()) {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             body = response.body();
-            String title = "";
-            var matcher = pattern.matcher(body);
-            if (matcher.matches()) {
-                title = matcher.group("title");
-            }
-            return title;
+            return body.split("title\":\"")[1].split("\",\"type")[0];
         } catch (IOException | InterruptedException e) {
             return "";
         }
