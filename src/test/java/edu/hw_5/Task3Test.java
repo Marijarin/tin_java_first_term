@@ -12,10 +12,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task3Test {
     @Test
     void commonDateParserSuitableInputCheck() {
-        CommonDateParser cdp = new CommonDateParser();
+        CommonDateParser commonDateParser = new CommonDateParser();
         String toCheck = "2023-8-9";
 
-        var result = cdp.check(toCheck);
+        var result = commonDateParser.check(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.of(2023, 8, 9)));
     }
@@ -32,109 +32,109 @@ public class Task3Test {
 
     @Test
     void commonDateParserSuitableInputParsedSlash() {
-        CommonDateParser cdp = new CommonDateParser();
+        CommonDateParser commonDateParser = new CommonDateParser();
         String toCheck = "9/8/23";
 
-        var result = cdp.process(toCheck);
+        var result = commonDateParser.process(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.of(2023, 8, 9)));
     }
 
     @Test
     void commonDateParserBadInputParsed() {
-        CommonDateParser cdp = new CommonDateParser();
+        CommonDateParser commonDateParser = new CommonDateParser();
         String toCheck = "19/18/23";
 
-        var result = cdp.process(toCheck);
-        assertThat(result).isEqualTo(Optional.empty());
+        var result = commonDateParser.process(toCheck);
+        assertThat(result).isEmpty();
     }
 
     @Test
     void agoDateParserSuitableInputCheck() {
-        AgoDateParser adp = new AgoDateParser();
+        AgoDateParser agoDateParser = new AgoDateParser();
         String toCheck = "10 days ago";
 
-        var result = adp.check(toCheck);
+        var result = agoDateParser.check(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.now().minusDays(10)));
     }
 
     @Test
     void agoDateParserSuitableInputParsed() {
-        AgoDateParser adp = new AgoDateParser();
+        AgoDateParser agoDateParser = new AgoDateParser();
         String toCheck = "10 days ago";
 
-        var result = adp.process(toCheck);
+        var result = agoDateParser.process(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.now().minusDays(10)));
     }
 
     @Test
     void agoDateParserBadInput() {
-        AgoDateParser adp = new AgoDateParser();
+        AgoDateParser agoDateParser = new AgoDateParser();
         String toCheck = "ten days ago";
 
-        var result = adp.process(toCheck);
+        var result = agoDateParser.process(toCheck);
 
-        assertThat(result).isEqualTo(Optional.empty());
+        assertThat(result).isEmpty();
     }
 
     @Test
     void wordsDateParserSuitableInputCheck() {
-        WordsDateParser wdp = new WordsDateParser();
+        WordsDateParser wordsDateParser = new WordsDateParser();
         String toCheck = "today";
 
-        var result = wdp.check(toCheck);
+        var result = wordsDateParser.check(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.now()));
     }
 
     @Test
     void wordsDateParserSuitableInputParsed() {
-        WordsDateParser wdp = new WordsDateParser();
+        WordsDateParser wordsDateParser = new WordsDateParser();
         String toCheck = "tomorrow";
 
-        var result = wdp.process(toCheck);
+        var result = wordsDateParser.process(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.now().plusDays(1)));
     }
 
     @Test
     void wordsDateParserBadInput() {
-        WordsDateParser wdp = new WordsDateParser();
+        WordsDateParser wordsDateParser = new WordsDateParser();
         String toCheck = "last week";
 
-        var result = wdp.process(toCheck);
+        var result = wordsDateParser.process(toCheck);
 
-        assertThat(result).isEqualTo(Optional.empty());
+        assertThat(result).isEmpty();
     }
 
     @Test
     void dateFormatUtilAgoParser() {
-        DateFormatUtil d = new DateFormatUtil();
+        DateFormatUtil dateFormatUtil = new DateFormatUtil();
         String toCheck = "10 days ago";
 
-        var result = d.parseDate(toCheck);
+        var result = dateFormatUtil.parseDate(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.now().minusDays(10)));
     }
 
     @Test
     void dateFormatUtilWordsParser() {
-        DateFormatUtil d = new DateFormatUtil();
+        DateFormatUtil dateFormatUtil = new DateFormatUtil();
         String toCheck = "yesterday";
 
-        var result = d.parseDate(toCheck);
+        var result = dateFormatUtil.parseDate(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.now().minusDays(1)));
     }
 
     @Test
     void dateFormatUtilCommonParser() {
-        DateFormatUtil d = new DateFormatUtil();
+        DateFormatUtil dateFormatUtil = new DateFormatUtil();
         String toCheck = "1023-08-8";
 
-        var result = d.parseDate(toCheck);
+        var result = dateFormatUtil.parseDate(toCheck);
 
         assertThat(result).isEqualTo(Optional.of(LocalDate.of(1023, 8, 8)));
     }

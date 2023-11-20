@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class DateUtil {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm");
     public final List<String> intervals = List.of(
         "2022-03-12, 20:20 - 2022-03-12, 23:50",
         "2022-04-01, 21:30 - 2022-04-02, 01:20",
@@ -20,10 +21,6 @@ public class DateUtil {
         "2022-01-23, 20:20 - 2022-01-23, 23:50",
         "2022-10-24, 21:30 - 2022-10-25, 01:20"
     );
-    final int exactDay = 13;
-    final int exactDayWeek = 5;
-
-    final int monthsNumber = 12;
 
     //#1
     public String showAverageTime(List<String> intervals) {
@@ -47,7 +44,6 @@ public class DateUtil {
     }
 
     private Long spentTimeDuration(Pair p) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm");
         LocalDateTime startLocalDateTime = LocalDateTime.parse(p.first, formatter);
         LocalDateTime endLocalDateTime = LocalDateTime.parse(p.second, formatter);
         return Duration.between(startLocalDateTime, endLocalDateTime).toMinutes();
@@ -57,7 +53,8 @@ public class DateUtil {
     public List<LocalDate> fridays13(int year) {
         return makeDates13Day(year)
             .stream()
-            .filter(it -> getDayNumber(it) == exactDayWeek && it.getDayOfMonth() == exactDay)
+            .filter(it -> getDayNumber(it) == DateConstants.FRIDAY.valueOf()
+                && it.getDayOfMonth() == DateConstants.THIS_DAY.valueOf())
             .toList();
     }
 
@@ -68,8 +65,8 @@ public class DateUtil {
 
     private List<LocalDate> makeDates13Day(int year) {
         List<LocalDate> ldList = new ArrayList<>();
-        for (int i = 1; i <= monthsNumber; i++) {
-            LocalDate ld = LocalDate.of(year, i, exactDay);
+        for (int i = 1; i <= DateConstants.MONTHS_COUNT.valueOf(); i++) {
+            LocalDate ld = LocalDate.of(year, i, DateConstants.THIS_DAY.valueOf());
             ldList.add(ld);
         }
         return ldList;
@@ -83,9 +80,9 @@ public class DateUtil {
     }
 
     private LocalDate findFriday13(int year, int month) {
-        for (int i = month; i <= monthsNumber; i++) {
-            LocalDate ld = LocalDate.of(year, i, exactDay);
-            if (getDayNumber(ld) == exactDayWeek) {
+        for (int i = month; i <= DateConstants.MONTHS_COUNT.valueOf(); i++) {
+            LocalDate ld = LocalDate.of(year, i, DateConstants.THIS_DAY.valueOf());
+            if (getDayNumber(ld) == DateConstants.FRIDAY.valueOf()) {
                 return ld;
             }
         }
@@ -93,10 +90,10 @@ public class DateUtil {
     }
 
     private LocalDate goTo13(LocalDate localDate) {
-        if (localDate.getDayOfMonth() > exactDay) {
+        if (localDate.getDayOfMonth() > DateConstants.THIS_DAY.valueOf()) {
             return localDate.with(TemporalAdjusters.firstDayOfNextMonth()).withDayOfMonth(13);
         } else {
-            return localDate.withDayOfMonth(exactDay);
+            return localDate.withDayOfMonth(DateConstants.THIS_DAY.valueOf());
         }
     }
 

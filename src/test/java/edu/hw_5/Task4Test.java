@@ -8,19 +8,19 @@ public class Task4Test {
 
     @Test
     void hasSpecial(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String toCheck = "alfkj12334400-fknalfknwefn#";
 
-        var result = r.checkPW(toCheck);
+        var result = regExpUtil.checkPW(toCheck);
 
         assertThat(result).isTrue();
     }
     @Test
     void hasNotSpecial(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String toCheck = "alfkjalfknalalfkj12334400-";
 
-        var result = r.checkPW(toCheck);
+        var result = regExpUtil.checkPW(toCheck);
 
         assertThat(result).isFalse();
     }

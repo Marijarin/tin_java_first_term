@@ -6,11 +6,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task6Test {
     @Test
     void isSubstringWithSpecials(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String small = "ap*le";
         String big = "appleapple";
 
-        var result = r.isSubstring(small, big);
+        var result = regExpUtil.isSubstring(small, big);
 
         assertThat(result).isFalse();
     }

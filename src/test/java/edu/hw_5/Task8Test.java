@@ -9,9 +9,9 @@ public class Task8Test {
     void firstPattern() {
         String check = "001";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(0));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(0));
 
         assertThat(result).isTrue();
     }
@@ -20,9 +20,9 @@ public class Task8Test {
     void firstPatternNot() {
         String check = "0010";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(0));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(0));
 
         assertThat(result).isFalse();
     }
@@ -31,9 +31,9 @@ public class Task8Test {
     void secondPattern1() {
         String check = "001";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(1));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(1));
 
         assertThat(result).isTrue();
     }
@@ -42,9 +42,9 @@ public class Task8Test {
     void secondPattern1Not() {
         String check = "0010";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(1));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(1));
 
         assertThat(result).isFalse();
     }
@@ -53,9 +53,9 @@ public class Task8Test {
     void secondPattern2() {
         String check = "1101";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(1));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(1));
 
         assertThat(result).isTrue();
     }
@@ -64,9 +64,9 @@ public class Task8Test {
     void secondPattern2Not() {
         String check = "10010";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(1));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(1));
 
         assertThat(result).isFalse();
     }
@@ -75,9 +75,9 @@ public class Task8Test {
     void thirdPattern() {
         String check = "10010";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(2));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(2));
 
         assertThat(result).isTrue();
     }
@@ -86,9 +86,9 @@ public class Task8Test {
     void thirdPatternNot() {
         String check = "100100";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(2));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(2));
 
         assertThat(result).isFalse();
     }
@@ -97,9 +97,9 @@ public class Task8Test {
     void fourthPattern() {
         String check = "100100";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(3));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(3));
 
         assertThat(result).isTrue();
     }
@@ -108,9 +108,9 @@ public class Task8Test {
     void fourthPatternNot1() {
         String check = "111";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(3));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(3));
 
         assertThat(result).isFalse();
     }
@@ -119,9 +119,9 @@ public class Task8Test {
     void fourthPatternNot2() {
         String check = "11";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(3));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(3));
 
         assertThat(result).isFalse();
     }
@@ -130,9 +130,9 @@ public class Task8Test {
     void fifthPattern() {
         String check = "1111111";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(4));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(4));
 
         assertThat(result).isTrue();
     }
@@ -141,9 +141,9 @@ public class Task8Test {
     void fifthPatternNot() {
         String check = "0111111";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(4));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(4));
 
         assertThat(result).isFalse();
     }
@@ -152,9 +152,9 @@ public class Task8Test {
     void sixthPattern() {
         String check = "0100";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(5));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(5));
 
         assertThat(result).isTrue();
     }
@@ -163,9 +163,9 @@ public class Task8Test {
     void sixthPatternNot() {
         String check = "0101";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(5));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(5));
 
         assertThat(result).isFalse();
     }
@@ -174,9 +174,9 @@ public class Task8Test {
     void seventhPattern() {
         String check = "101001";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(6));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(6));
 
         assertThat(result).isTrue();
     }
@@ -185,9 +185,9 @@ public class Task8Test {
     void seventhPatternNot() {
         String check = "01101";
 
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
 
-        var result = r.isThisPattern(check, r.others.get(6));
+        var result = regExpUtil.isThisPattern(check, regExpUtil.others.get(6));
 
         assertThat(result).isFalse();
     }

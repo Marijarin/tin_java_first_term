@@ -11,9 +11,9 @@ public class Task2Test {
     void getAllFridays13InAYear() {
         int year = 2024;
 
-        DateUtil d = new DateUtil();
+        DateUtil dateUtil = new DateUtil();
 
-        var result = d.fridays13(year);
+        var result = dateUtil.fridays13(year);
 
         var correctOutput = List.of(LocalDate.of(2024, 9, 13), LocalDate.of(2024, 12, 13));
 

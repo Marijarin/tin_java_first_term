@@ -14,9 +14,9 @@ public class Task1Test {
             "2022-04-01, 21:30 - 2022-04-02, 01:20"
         );
 
-        DateUtil d = new DateUtil();
+        DateUtil dateUtil = new DateUtil();
 
-        var result = d.showAverageTime(intervals);
+        var result = dateUtil.showAverageTime(intervals);
 
         var correctOutput = "3ч 40м";
 

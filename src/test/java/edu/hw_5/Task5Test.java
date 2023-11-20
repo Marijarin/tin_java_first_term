@@ -7,39 +7,39 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task5Test {
     @Test
     void isCode(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String toCheck = "А123ВЕ777";
 
-        var result = r.checkCarCode(toCheck);
+        var result = regExpUtil.checkCarCode(toCheck);
 
         assertThat(result).isTrue();
     }
     @Test
     void isNotCode1(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String toCheck = "А123ВЕ7777";
 
-        var result = r.checkCarCode(toCheck);
+        var result = regExpUtil.checkCarCode(toCheck);
 
         assertThat(result).isFalse();
     }
 
     @Test
     void isNotCode2(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String toCheck = "А123ВГ77";
 
-        var result = r.checkCarCode(toCheck);
+        var result = regExpUtil.checkCarCode(toCheck);
 
         assertThat(result).isFalse();
     }
 
     @Test
     void isNotCode3(){
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String toCheck = "123АВЕ777";
 
-        var result = r.checkCarCode(toCheck);
+        var result = regExpUtil.checkCarCode(toCheck);
 
         assertThat(result).isFalse();
     }

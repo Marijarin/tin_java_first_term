@@ -7,60 +7,60 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task7Test {
     @Test
     void matchesFirstPattern() {
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String check = "100";
 
-        var result = r.isThisPattern(check, r.first);
+        var result = regExpUtil.isThisPattern(check, regExpUtil.notLess3ThirdZero);
 
         assertThat(result).isTrue();
     }
 
     @Test
     void matchesNotFirstPattern() {
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String check = "101";
 
-        var result = r.isThisPattern(check, r.first);
+        var result = regExpUtil.isThisPattern(check, regExpUtil.notLess3ThirdZero);
 
         assertThat(result).isFalse();
     }
 
     @Test
     void matchesSecondPattern() {
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String check = "100000000000000000000000001";
 
-        var result = r.isThisPattern(check, r.second);
+        var result = regExpUtil.isThisPattern(check, regExpUtil.startAndEndSame);
 
         assertThat(result).isTrue();
     }
 
     @Test
     void matchesNotSecondPattern() {
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String check = "1010000000000000000000000000000000000000";
 
-        var result = r.isThisPattern(check, r.second);
+        var result = regExpUtil.isThisPattern(check, regExpUtil.startAndEndSame);
 
         assertThat(result).isFalse();
     }
 
     @Test
     void matchesThirdPattern() {
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String check = "10";
 
-        var result = r.isThisPattern(check, r.third);
+        var result = regExpUtil.isThisPattern(check, regExpUtil.lengthNotLess1NotMore3);
 
         assertThat(result).isTrue();
     }
 
     @Test
     void matchesNotThirdPattern() {
-        RegExpUtil r = new RegExpUtil();
+        RegExpUtil regExpUtil = new RegExpUtil();
         String check = "*";
 
-        var result = r.isThisPattern(check, r.third);
+        var result = regExpUtil.isThisPattern(check, regExpUtil.lengthNotLess1NotMore3);
 
         assertThat(result).isFalse();
     }
