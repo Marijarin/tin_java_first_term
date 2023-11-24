@@ -21,20 +21,21 @@ public class MultiThreadCounter {
         }
     }
 
-    void incrementTo1(){
+    void incrementTo1() {
         counter.addAndGet(1);
     }
 
-    void badIncrementTo1(){
+    void badIncrementTo1() {
         unSafeCounter++;
     }
-    int afterIncrement(){
+
+    int afterIncrement() {
         addThreads();
-        for (Thread t: threads) {
+        for (Thread t : threads) {
             t.start();
         }
         try {
-            for (Thread t: threads) {
+            for (Thread t : threads) {
                 t.join();
             }
         } catch (InterruptedException e) {

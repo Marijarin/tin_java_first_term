@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.LongAdder;
  * Далее нужно отследить те, которые оказываются при этом и внутри дуги окружности.
  * Далее делим последнюю величину на общее количество точек.
  **/
+@SuppressWarnings("MagicNumber")
 public class PiCounter {
     int howMany;
     LongAdder total = new LongAdder();
@@ -21,7 +22,7 @@ public class PiCounter {
     double piManyThreads;
     double piSingleThread;
 
-    public final double PI = Math.PI;
+    public final double pi = Math.PI;
 
     double x;
     double y;
@@ -100,7 +101,7 @@ public class PiCounter {
     private void makePiStats() {
         for (int i = 0; i < statsInput.length; i++) {
             double piCounted = countPiSingleThread(statsInput[i]);
-            statsOutPut[i] = 100 * ((Math.abs(piCounted - PI) / PI));
+            statsOutPut[i] = 100 * ((Math.abs(piCounted - pi) / pi));
         }
     }
 

@@ -3,6 +3,7 @@ package edu.hw_7.Task3;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("MagicNumber")
 public record Person(int id, String name, String address, String phoneNumber) {
     public Person(int id, String name, String address, String phoneNumber) {
         Pattern pattern = Pattern.compile("^.([0-9]{10,12})$");
