@@ -1,5 +1,6 @@
 package edu.hw_7;
 
+import edu.hw_7.Task3.PeopleServiceLock;
 import edu.hw_7.Task3.PeopleServiceSynchronized;
 import edu.hw_7.Task3.Person;
 import java.util.List;
@@ -15,7 +16,6 @@ public final class Main {
         new Person(
             "Mary",
             """
-                Ms Mary Smith
                 132, My Street,
                 Kingston, New York 12401
                 United States""",
@@ -24,17 +24,15 @@ public final class Main {
         new Person(
             "Mary",
             """
-                Ms Mary Fvvbv
-                132, Jkklll,
+                88, Jkklll,
                 Vbbnnhmh, Sawddrrr 12401
                 Finland""",
             "+93339990000"
         ),
         new Person(
-            "Ary",
+            "Ay",
             """
-                Ms Ary Smith
-                132, My Street,
+                99, My Street,
                 Kingston, New York 12401
                 United States""",
             "+342229990000"
@@ -42,8 +40,7 @@ public final class Main {
         new Person(
             "John",
             """
-                Mr John Smith
-                132, My Street,
+                2, My Street,
                 Kingston, New York 12401
                 United States""",
             "+351119990000"
@@ -51,8 +48,7 @@ public final class Main {
         new Person(
             "Katya",
             """
-                Ekaterina B. Vasilyeva,
-                132, My Street,
+                1, My Street,
                 Moscow, 101000
                 Russian Federation""",
             "+72229990011"
@@ -68,11 +64,17 @@ public final class Main {
         PiCounterStats piCounterStats = new PiCounterStats();
         System.out.println(piCounterStats.showThreadsStats());
         PeopleServiceSynchronized pss = new PeopleServiceSynchronized(3);
+        /*
+          Вся мапа - голубой цвет,
+          По адресу - зеленый,
+          По имени - желтый,
+          По телефону - сиреневый**/
         pss.addTasks(
             pss.addPerson(PEOPLE_EXAMPLE.get(0)),
-
+            pss.findByPhone(PEOPLE_EXAMPLE.get(3).phoneNumber()),
             pss.addPerson(PEOPLE_EXAMPLE.get(2)),
-            pss.addPerson(PEOPLE_EXAMPLE.get(3))
+            pss.addPerson(PEOPLE_EXAMPLE.get(3)),
+            pss.findByAddress(PEOPLE_EXAMPLE.get(3).address())
         );
         pss.executeTasks();
         pss.addTasks(
@@ -82,5 +84,21 @@ public final class Main {
             pss.findByPhone(PEOPLE_EXAMPLE.get(0).phoneNumber())
         );
         pss.executeTasks();
+        PeopleServiceLock psl = new PeopleServiceLock(3);
+        psl.addTasks(
+            psl.addPerson(PEOPLE_EXAMPLE.get(0)),
+            psl.findByPhone(PEOPLE_EXAMPLE.get(3).phoneNumber()),
+            psl.addPerson(PEOPLE_EXAMPLE.get(2)),
+            psl.addPerson(PEOPLE_EXAMPLE.get(3)),
+            psl.findByAddress(PEOPLE_EXAMPLE.get(3).address())
+        );
+        psl.executeTasks();
+        psl.addTasks(
+            psl.addPerson(PEOPLE_EXAMPLE.get(1)),
+            psl.findByName(PEOPLE_EXAMPLE.get(0).name()),
+            psl.findByAddress(PEOPLE_EXAMPLE.get(0).address()),
+            psl.findByPhone(PEOPLE_EXAMPLE.get(0).phoneNumber())
+        );
+        psl.executeTasks();
     }
 }

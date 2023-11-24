@@ -21,17 +21,44 @@ public class PersonDBSynchronized implements PersonDataBase {
 
     @Override
     public synchronized List<Person> findByName(String name) {
-        return cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList();
+        var found = cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList();
+        if (found.isEmpty()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException();
+            }
+            return cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList();
+        }
+        return found;
     }
 
     @Override
     public synchronized List<Person> findByAddress(String address) {
-        return cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList();
+        var found = cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList();
+        if (found.isEmpty()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException();
+            }
+            return cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList();
+        }
+        return found;
     }
 
     @Override
     public synchronized List<Person> findByPhone(String phone) {
-        return cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
+        var found =  cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
+        if (found.isEmpty()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException();
+            }
+            return cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
+        }
+       return found;
     }
 
 }
