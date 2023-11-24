@@ -31,6 +31,6 @@ public class Task4Test {
 
         var result = piCounterStats.timeInS;
 
-        assertThat(result[0]).isGreaterThan(result[2]);
+        assertThat(result[0]).isGreaterThan(result[3]);
     }
 }
