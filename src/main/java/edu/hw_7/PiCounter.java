@@ -1,7 +1,7 @@
 package edu.hw_7;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.LongAdder;
 
@@ -64,8 +64,7 @@ public class PiCounter {
     private void forThreadFun() {
         int all = 0;
         int inCircle = 0;
-        int forOneThread = howMany / threadsNumber;
-        for (int i = 0; i < forOneThread; i++) {
+        for (int i = 0; i < howMany; i++) {
             x = ThreadLocalRandom.current().nextFloat();
             double sqX = Math.pow(x, 2);
             y = ThreadLocalRandom.current().nextFloat();
@@ -80,7 +79,12 @@ public class PiCounter {
     }
 
     double countPiManyThreads() {
-        List<Thread> threads = new ArrayList<>();
+        try (ExecutorService service = Executors.newFixedThreadPool(threadsNumber)) {
+            service.execute(this::forThreadFun);
+        } finally {
+            piManyThreads = 4 * (double) insideBow.sumThenReset() / (double) total.sumThenReset();
+        }
+       /* List<Thread> threads = new ArrayList<>();
         for (int j = 0; j < threadsNumber; j++) {
             threads.add(new Thread(this::forThreadFun));
         }
@@ -93,8 +97,7 @@ public class PiCounter {
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
-        piManyThreads = 4 * (double) insideBow.sumThenReset() / (double) total.sumThenReset();
+        }*/
         return piManyThreads;
     }
 
