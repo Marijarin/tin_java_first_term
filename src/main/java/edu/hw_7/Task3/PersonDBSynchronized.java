@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("MagicNumber")
 public class PersonDBSynchronized implements PersonDataBase {
 
     Map<Integer, Person> cash = new HashMap<>();
@@ -49,7 +50,7 @@ public class PersonDBSynchronized implements PersonDataBase {
 
     @Override
     public synchronized List<Person> findByPhone(String phone) {
-        var found =  cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
+        var found = cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
         if (found.isEmpty()) {
             try {
                 Thread.sleep(500);
@@ -58,7 +59,7 @@ public class PersonDBSynchronized implements PersonDataBase {
             }
             return cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
         }
-       return found;
+        return found;
     }
 
 }
