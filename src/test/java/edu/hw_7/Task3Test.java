@@ -123,7 +123,5 @@ assertThat(peopleServiceLock.foundByName.size()
         peopleServiceLock.executeTasks();
 
         assertThat(peopleServiceLock.inMemory.size()).isEqualTo(0);
-
-
     }
 }

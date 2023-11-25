@@ -44,4 +44,13 @@ public class Task1Test {
         }
         assertThat(numberOfThreads).isNotEqualTo(multiThreadCounter.unSafeCounter);
     }
+
+    @Test
+    void counterBaseFunctionWorks() {
+        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(15100);
+
+        var result = multiThreadCounter.afterIncrement();
+
+        assertThat(result).isEqualTo(15100);
+    }
 }
