@@ -10,9 +10,9 @@ import java.util.concurrent.Executors;
 @SuppressWarnings({"MagicNumber", "MultiLineStringLiterals", "RegexpSingleLineJava"})
 public class PeopleServiceSynchronized {
     final int threads;
-    PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+    public final PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
 
-    Map<Integer, Person> inMemory = new HashMap<>();
+    public final Map<Integer, Person> inMemory = new HashMap<>();
 
     List<Runnable> tasks = new ArrayList<>();
 
@@ -22,6 +22,10 @@ public class PeopleServiceSynchronized {
 
     private synchronized void writeToMemory(Map<Integer, Person> cash) {
         inMemory.putAll(cash);
+    }
+
+    private synchronized void deleteFromMemory(int id) {
+        inMemory.remove(id);
     }
 
     public Runnable addPerson(Person person) {
@@ -34,7 +38,7 @@ public class PeopleServiceSynchronized {
     public Runnable deletePerson(int id) {
         return (() -> {
             personDBSynchronized.delete(id);
-            writeToMemory(personDBSynchronized.cash);
+            deleteFromMemory(id);
         });
     }
 

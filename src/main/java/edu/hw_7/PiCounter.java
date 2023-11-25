@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.LongAdder;
  * Расчет числа пи с использованием уравнения окружности x^2 + y^2 = 1.
  * Для это можно взять 1/4 часть окружности и вписать дугу в квадрат со стороной 1.
  * Квадрат помещаем одной строной на ось X, другой стороной на ось Y.
- * Функция Math.random() дает точки с коордитнатами <1, т.е. все они лежат внутри квадрата.
+ * ThreadLocalRandom дает точки с координатами <1, т.е. все они лежат внутри квадрата.
  * Далее нужно отследить те, которые оказываются при этом и внутри дуги окружности.
  * Далее делим последнюю величину на общее количество точек.
  **/
@@ -81,6 +81,7 @@ public class PiCounter {
     double countPiManyThreads() {
         try (ExecutorService service = Executors.newFixedThreadPool(threadsNumber)) {
             service.execute(this::forThreadFun);
+            service.shutdown();
         } finally {
             piManyThreads = 4 * (double) insideBow.sumThenReset() / (double) total.sumThenReset();
         }

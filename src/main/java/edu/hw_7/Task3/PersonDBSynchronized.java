@@ -1,5 +1,6 @@
 package edu.hw_7.Task3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,10 @@ import java.util.Objects;
 public class PersonDBSynchronized implements PersonDataBase {
 
     Map<Integer, Person> cash = new HashMap<>();
+
+    public final List<Person> foundByAddress = new ArrayList<>();
+    public final List<Person> foundByName = new ArrayList<>();
+    public final List<Person> foundByPhone = new ArrayList<>();
 
     @Override
     public synchronized void add(Person person) {
@@ -22,44 +27,50 @@ public class PersonDBSynchronized implements PersonDataBase {
 
     @Override
     public synchronized List<Person> findByName(String name) {
-        var found = cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList();
-        if (found.isEmpty()) {
+        foundByName.clear();
+        foundByName.addAll(cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList());
+        if (foundByName.isEmpty()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException();
             }
-            return cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList();
+            foundByName.addAll(cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList());
+            return foundByName;
         }
-        return found;
+        return foundByName;
     }
 
     @Override
     public synchronized List<Person> findByAddress(String address) {
-        var found = cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList();
-        if (found.isEmpty()) {
+        foundByAddress.clear();
+        foundByAddress.addAll(cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList());
+        if (foundByAddress.isEmpty()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException();
             }
-            return cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList();
+            foundByAddress.addAll(cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList());
+            return foundByAddress;
         }
-        return found;
+        return foundByAddress;
     }
 
     @Override
     public synchronized List<Person> findByPhone(String phone) {
-        var found = cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
-        if (found.isEmpty()) {
+        foundByPhone.clear();
+        foundByPhone.addAll(cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList());
+        if (foundByPhone.isEmpty()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException();
             }
-            return cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList();
+            foundByPhone.addAll(cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList());
+            return foundByPhone;
         }
-        return found;
+        return foundByPhone;
     }
 
 }
