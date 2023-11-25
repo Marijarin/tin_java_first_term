@@ -25,9 +25,9 @@ public class Task3Test {
         peopleServiceSynchronized.executeTasks();
 
         assertThat(
-            peopleServiceSynchronized.personDBSynchronized.foundByName.size()
-                + peopleServiceSynchronized.personDBSynchronized.foundByAddress.size()
-                + peopleServiceSynchronized.personDBSynchronized.foundByPhone.size()).isEqualTo(3);
+            peopleServiceSynchronized.foundByName.size()
+                + peopleServiceSynchronized.foundByAddress.size()
+                + peopleServiceSynchronized.foundByPhone.size()).isEqualTo(3);
     }
 
     @Test
@@ -47,9 +47,9 @@ public class Task3Test {
             peopleServiceLock.findByPhone(Main.PEOPLE_EXAMPLE.get(3).phoneNumber()));
 
         peopleServiceLock.executeTasks();
-assertThat(peopleServiceLock.personDBLock.foundByName.size()
-    + peopleServiceLock.personDBLock.foundByAddress.size()
-    + peopleServiceLock.personDBLock.foundByPhone.size()).isEqualTo(3);
+assertThat(peopleServiceLock.foundByName.size()
+    + peopleServiceLock.foundByAddress.size()
+    + peopleServiceLock.foundByPhone.size()).isEqualTo(3);
 
     }
 

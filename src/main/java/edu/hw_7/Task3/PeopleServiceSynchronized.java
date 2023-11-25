@@ -10,7 +10,9 @@ import java.util.concurrent.Executors;
 @SuppressWarnings({"MagicNumber", "MultiLineStringLiterals", "RegexpSingleLineJava"})
 public class PeopleServiceSynchronized {
     final int threads;
-    public final PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+    public final List<Person> foundByAddress = new ArrayList<>();
+    public final List<Person> foundByName = new ArrayList<>();
+    public final List<Person> foundByPhone = new ArrayList<>();
 
     public final Map<Integer, Person> inMemory = new HashMap<>();
 
@@ -29,6 +31,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable addPerson(Person person) {
+        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
             personDBSynchronized.add(person);
             writeToMemory(personDBSynchronized.cash);
@@ -36,6 +39,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable deletePerson(int id) {
+        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
             personDBSynchronized.delete(id);
             deleteFromMemory(id);
@@ -43,21 +47,33 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable findByName(String name) {
+        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
-            System.out.println("\u001b[0;93mFound by name: " + name + personDBSynchronized.findByName(name));
+            foundByName.clear();
+            personDBSynchronized.cash.putAll(inMemory);
+            foundByName.addAll(personDBSynchronized.findByName(name));
+            System.out.println("\u001b[0;93mFound by name: " + name + foundByName);
         });
     }
 
     public Runnable findByPhone(String phone) {
+        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
-            System.out.println("\u001b[0;95mFound by phone: " + phone + personDBSynchronized.findByPhone(phone));
+            foundByPhone.clear();
+            personDBSynchronized.cash.putAll(inMemory);
+            foundByPhone.addAll(personDBSynchronized.findByPhone(phone));
+            System.out.println("\u001b[0;95mFound by phone: " + phone + foundByPhone);
         });
     }
 
     public Runnable findByAddress(String address) {
+        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
+            foundByAddress.clear();
+            personDBSynchronized.cash.putAll(inMemory);
+            foundByAddress.addAll(personDBSynchronized.findByAddress(address));
             System.out.println(
-                "\u001b[0;92mFound by address: " + address + personDBSynchronized.findByAddress(address));
+                "\u001b[0;92mFound by address: " + address + foundByAddress);
         });
     }
 

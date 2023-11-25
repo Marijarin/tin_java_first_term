@@ -10,8 +10,10 @@ import java.util.concurrent.Executors;
 @SuppressWarnings({"MagicNumber", "MultiLineStringLiterals", "RegexpSingleLineJava"})
 public class PeopleServiceLock {
     final int threads;
-    public final PersonDBLock personDBLock = new PersonDBLock();
 
+    public final List<Person> foundByAddress = new ArrayList<>();
+    public final List<Person> foundByName = new ArrayList<>();
+    public final List<Person> foundByPhone = new ArrayList<>();
     public final Map<Integer, Person> inMemory = new HashMap<>();
 
     List<Runnable> tasks = new ArrayList<>();
@@ -29,6 +31,7 @@ public class PeopleServiceLock {
     }
 
     public Runnable addPerson(Person person) {
+        PersonDBLock personDBLock = new PersonDBLock();
         return (() -> {
             personDBLock.add(person);
             writeToMemory(personDBLock.cash);
@@ -36,6 +39,7 @@ public class PeopleServiceLock {
     }
 
     public Runnable deletePerson(int id) {
+        PersonDBLock personDBLock = new PersonDBLock();
         return (() -> {
             personDBLock.delete(id);
             deleteFromMemory(id);
@@ -43,21 +47,33 @@ public class PeopleServiceLock {
     }
 
     public Runnable findByName(String name) {
+        PersonDBLock personDBLock = new PersonDBLock();
         return (() -> {
-            System.out.println("\u001b[0;93mFound by name: " + name + personDBLock.findByName(name));
+            foundByName.clear();
+            personDBLock.cash.putAll(inMemory);
+            foundByName.addAll(personDBLock.findByName(name));
+            System.out.println("\u001b[0;93mFound by name: " + name + foundByName);
         });
     }
 
     public Runnable findByPhone(String phone) {
+        PersonDBLock personDBLock = new PersonDBLock();
         return (() -> {
-            System.out.println("\u001b[0;95mFound by phone: " + phone + personDBLock.findByPhone(phone));
+            foundByPhone.clear();
+            personDBLock.cash.putAll(inMemory);
+            foundByPhone.addAll(personDBLock.findByPhone(phone));
+            System.out.println("\u001b[0;95mFound by phone: " + phone + foundByPhone);
         });
     }
 
     public Runnable findByAddress(String address) {
+        PersonDBLock personDBLock = new PersonDBLock();
         return (() -> {
+            foundByAddress.clear();
+            personDBLock.cash.putAll(inMemory);
+            foundByAddress.addAll(personDBLock.findByAddress(address));
             System.out.println(
-                "\u001b[0;92mFound by address: " + address + personDBLock.findByAddress(address));
+                "\u001b[0;92mFound by address: " + address + foundByAddress);
         });
     }
 
