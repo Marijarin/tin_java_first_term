@@ -1,6 +1,6 @@
 package edu.hw_8.Task2;
 
-public class FixedThreadPool implements ThreadPool{
+public class FixedThreadPool implements ThreadPool {
     @Override
     public void start() {
 

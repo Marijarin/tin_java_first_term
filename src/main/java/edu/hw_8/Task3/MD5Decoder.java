@@ -3,8 +3,13 @@ package edu.hw_8.Task3;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class MD5Decipherator {
+@SuppressWarnings("MagicNumber")
+public class MD5Decoder {
+    public int[] numberOfThreads = new int[] {1, 2, 5, 8, 16, 32, 64};
+    long[] timeInS = new long[numberOfThreads.length];
     MD5HashMaker md5HashMaker = new MD5HashMaker();
     Map<String, String> stolen = md5HashMaker.generateStolenData(md5HashMaker.passwords, md5HashMaker.people);
     public Map<String, String> deciphered = new HashMap<>();
@@ -32,4 +37,10 @@ public class MD5Decipherator {
 
     }
 
+    void nextPasswordManyThreads(int threadsNumber) {
+        try (ExecutorService service = Executors.newFixedThreadPool(threadsNumber)) {
+            service.execute(this::nextPassword);
+            service.shutdown();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package edu.hw_8;
 
-import edu.hw_8.Task3.MD5Decipherator;
+import edu.hw_8.Task3.DecoderThreadsStats;
+import edu.hw_8.Task3.MD5Decoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,10 +13,12 @@ public final class Main {
     private Main() {
     }
 
-    @SuppressWarnings("MagicNumber")
+    @SuppressWarnings({"MagicNumber", "RegexpSinglelineJava"})
     public static void main(String[] args) {
-        MD5Decipherator md5Decipherator = new MD5Decipherator();
-        md5Decipherator.nextPassword();
-        LOGGER.info(md5Decipherator.deciphered);
+        MD5Decoder md5Decoder = new MD5Decoder();
+        md5Decoder.nextPassword();
+        LOGGER.info(md5Decoder.deciphered);
+        DecoderThreadsStats decoderThreadsStats = new DecoderThreadsStats();
+        System.out.println(decoderThreadsStats.showThreadsStats());
     }
 }

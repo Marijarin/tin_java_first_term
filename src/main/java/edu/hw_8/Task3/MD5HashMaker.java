@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("MagicNumber")
 public class MD5HashMaker {
     public final List<String> passwords = List.of(
         "dssc",
