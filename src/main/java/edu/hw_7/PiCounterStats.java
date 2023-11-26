@@ -5,7 +5,7 @@ import java.util.List;
 
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class PiCounterStats {
-    private final int[] numberOfThreads = {1, 2, 5, 10, 20, 50};
+    private final int[] numberOfThreads = {1, 2, 5, 8, 20, 50};
     private final List<PiCounter> piCounters = new ArrayList<>(numberOfThreads.length);
     final long[] timeInS = new long[numberOfThreads.length];
     final double[] pis = new double[numberOfThreads.length];
