@@ -11,13 +11,14 @@ public class Task3Test {
         PeopleServiceSynchronized peopleServiceSynchronized = new PeopleServiceSynchronized(3);
 
         peopleServiceSynchronized.addTasks(
-            peopleServiceSynchronized.addPerson(Main.PEOPLE_EXAMPLE.get(3)),
+
             peopleServiceSynchronized.addPerson(Main.PEOPLE_EXAMPLE.get(2)),
             peopleServiceSynchronized.addPerson(Main.PEOPLE_EXAMPLE.get(1)));
 
         peopleServiceSynchronized.executeTasks();
 
         peopleServiceSynchronized.addTasks(
+            peopleServiceSynchronized.addPerson(Main.PEOPLE_EXAMPLE.get(3)),
             peopleServiceSynchronized.findByName(Main.PEOPLE_EXAMPLE.get(3).name()),
             peopleServiceSynchronized.findByAddress(Main.PEOPLE_EXAMPLE.get(3).address()),
             peopleServiceSynchronized.findByPhone(Main.PEOPLE_EXAMPLE.get(3).phoneNumber()));
@@ -35,13 +36,14 @@ public class Task3Test {
         PeopleServiceLock peopleServiceLock = new PeopleServiceLock(3);
 
         peopleServiceLock.addTasks(
-            peopleServiceLock.addPerson(Main.PEOPLE_EXAMPLE.get(3)),
+
             peopleServiceLock.addPerson(Main.PEOPLE_EXAMPLE.get(2)),
             peopleServiceLock.addPerson(Main.PEOPLE_EXAMPLE.get(1)));
 
         peopleServiceLock.executeTasks();
 
         peopleServiceLock.addTasks(
+            peopleServiceLock.addPerson(Main.PEOPLE_EXAMPLE.get(3)),
             peopleServiceLock.findByName(Main.PEOPLE_EXAMPLE.get(3).name()),
             peopleServiceLock.findByAddress(Main.PEOPLE_EXAMPLE.get(3).address()),
             peopleServiceLock.findByPhone(Main.PEOPLE_EXAMPLE.get(3).phoneNumber()));

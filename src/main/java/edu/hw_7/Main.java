@@ -71,10 +71,11 @@ public final class Main {
           По телефону - сиреневый**/
         pss.addTasks(
             pss.addPerson(PEOPLE_EXAMPLE.get(0)),
-            pss.findByPhone(PEOPLE_EXAMPLE.get(3).phoneNumber()),
+
             pss.addPerson(PEOPLE_EXAMPLE.get(2)),
             pss.addPerson(PEOPLE_EXAMPLE.get(3)),
-            pss.findByAddress(PEOPLE_EXAMPLE.get(3).address())
+            pss.findByAddress(PEOPLE_EXAMPLE.get(3).address()),
+            pss.findByPhone(PEOPLE_EXAMPLE.get(3).phoneNumber())
         );
         pss.executeTasks();
         pss.addTasks(
@@ -84,7 +85,7 @@ public final class Main {
             pss.findByPhone(PEOPLE_EXAMPLE.get(0).phoneNumber())
         );
         pss.executeTasks();
-        PeopleServiceLock psl = new PeopleServiceLock(3);
+       PeopleServiceLock psl = new PeopleServiceLock(3);
         psl.addTasks(
             psl.addPerson(PEOPLE_EXAMPLE.get(0)),
             psl.findByPhone(PEOPLE_EXAMPLE.get(3).phoneNumber()),

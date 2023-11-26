@@ -52,6 +52,9 @@ public class PeopleServiceSynchronized {
             foundByName.clear();
             personDBSynchronized.cash.putAll(inMemory);
             foundByName.addAll(personDBSynchronized.findByName(name));
+            if (foundByName.isEmpty()) {
+                tasks.add(findByName(name));
+            }
             System.out.println("\u001b[0;93mFound by name: " + name + foundByName);
         });
     }
@@ -62,6 +65,9 @@ public class PeopleServiceSynchronized {
             foundByPhone.clear();
             personDBSynchronized.cash.putAll(inMemory);
             foundByPhone.addAll(personDBSynchronized.findByPhone(phone));
+            if (foundByPhone.isEmpty()) {
+                tasks.add(findByAddress(phone));
+            }
             System.out.println("\u001b[0;95mFound by phone: " + phone + foundByPhone);
         });
     }
@@ -72,6 +78,9 @@ public class PeopleServiceSynchronized {
             foundByAddress.clear();
             personDBSynchronized.cash.putAll(inMemory);
             foundByAddress.addAll(personDBSynchronized.findByAddress(address));
+            if (foundByAddress.isEmpty()) {
+               tasks.add(findByAddress(address));
+            }
             System.out.println(
                 "\u001b[0;92mFound by address: " + address + foundByAddress);
         });

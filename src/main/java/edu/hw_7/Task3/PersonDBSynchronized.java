@@ -29,15 +29,6 @@ public class PersonDBSynchronized implements PersonDataBase {
     public synchronized List<Person> findByName(String name) {
         foundByName.clear();
         foundByName.addAll(cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList());
-        if (foundByName.isEmpty()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException();
-            }
-            foundByName.addAll(cash.values().stream().filter(p -> Objects.equals(p.name(), name)).toList());
-            return foundByName;
-        }
         return foundByName;
     }
 
@@ -45,15 +36,6 @@ public class PersonDBSynchronized implements PersonDataBase {
     public synchronized List<Person> findByAddress(String address) {
         foundByAddress.clear();
         foundByAddress.addAll(cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList());
-        if (foundByAddress.isEmpty()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException();
-            }
-            foundByAddress.addAll(cash.values().stream().filter(p -> Objects.equals(p.address(), address)).toList());
-            return foundByAddress;
-        }
         return foundByAddress;
     }
 
@@ -61,15 +43,6 @@ public class PersonDBSynchronized implements PersonDataBase {
     public synchronized List<Person> findByPhone(String phone) {
         foundByPhone.clear();
         foundByPhone.addAll(cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList());
-        if (foundByPhone.isEmpty()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException();
-            }
-            foundByPhone.addAll(cash.values().stream().filter(p -> Objects.equals(p.phoneNumber(), phone)).toList());
-            return foundByPhone;
-        }
         return foundByPhone;
     }
 
