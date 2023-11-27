@@ -25,16 +25,30 @@ fun main(args: Array<String>) {
 @Suppress("RegExpRedundantEscape")
 class LogWorker {
     private val codes = mapOf(
-        Pair(1, "informational response"),
-        Pair(2, "successful"),
-        Pair(3, "redirection"),
-        Pair(4, "client error"),
-        Pair(5, "server error")
+        1 to "informational response",
+        2 to "successful",
+        3 to "redirection",
+        4 to "client error",
+        5 to "server error"
     )
+
+    /*** In fun makeLogRecords the regular expression to get info from nginx log is used.
+     *  It suits for all logs having the following scheme:
+     *  '$remote_address - $remote_user \\[$time_local] ' '"$request" $status $body_bytes_sent ' '"$http_referer" "$http_user_agent"'
+     *  All fields listed in the scheme are captured into pattern groups and are available as MatcherResult
+     *  To check these groups in detail, please, visit https://regex101.com/
+     * ***/
+    private val pattern: Pattern =
+        Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
+
+    /**
+     * In fun makeLogRecords DateTimeFormatter is used to parse the date of request**/
+    private val dateTimeFormatter: DateTimeFormatter =
+        DateTimeFormatter.ofPattern("dd/MMM/uuuu:HH:mm:ss Z", Locale.ENGLISH)
+
 
     fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat) {
         val logRecords = makeLogRecords(fileToStringList(fileName))
-
         val numberOfResponses = calculateNumberOfRequests(logRecords, from, to)
         val mostFrequentResources = mostFrequentResources(logRecords, from, to)
         val mostFrCodes = mostFrequentCodes(logRecords, from, to)
@@ -61,24 +75,15 @@ class LogWorker {
         return File(fileName).useLines { it.toList() }
     }
 
-    /*** In fun makeLogRecords the regular expression to get info from nginx log is used.
-     *  It suits for all logs having scheme like that:
-     *  '$remote_address - $remote_user \\[$time_local] ' '"$request" $status $body_bytes_sent ' '"$http_referer" "$http_user_agent"'
-     *  All fields listed in the scheme are captured into pattern groups and are available as MatcherResult
-     *  To check these groups in detail, please, visit https://regex101.com/
-     * ***/
     fun makeLogRecords(list: List<String>): List<LogRecord> {
         val logRecords = mutableListOf<LogRecord>()
-        val pattern =
-            Pattern.compile("^(?<ip>(\\d+\\.\\d+\\.\\d+\\.\\d+))...(?<remoteUser>.+).(\\[(?<timestamp>(.+))\\]).(\\\"(?<request>(.+\\/.+\\/.+\\/\\d\\.\\d))\\\").(?<code>\\d{3}).(?<bytes>\\d+).(\\\"(?<resourceRequested>.+)\\\").(\\\"(?<userAgent>.+)\\\")")
         for (string in list) {
             val m = pattern.matcher(string)
             if (m.matches()) {
-                val dtf = DateTimeFormatter.ofPattern("dd/MMM/uuuu:HH:mm:ss Z", Locale.ENGLISH)
                 val logRec = LogRecord(
                     remoteAddress = m.group("ip"),
                     remoteUser = m.group("remoteUser"),
-                    dateLocal = LocalDate.parse(m.group("timestamp"), dtf),
+                    dateLocal = LocalDate.parse(m.group("timestamp"), dateTimeFormatter),
                     request = m.group("request"),
                     code = m.group("code").toInt(),
                     bytesSent = m.group("bytes").toInt(),

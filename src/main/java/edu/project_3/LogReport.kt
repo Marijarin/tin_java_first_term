@@ -42,7 +42,6 @@ ${showCodesStats()}
 ${showUserAgentMostFreq()}
             """
 
-    //`${}`
     private fun formatMap(): String {
         val sb = StringBuilder()
         sb.append(
@@ -56,13 +55,13 @@ ${showUserAgentMostFreq()}
         if (this.resources.size <= maxSize) {
             for (i in 0 until this.resources.size) {
                 val entry = this.resources.pollFirstEntry()
-                sb.append("""|    ${String.format("%-10s", entry.key)}   |  ${String.format("%-10s", entry.value)}|""")
+                sb.append("""|    ${entry.key.format("%-10s")}   |  ${entry.value.toString().format("%-10s")}  |""")
                 sb.append("\n")
             }
         } else {
             for (i in 0..maxSize) {
                 val entry = this.resources.pollFirstEntry()
-                sb.append("""|    ${String.format("%-10s", entry.key)}   |  ${String.format("%-10s", entry.value)}|""")
+                sb.append("""|    ${entry.key.format("%-10s")}   |  ${entry.value.toString().format("%-10s")}|""")
                 sb.append("\n")
             }
         }
@@ -71,13 +70,22 @@ ${showUserAgentMostFreq()}
 
     private fun formatTwoMaps(): String {
         val sb = StringBuilder()
-        sb.append("""#### Коды ответа
+        sb.append(
+            """#### Коды ответа
 
 | Код |          Имя          | Количество |
 |:---:|:---------------------:|-----------:|
-""")
+"""
+        )
         for (entry in codeNames) {
-            sb.append("| ${entry.key} |    ${String.format("%-15s", entry.value)}    |  ${String.format("%-9s", quantityOfCodes.getValue(entry.key))} |")
+            sb.append(
+                "| ${entry.key} |    ${entry.value.format("%-10s")}}    |  ${
+                    String.format(
+                        "%-9s",
+                        quantityOfCodes.getValue(entry.key)
+                    )
+                } |"
+            )
             sb.append("\n")
         }
         return sb.toString()
@@ -89,7 +97,7 @@ ${showUserAgentMostFreq()}
         file.writeText(prettyPrint())
     }
 
-    private fun showUserAgentMostFreq(): String{
+    private fun showUserAgentMostFreq(): String {
         val sb = StringBuilder()
         sb.append(
             """#### Самый распространенный user agent
@@ -98,19 +106,29 @@ ${showUserAgentMostFreq()}
 |:---------------:|-----------:|
 """
         )
-        sb.append("""|    ${String.format("%-10s", mostFrequentUAgent.first)}   |  ${String.format("%-10s", mostFrequentUAgent.second)}|""")
+        sb.append(
+            """|    ${String.format("%-10s", mostFrequentUAgent.first)}   |  ${
+                String.format(
+                    "%-10s",
+                    mostFrequentUAgent.second
+                )
+            }|"""
+        )
         sb.append("\n")
         return sb.toString()
     }
+
     private fun showCodesStats(): String {
         val sb = StringBuilder()
-        sb.append("""#### Сколько успешных и неуспешных
+        sb.append(
+            """#### Сколько успешных и неуспешных
 
 | Код |          Количество   |
 |:---:|:---------------------:|
-""")
+"""
+        )
         for (entry in successfulAndFailedResponses) {
-            sb.append("| ${entry.key} |    ${String.format("%-15s", entry.value)}    |")
+            sb.append("| ${entry.key} |    ${entry.value.toString().format("%-15s")}    |")
             sb.append("\n")
         }
         return sb.toString()
