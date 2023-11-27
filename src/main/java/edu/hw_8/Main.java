@@ -1,7 +1,6 @@
 package edu.hw_8;
 
-import edu.hw_8.Task3.DecoderThreadsStats;
-import edu.hw_8.Task3.MD5Decoder;
+import edu.hw_8.Task2.FibonacciCounter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,11 +13,21 @@ public final class Main {
     }
 
     @SuppressWarnings({"MagicNumber", "RegexpSinglelineJava"})
-    public static void main(String[] args) {
-        MD5Decoder md5Decoder = new MD5Decoder();
+    public static void main(String[] args) throws InterruptedException {
+       /* MD5Decoder md5Decoder = new MD5Decoder();
         md5Decoder.nextPassword();
         LOGGER.info(md5Decoder.deciphered);
         DecoderThreadsStats decoderThreadsStats = new DecoderThreadsStats();
-        System.out.println(decoderThreadsStats.showThreadsStats());
+        System.out.println(decoderThreadsStats.showThreadsStats());*/
+        FibonacciCounter fibonacciCounter1 = new FibonacciCounter(10);
+        FibonacciCounter fibonacciCounter2 = new FibonacciCounter(1);
+        long start1 = System.nanoTime() / 1_000_000;
+        LOGGER.info(fibonacciCounter1.startCount(5));
+        long end1 = System.nanoTime() / 1_000_000;
+        long start2 = System.nanoTime() / 1_000_000;
+        LOGGER.info(fibonacciCounter2.startCount(5));
+        long end2 = System.nanoTime() / 1_000_000;
+        LOGGER.info("10 threads: {}", end1 - start1);
+        LOGGER.info("1 thread: {}", end2 - start2);
     }
 }
