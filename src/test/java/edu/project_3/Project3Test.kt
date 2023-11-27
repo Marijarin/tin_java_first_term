@@ -10,7 +10,7 @@ class Project3Test {
     private val fileName = "test_logs.txt"
     private val from: LocalDate = LocalDate.of(2023, 5, 16)
     private val to: LocalDate = LocalDate.now()
-    private val format = OutFormat.MARKDOWN
+    private val format = "markdown"
 
     @Test
     fun canMakeReportMD() {

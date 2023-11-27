@@ -6,22 +6,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.regex.Pattern
 
-
-fun main(args: Array<String>) {
-    fun parseFormat(format: String) =
-        when (format) {
-            "markdown" -> OutFormat.MARKDOWN
-            "console" -> OutFormat.CONSOLE
-            "console plain" -> OutFormat.CONSOLE_PLAIN
-            else -> OutFormat.CONSOLE_PLAIN
-        }
-    if (args.isNotEmpty()) {
-        LogWorker().logAnalytics(args[0], LocalDate.parse(args[1]), format = parseFormat(args[2]))
-    } else {
-        LogWorker().logAnalytics("logs.txt", LocalDate.of(2015, 5, 16), format = OutFormat.MARKDOWN)
-    }
-}
-
 @Suppress("RegExpRedundantEscape")
 class LogWorker {
     private val codes = mapOf(
@@ -47,7 +31,8 @@ class LogWorker {
         DateTimeFormatter.ofPattern("dd/MMM/uuuu:HH:mm:ss Z", Locale.ENGLISH)
 
 
-    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format: OutFormat) {
+    fun logAnalytics(fileName: String, from: LocalDate, to: LocalDate = LocalDate.now(), format:String) {
+        val formatFormatted = parseFormat(format);
         val logRecords = makeLogRecords(fileToStringList(fileName))
         val numberOfResponses = calculateNumberOfRequests(logRecords, from, to)
         val mostFrequentResources = mostFrequentResources(logRecords, from, to)
@@ -68,8 +53,15 @@ class LogWorker {
             successfulAndFailedResponses = successfulAndFailed,
             mostFrequentUAgent = mostFreqUA
         )
-        logReport.formatReport(format)
+        logReport.formatReport(formatFormatted)
     }
+    private fun parseFormat(format: String) =
+        when (format) {
+            "markdown" -> OutFormat.MARKDOWN
+            "console" -> OutFormat.CONSOLE
+            "console plain" -> OutFormat.CONSOLE_PLAIN
+            else -> OutFormat.CONSOLE_PLAIN
+        }
 
     fun fileToStringList(fileName: String): List<String> {
         return File(fileName).useLines { it.toList() }
