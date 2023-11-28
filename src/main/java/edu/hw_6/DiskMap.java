@@ -20,31 +20,20 @@ import org.jetbrains.annotations.Nullable;
 public class DiskMap implements Map<String, String> {
     public final String fileName = System.getenv("HOME") + "/diskMap.txt";
     Map<String, String> inMemoryStorage = new HashMap<>();
+    String key = "";
+    String value;
 
     //#1
     public Map<String, String> readToRuntime() {
         try (FileChannel inChannel = FileChannel.open(Path.of(fileName))) {
             ByteBuffer byteBuffer = ByteBuffer.allocate(64);
-            String key = "";
-            String value;
             StringBuilder sb = new StringBuilder();
             int bytesRead = inChannel.read(byteBuffer);
             while (bytesRead != -1) {
                 byteBuffer.flip();
                 while (byteBuffer.hasRemaining()) {
                     char c = (char) byteBuffer.get();
-                    switch (c) {
-                        case ':' -> {
-                            key = sb.toString();
-                            sb.delete(0, sb.length());
-                        }
-                        case '\n' -> {
-                            value = sb.toString();
-                            sb.delete(0, sb.length());
-                            this.put(key, value);
-                        }
-                        default -> sb.append(c);
-                    }
+                    sb.append(buildingFromBuffer(sb, c));
                 }
                 byteBuffer.clear();
                 bytesRead = inChannel.read(byteBuffer);
@@ -53,6 +42,22 @@ public class DiskMap implements Map<String, String> {
             throw new RuntimeException(ex);
         }
         return this.inMemoryStorage;
+    }
+
+    private String buildingFromBuffer(StringBuilder sb, char c) {
+        switch (c) {
+            case ':' -> {
+                key = sb.toString();
+                sb.delete(0, sb.length());
+            }
+            case '\n' -> {
+                value = sb.toString();
+                sb.delete(0, sb.length());
+                this.put(key, value);
+            }
+            default -> sb.append(c);
+        }
+        return sb.toString();
     }
 
     public void writeToFile() {

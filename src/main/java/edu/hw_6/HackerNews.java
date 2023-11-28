@@ -22,22 +22,18 @@ public class HackerNews {
         try (var client = newHttpClient()) {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             body = response.body();
-            var longList = idsFromResponse(body);
-            var result = new long[longList.length];
-            for (int i = 0; i < longList.length; i++) {
-                result[i] = longList[i];
-            }
-            return result;
+            return idsFromResponse(body);
         } catch (IOException | InterruptedException e) {
             return new long[0];
         }
     }
 
-    private Long[] idsFromResponse(String responseBody) {
+    private long[] idsFromResponse(String responseBody) {
         return Arrays.stream(responseBody.substring(1, responseBody.length() - 1)
                 .split(","))
             .map(Long::parseLong)
-            .toList().toArray(Long[]::new);
+            .mapToLong(Long::longValue)
+            .toArray();
     }
 
     /**
