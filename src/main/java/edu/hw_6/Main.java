@@ -18,5 +18,6 @@ public final class Main {
         PortScanner ps = new PortScanner();
         System.out.println(ps.printInfo());
     }
+    AbstractFilter filter = (AbstractFilter) AbstractFilter.isReadable();
 
 }

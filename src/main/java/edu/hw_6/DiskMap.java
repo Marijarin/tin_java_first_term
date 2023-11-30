@@ -24,7 +24,7 @@ public class DiskMap implements Map<String, String> {
     String value;
 
     //#1
-    public Map<String, String> readToRuntime() {
+    public void readToRuntime() {
         try (FileChannel inChannel = FileChannel.open(Path.of(fileName))) {
             ByteBuffer byteBuffer = ByteBuffer.allocate(64);
             StringBuilder sb = new StringBuilder();
@@ -41,7 +41,6 @@ public class DiskMap implements Map<String, String> {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        return this.inMemoryStorage;
     }
 
     private String buildingFromBuffer(StringBuilder sb, char c) {
