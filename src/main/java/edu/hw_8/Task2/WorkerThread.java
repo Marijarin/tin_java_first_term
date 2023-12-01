@@ -17,14 +17,18 @@ public class WorkerThread extends Thread {
     public void run() {
         Runnable task;
         while (isThreadRunning) {
-                while (queue.isEmpty()) {
+                while (!queue.isEmpty()) {
                     try {
-                        queue.wait();
+                        this.wait();
                     } catch (InterruptedException e) {
                         LOGGER.info("An error occurred while queue is waiting: {}", e.getMessage());
                     }
                 }
-                task = queue.poll();
+            try {
+                task = queue.take();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 task.run();
             } catch (RuntimeException e) {

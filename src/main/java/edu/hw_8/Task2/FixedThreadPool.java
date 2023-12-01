@@ -25,7 +25,6 @@ public class FixedThreadPool implements ThreadPool {
     @Override
     public synchronized void execute(Runnable runnable) {
         tasksQueue.offer(runnable);
-        tasksQueue.notify();
     }
 
     @Override
