@@ -1,16 +1,16 @@
 package edu.hw_6;
 
-import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
+    default AbstractFilter and(AbstractFilter filter) {
+        return entry -> this.accept(entry) && filter.accept(entry);
+    }
 
     static AbstractFilter isReadable() {
         return Files::isReadable;
@@ -20,7 +20,8 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         return Files::isWritable;
     }
 
-    static AbstractFilter globMatches(Pattern regex) {
+    static AbstractFilter globMatches(String s) {
+        Pattern regex = Pattern.compile(s);
         return entry -> {
             Pattern p = Pattern.compile("\\.\\w+$");
             Matcher m1 = p.matcher((CharSequence) entry);
