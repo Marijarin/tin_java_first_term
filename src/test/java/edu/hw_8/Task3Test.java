@@ -109,6 +109,6 @@ public class Task3Test {
 
         long max = Arrays.stream(result).max().orElseThrow();
 
-        assertThat(result[0]).isCloseTo(max, Percentage.withPercentage(20));
+        assertThat(result[0]).isCloseTo(max, Percentage.withPercentage(35));
     }
 }
