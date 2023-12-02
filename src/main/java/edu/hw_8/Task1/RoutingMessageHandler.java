@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RoutingMessageHandler {
-    private static final Logger log = Logger.getAnonymousLogger();
+    private static final Logger LOG = Logger.getAnonymousLogger();
     private static final String INCOMING_MESSAGE = "Incoming message from the client %s: %s";
     private static final String CLIENT_RESPONSE = "Response to the client %s request: %s";
     private final Map<String, String> handlerMap = new HashMap<>();
@@ -38,7 +38,7 @@ public class RoutingMessageHandler {
         String decoded = new String(message, StandardCharsets.UTF_8).trim();
         byteBuffer.clear();
         try {
-            log.log(Level.SEVERE, INCOMING_MESSAGE.formatted(socketChannel.getRemoteAddress().toString(), decoded));
+            LOG.log(Level.SEVERE, INCOMING_MESSAGE.formatted(socketChannel.getRemoteAddress().toString(), decoded));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +54,7 @@ public class RoutingMessageHandler {
 
     private void socketChannelSendWrapper(SocketChannel socketChannel) {
         try {
-            log.info(CLIENT_RESPONSE.formatted(
+            LOG.info(CLIENT_RESPONSE.formatted(
                 socketChannel.getRemoteAddress().toString(),
                 new String(byteBuffer.array(), StandardCharsets.UTF_8).trim()
             ));
@@ -63,9 +63,10 @@ public class RoutingMessageHandler {
             throw new RuntimeException(e);
         }
     }
+
     private void socketChannelSendEmptyWrapper(SocketChannel socketChannel) {
         try {
-            log.info(CLIENT_RESPONSE.formatted(
+            LOG.info(CLIENT_RESPONSE.formatted(
                 socketChannel.getRemoteAddress().toString(),
                 "Не могу прислать подходящую фразу, попробуй еще"
             ));

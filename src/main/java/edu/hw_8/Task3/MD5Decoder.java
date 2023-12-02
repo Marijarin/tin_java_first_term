@@ -6,12 +6,16 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Decodes password which consist of 4 lower case latin alphabet letters
+ * Such pattern of password does not make sense, but allows to ensure that program is correct
+ **/
 @SuppressWarnings("MagicNumber")
 public class MD5Decoder {
     public int[] numberOfThreads = new int[] {1, 2, 5, 8, 16, 32, 64};
     long[] timeInS = new long[numberOfThreads.length];
     MD5HashMaker md5HashMaker = new MD5HashMaker();
-    Map<String, String> stolen = md5HashMaker.generateStolenData(md5HashMaker.passwords, md5HashMaker.people);
+    public Map<String, String> stolen = md5HashMaker.generateStolenData(md5HashMaker.passwords, md5HashMaker.people);
     public Map<String, String> deciphered = new HashMap<>();
 
     public void nextPassword() {
@@ -25,7 +29,7 @@ public class MD5Decoder {
         }
     }
 
-    String generateNext() {
+    public String generateNext() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 4;
@@ -37,9 +41,11 @@ public class MD5Decoder {
 
     }
 
-    void nextPasswordManyThreads(int threadsNumber) {
+    public void nextPasswordManyThreads(int threadsNumber) {
         try (ExecutorService service = Executors.newFixedThreadPool(threadsNumber)) {
-            service.execute(this::nextPassword);
+            for (int i = 0; i < stolen.size(); i++) {
+                service.execute(this::nextPassword);
+            }
             service.shutdown();
         }
     }

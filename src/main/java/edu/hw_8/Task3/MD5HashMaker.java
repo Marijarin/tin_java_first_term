@@ -3,9 +3,9 @@ package edu.hw_8.Task3;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings("MagicNumber")
 public class MD5HashMaker {
@@ -38,7 +38,7 @@ public class MD5HashMaker {
         return md5;
     }
 
-    String makeMD5(String pw) {
+    public String makeMD5(String pw) {
         try {
             var md = MessageDigest.getInstance("MD5");
             md.update(pw.getBytes());
@@ -57,9 +57,9 @@ public class MD5HashMaker {
         return builder.toString();
     }
 
-    Map<String, String> generateStolenData(List<String> pws, List<String> names) {
+    public Map<String, String> generateStolenData(List<String> pws, List<String> names) {
         var md5 = makeMD5ForList(pws);
-        Map<String, String> stolen = new HashMap<>();
+        Map<String, String> stolen = new ConcurrentHashMap<>();
         for (int i = 0; i < names.size(); i++) {
             stolen.put(md5.get(i), names.get(i));
         }

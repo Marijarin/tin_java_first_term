@@ -1,4 +1,4 @@
-package edu.hw_8.Task2;
+package edu.hw_8.Task2.thread_pool_one;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,7 +11,7 @@ public class FixedThreadPool implements ThreadPool {
         this.threadsNumber = threadsNumber;
         tasksQueue = new LinkedBlockingQueue<>();
         threads = new WorkerThread[threadsNumber];
-        this.start();
+
     }
 
     @Override public void start() {
@@ -23,16 +23,17 @@ public class FixedThreadPool implements ThreadPool {
     }
 
     @Override
-    public synchronized void execute(Runnable runnable) {
+    public void execute(Runnable runnable) throws InterruptedException {
         tasksQueue.offer(runnable);
+        this.start();
+        Thread.sleep(1);
     }
 
     @Override
-    public void close() throws InterruptedException {
+    public void close() {
         for (int i = 0; i < threadsNumber; i++) {
-            threads[i] = new WorkerThread(tasksQueue);
-            threads[i].join();
             threads[i].isThreadRunning = false;
+            threads[i].interrupt();
         }
     }
 }

@@ -11,8 +11,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
+@SuppressWarnings("MagicNumber")
 public class Server {
-    private static final Logger log = Logger.getAnonymousLogger();
+    private static final Logger LOG = Logger.getAnonymousLogger();
     private static final String CONNECTION_ACCEPT = "New connection from the client %s has been accepted";
     private static final int CLIENT_MESSAGE_CAPACITY = 100;
     private final int port;
@@ -40,20 +41,25 @@ public class Server {
                     }
                 }
             }
-           if(!isRunning) {
-               selector.keys()
-                   .forEach(selectionKey -> {
-                       try {
-                           selectionKey.channel().close();
-                       } catch (IOException e) {
-                           throw new RuntimeException(e);
-                       }
-                   });
-           }
+            if (!isRunning) {
+                selector.keys()
+                    .forEach(selectionKey -> {
+                        try {
+                            selectionKey.channel().close();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+            }
         }
     }
 
-    private void handleSelectionKey(Selector selector, ServerSocketChannel serverSocket, ByteBuffer buffer, SelectionKey key) throws IOException {
+    private void handleSelectionKey(
+        Selector selector,
+        ServerSocketChannel serverSocket,
+        ByteBuffer buffer,
+        SelectionKey key
+    ) throws IOException {
         if (key.isAcceptable()) {
             configureSocketChannel(selector, serverSocket);
         }
@@ -74,7 +80,7 @@ public class Server {
 
     private void configureSocketChannel(Selector selector, ServerSocketChannel serverSocket) throws IOException {
         SocketChannel client = serverSocket.accept();
-        log.info(CONNECTION_ACCEPT.formatted(client.getRemoteAddress().toString()));
+        LOG.info(CONNECTION_ACCEPT.formatted(client.getRemoteAddress().toString()));
         client.configureBlocking(false);
         client.register(selector, SelectionKey.OP_READ);
     }

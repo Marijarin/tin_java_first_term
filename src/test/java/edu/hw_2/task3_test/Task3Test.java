@@ -6,7 +6,6 @@ import edu.hw_2.task3.FaultyConnectionManager;
 import edu.hw_2.task3.PopularCommandExecutor;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatException;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 public class Task3Test {

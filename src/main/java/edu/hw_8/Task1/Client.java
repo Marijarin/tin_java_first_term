@@ -9,8 +9,9 @@ import java.nio.channels.SocketChannel;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+@SuppressWarnings("MagicNumber")
 public class Client {
-    private static final Logger log = Logger.getAnonymousLogger();
+    private static final Logger LOG = Logger.getAnonymousLogger();
     public static final int DEFAULT_BUFFER_CAPACITY = 1000;
     private static final String CONNECTION_CLOSED_UNEXPECTEDLY = "Connection should be opened but it is closed";
     private static final String CONNECTION_SUCCESSFUL = "Connection has been established";
@@ -31,13 +32,12 @@ public class Client {
         selector = Selector.open();
         socketChannel.register(selector, SelectionKey.OP_READ);
         isConnectionOpened = true;
-        log.info(CONNECTION_SUCCESSFUL);
+        LOG.info(CONNECTION_SUCCESSFUL);
     }
-
 
     public void send(byte[] bytes) throws IOException {
         if (!isConnectionOpened) {
-            log.info(CONNECTION_CLOSED_UNEXPECTEDLY);
+            LOG.info(CONNECTION_CLOSED_UNEXPECTEDLY);
             return;
         }
         socketChannel.write(byteBuffer.clear().put(bytes).flip());
@@ -46,7 +46,7 @@ public class Client {
 
     public Optional<byte[]> waitResponse() throws IOException {
         if (!isConnectionOpened) {
-            log.info(CONNECTION_CLOSED_UNEXPECTEDLY);
+            LOG.info(CONNECTION_CLOSED_UNEXPECTEDLY);
             return Optional.empty();
         }
         selector.select();
@@ -58,7 +58,7 @@ public class Client {
 
     public void close() throws IOException {
         if (isConnectionOpened) {
-            log.info(CONNECTION_CLOSED);
+            LOG.info(CONNECTION_CLOSED);
             socketChannel.close();
             selector.close();
         }

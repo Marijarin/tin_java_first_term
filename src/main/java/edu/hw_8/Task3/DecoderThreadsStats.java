@@ -5,11 +5,11 @@ import java.util.List;
 
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class DecoderThreadsStats {
-    private final int[] numberOfThreads = {1, 2, 5, 8, 16, 32};
+    private final int[] numberOfThreads = {1, 5, 8};
     private final List<MD5Decoder> decoders = new ArrayList<>(numberOfThreads.length);
-    final long[] timeInS = new long[numberOfThreads.length];
+    public final long[] timeInS = new long[numberOfThreads.length];
 
-    void makeThreadsStats() {
+    public void makeThreadsStats() {
         for (int i = 0; i < numberOfThreads.length; i++) {
             decoders.add(new MD5Decoder());
         }

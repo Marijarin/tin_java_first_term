@@ -1,6 +1,9 @@
 package edu.hw_8;
 
 import edu.hw_8.Task2.FibonacciCounter;
+import edu.hw_8.Task2.another_one.CustomExecutorService;
+import edu.hw_8.Task2.another_one.CustomExecutors;
+import edu.hw_8.Task2.another_one.FibTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,20 +17,24 @@ public final class Main {
 
     @SuppressWarnings({"MagicNumber", "RegexpSinglelineJava"})
     public static void main(String[] args) throws InterruptedException {
-       /* MD5Decoder md5Decoder = new MD5Decoder();
-        md5Decoder.nextPassword();
-        LOGGER.info(md5Decoder.deciphered);
-        DecoderThreadsStats decoderThreadsStats = new DecoderThreadsStats();
-        System.out.println(decoderThreadsStats.showThreadsStats());*/
-        FibonacciCounter fibonacciCounter1 = new FibonacciCounter(10);
-        FibonacciCounter fibonacciCounter2 = new FibonacciCounter(1);
         long start1 = System.nanoTime() / 1_000_000;
-        LOGGER.info(fibonacciCounter1.startCount(5));
+        FibonacciCounter fibonacciCounter1 = new FibonacciCounter(6);
+        LOGGER.info(fibonacciCounter1.startCount(6));
         long end1 = System.nanoTime() / 1_000_000;
         long start2 = System.nanoTime() / 1_000_000;
-        LOGGER.info(fibonacciCounter2.startCount(5));
+        FibonacciCounter fibonacciCounter2 = new FibonacciCounter(1);
+
+        LOGGER.info(fibonacciCounter2.startCount(6));
         long end2 = System.nanoTime() / 1_000_000;
         LOGGER.info("10 threads: {}", end1 - start1);
         LOGGER.info("1 thread: {}", end2 - start2);
+        long start3 = System.nanoTime() / 1_000_000;
+        CustomExecutorService service = CustomExecutors.FixedThreadPool(3);
+        for (int i = 0; i <= 6; i++) {
+            service.submit(new FibTask(i));
+        }
+        Thread.sleep(1);
+        long end3 = System.nanoTime() / 1_000_000;
+        LOGGER.info("new thread pool: {}", end3 - start3);
     }
 }
