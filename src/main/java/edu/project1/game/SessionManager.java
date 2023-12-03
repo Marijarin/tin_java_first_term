@@ -17,6 +17,7 @@ public class SessionManager implements Printable {
     private int attempt = 1;
     private final Scanner sc;
     private GuessResult result;
+    Renderer r = new Renderer();
 
     public SessionManager(String puzzle, int maxAttempts, Scanner sc) {
         this.puzzle = puzzle;
@@ -34,6 +35,7 @@ public class SessionManager implements Printable {
                     + "\nIf you want to finish the game, please, print end or empty space in separate line.\n",
                 maxAttempts
             );
+            r.renderHangman(maxAttempts);
             String response = "*".repeat(puzzle.length());
             GuessResult g = checkGuess(response, attempt);
             proceedGame(g);
@@ -42,11 +44,12 @@ public class SessionManager implements Printable {
 
     @SuppressWarnings("MultipleStringLiterals")
     public String validateInput() {
-        LOGGER.info("\nGuess a letter:");
+        r.letterPrompt();
         String guess;
         try {
             guess = sc.nextLine().trim();
             if (guess.length() != 1 && !guess.equals("end")) {
+                r.lose("The end");
                 sc.close();
                 guess = "";
             }
@@ -62,11 +65,13 @@ public class SessionManager implements Printable {
         String input = validateInput();
         switch (input) {
             case "" -> {
-                return new ErrorResult("not valid input");
+                ErrorResult er = new ErrorResult("not valid input");
+                r.lose(er.message());
+                return er;
             }
             case "end" -> {
                 GuessResult resultEnd = giveUp(attempt);
-                LOGGER.info(resultEnd.message());
+                r.lose(resultEnd.message());
                 return resultEnd;
             }
             default -> {
@@ -86,14 +91,16 @@ public class SessionManager implements Printable {
                 }
             }
             g = new SuccessfulGuess(attempt - 1, responseN.toString());
+            r.renderHangman(maxAttempts - (attempt - 1));
             LOGGER.info(g.message());
             if (g.state().equals(puzzle)) {
                 g = new Win(attempt - 1, maxAttempts, puzzle);
-                LOGGER.info(g.message());
+                r.win(g.message());
             }
         } else {
             attempt++;
             g = new FailedGuess(attempt - 1, maxAttempts, responseN.toString());
+            r.renderHangman(maxAttempts - (attempt - 1));
             LOGGER.info(g.message());
 
         }
@@ -108,7 +115,8 @@ public class SessionManager implements Printable {
                 proceedGame(intermediate);
             } else {
                 result = new Defeat(g.attempt(), maxAttempts);
-                LOGGER.info(result.message());
+                r.renderHangman(0);
+                r.lose(result.message());
             }
         } else {
             result = g;
