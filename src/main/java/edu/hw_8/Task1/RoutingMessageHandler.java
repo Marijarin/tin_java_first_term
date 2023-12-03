@@ -68,7 +68,7 @@ public class RoutingMessageHandler {
         try {
             LOG.info(CLIENT_RESPONSE.formatted(
                 socketChannel.getRemoteAddress().toString(),
-                "Не могу прислать подходящую фразу, попробуй еще"
+                "Не могу прислать подходящую фразу, попробуй другое слово"
             ));
             socketChannel.write(byteBuffer);
         } catch (IOException e) {

@@ -16,9 +16,9 @@ public final class Main {
     }
 
     @SuppressWarnings({"MagicNumber", "RegexpSinglelineJava"})
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         long start1 = System.nanoTime() / 1_000_000;
-        FibonacciCounter fibonacciCounter1 = new FibonacciCounter(6);
+        FibonacciCounter fibonacciCounter1 = new FibonacciCounter(5);
         LOGGER.info(fibonacciCounter1.startCount(6));
         long end1 = System.nanoTime() / 1_000_000;
         long start2 = System.nanoTime() / 1_000_000;
@@ -26,15 +26,16 @@ public final class Main {
 
         LOGGER.info(fibonacciCounter2.startCount(6));
         long end2 = System.nanoTime() / 1_000_000;
-        LOGGER.info("10 threads: {}", end1 - start1);
+        LOGGER.info("5 threads: {}", end1 - start1);
         LOGGER.info("1 thread: {}", end2 - start2);
         long start3 = System.nanoTime() / 1_000_000;
-        CustomExecutorService service = CustomExecutors.FixedThreadPool(3);
-        for (int i = 0; i <= 6; i++) {
-            service.submit(new FibTask(i));
+        try (CustomExecutorService service = CustomExecutors.FixedThreadPool(5)) {
+            for (int i = 0; i <= 6; i++) {
+                service.execute(new FibTask(i));
+            }
+            Thread.sleep(1);
+            long end3 = System.nanoTime() / 1_000_000;
+            LOGGER.info("new thread pool 5 : {}", end3 - start3);
         }
-        Thread.sleep(1);
-        long end3 = System.nanoTime() / 1_000_000;
-        LOGGER.info("new thread pool: {}", end3 - start3);
     }
 }

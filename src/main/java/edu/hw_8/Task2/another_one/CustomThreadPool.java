@@ -16,9 +16,14 @@ class CustomThreadPool implements CustomExecutorService {
     }
 
     @Override
-    public void submit(Runnable r) {
+    public void execute(Runnable r) {
         linkedBlockingQueue.add(r);
-        runner.executeMyMethod();
+        runner.executeMethod();
+    }
+
+    @Override
+    public void close() {
+        runner.stop();
     }
 }
 

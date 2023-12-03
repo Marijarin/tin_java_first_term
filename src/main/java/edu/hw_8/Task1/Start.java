@@ -9,7 +9,8 @@ public final class Start {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        Client client = new Client();
+        Client client1 = new Client();
+        Client client2 = new Client();
         RoutingMessageHandler routingMessageHandler = new RoutingMessageHandler(1024);
         Server server = new Server(routingMessageHandler);
         Thread serverTread = new Thread(() -> {
@@ -21,12 +22,16 @@ public final class Start {
         });
         serverTread.start();
         Thread.sleep(1000);
-        client.start();
+        client1.start();
+        client2.start();
         while (true) {
             Scanner sc = new Scanner(System.in);
-            byte[] request = sc.nextLine().getBytes();
-            client.send(request);
-            client.waitResponse().orElseThrow();
+            byte[] request1 = sc.nextLine().getBytes();
+            client1.send(request1);
+            client1.waitResponse().orElseThrow();
+            byte[] request2 = sc.nextLine().getBytes();
+            client2.send(request2);
+            client2.waitResponse().orElseThrow();
         }
     }
 }

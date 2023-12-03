@@ -9,6 +9,8 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 @SuppressWarnings("MagicNumber")
@@ -64,18 +66,30 @@ public class Server {
             configureSocketChannel(selector, serverSocket);
         }
         if (key.isReadable()) {
-            SocketChannel client = (SocketChannel) key.channel();
-            int r = client.read(buffer);
-            if (r == -1) {
-                client.close();
-            } else {
-                buffer.flip();
-                routingMessageHandler.handle(client, buffer.array());
-                buffer.clear();
+            try (ExecutorService executorService = Executors.newFixedThreadPool(5)) {
+                executorService.execute(() -> {
+                    SocketChannel client = (SocketChannel) key.channel();
+                    int r;
+                    try {
+                        r = client.read(buffer);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (r == -1) {
+                        try {
+                            client.close();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        buffer.flip();
+                        routingMessageHandler.handle(client, buffer.array());
+                        buffer.clear();
+                    }
+                });
+
             }
-
         }
-
     }
 
     private void configureSocketChannel(Selector selector, ServerSocketChannel serverSocket) throws IOException {

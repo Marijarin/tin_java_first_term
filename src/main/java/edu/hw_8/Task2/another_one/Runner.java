@@ -1,7 +1,7 @@
 package edu.hw_8.Task2.another_one;
 
 class Runner implements Runnable {
-    void executeMyMethod() {
+    void executeMethod() {
         if (CustomThreadPool.currentCapacity < CustomThreadPool.capacity) {
             CustomThreadPool.currentCapacity++;
             Thread t = new Thread(new Runner());
@@ -14,5 +14,9 @@ class Runner implements Runnable {
         while (!CustomThreadPool.linkedBlockingQueue.isEmpty()) {
             CustomThreadPool.linkedBlockingQueue.poll().run();
         }
+    }
+
+    public void stop() {
+        Thread.currentThread().interrupt();
     }
 }
