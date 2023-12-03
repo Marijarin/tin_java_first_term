@@ -42,7 +42,7 @@ public class Task1SecondTest {
     }
 
     @Test
-    void answerFromServerIsCorrectWhenCorrectInput(CapturedOutput output) throws InterruptedException, IOException {
+    void answerFromServerIsCorrectWhenCorrectInput(CapturedOutput output1) throws InterruptedException, IOException {
         Client client1 = new Client();
         RoutingMessageHandler routingMessageHandler = new RoutingMessageHandler(1024);
         Server server = new Server(routingMessageHandler);
@@ -62,7 +62,7 @@ public class Task1SecondTest {
         client1.send(test.getBytes());
         client1.waitResponse();
         Thread.sleep(1000);
-        assertThat(output).contains("Ты просто бог идиотизма.");
+        assertThat(output1).contains("Ты просто бог идиотизма.");
         client1.close();
         server.isRunning = false;
         serverTread.interrupt();
