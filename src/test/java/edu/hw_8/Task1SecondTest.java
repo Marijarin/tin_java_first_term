@@ -25,7 +25,7 @@ public class Task1SecondTest {
             }
         });
         serverTread.start();
-        Thread.sleep(1000);
+        Thread.sleep(100);
         client1.start();
 
         String test = "глупыйй";
@@ -33,10 +33,16 @@ public class Task1SecondTest {
         client1.send(test.getBytes());
         client1.waitResponse();
         Thread.sleep(1000);
+
+        if (!output1.isEmpty()) {
+            assertThat(output1).containsOnlyOnce(test);
+        } else {
+            Thread.sleep(1000);
+            assertThat(output1).containsOnlyOnce(test);
+        }
+
         client1.close();
         server.isRunning = false;
         serverTread.interrupt();
-
-        assertThat(output1).containsOnlyOnce(test);
     }
 }

@@ -25,7 +25,7 @@ public class Task1FirstTest {
             }
         });
         serverTread.start();
-        Thread.sleep(1000);
+        Thread.sleep(100);
         client1.start();
 
         String test = "глупый";
@@ -33,7 +33,12 @@ public class Task1FirstTest {
         client1.send(test.getBytes());
         client1.waitResponse();
         Thread.sleep(1000);
-        assertThat(output).contains("Ты просто бог идиотизма.");
+        if (!output.isEmpty()) {
+            assertThat(output).contains("Ты просто бог идиотизма.");
+        } else {
+            Thread.sleep(1000);
+            assertThat(output).contains("Ты просто бог идиотизма.");
+        }
 
         client1.close();
         server.isRunning = false;
