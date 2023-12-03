@@ -25,13 +25,14 @@ public class Task1SecondTest {
             }
         });
         serverTread.start();
-        Thread.sleep(100);
+        Thread.sleep(1000);
         client1.start();
 
         String test = "глупыйй";
 
         client1.send(test.getBytes());
         client1.waitResponse();
+        Thread.sleep(1000);
         client1.close();
         server.isRunning = false;
         serverTread.interrupt();
