@@ -1,5 +1,7 @@
-package edu.project1.game;
+package edu.hw_5;
 
+import edu.hw_5.task1_task2.DateUtil;
+import java.time.LocalDate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,8 +13,12 @@ public final class Main {
     private Main() {
     }
 
+    @SuppressWarnings("MagicNumber")
     public static void main(String[] args) {
-        HangmanGame h = new HangmanGame();
-        LOGGER.info(h.startNewGame());
+
+        DateUtil du = new DateUtil();
+        LOGGER.info(du.showAverageTime(du.intervals));
+        LOGGER.info(du.fridays13(2013));
+        LOGGER.info(du.nextFriday13(LocalDate.of(2012, 8, 13)));
     }
 }

@@ -1,0 +1,2 @@
+178.62.69.228 - remote user 1 [19/May/2023:07:05:41 +0000] "GET /downloads/product_1 HTTP/1.1" 404 335 "resource requested" "user agent 1"
+176.58.88.166 - remote user 2 [22/Jun/2023:07:05:36 +0000] "GET /downloads/product_1 HTTP/1.1" 304 0 "other resource" "user agent 2"
