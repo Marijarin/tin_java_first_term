@@ -25,14 +25,14 @@ public class Task1FirstTest {
             }
         });
         serverTread.start();
-        Thread.sleep(100);
+        Thread.sleep(1000);
         client1.start();
 
         String test = "глупый";
 
         client1.send(test.getBytes());
         client1.waitResponse();
-
+        Thread.sleep(1000);
         assertThat(output).contains("Ты просто бог идиотизма.");
 
         client1.close();
