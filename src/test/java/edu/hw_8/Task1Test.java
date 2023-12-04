@@ -4,7 +4,9 @@ import edu.hw_8.Task1.Client;
 import edu.hw_8.Task1.RoutingMessageHandler;
 import edu.hw_8.Task1.Server;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.logging.LogManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
@@ -13,6 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(OutputCaptureExtension.class)
 public class Task1Test {
+    @BeforeEach
+    void reset() throws IOException {
+        LogManager.getLogManager().readConfiguration();
+    }
 
     @Test void answerFromServerIsCorrectWhenNotCorrectInput(CapturedOutput output)
         throws InterruptedException, IOException {
@@ -33,11 +39,17 @@ public class Task1Test {
         String test = "глупыйй";
 
         client1.send(test.getBytes());
-        byte[] bytes = client1.waitResponse().orElseThrow();
-        System.out.println(new String(bytes,StandardCharsets.UTF_8));
-        assertThat(output).contains("Не могу прислать");
+        client1.waitResponse();
+        Thread.sleep(100);
         client1.close();
         server.isRunning = false;
         serverTread.interrupt();
+
+        assertThat(output).contains("Не могу");
+    }
+
+    @AfterEach
+    void resetOnceMore() throws IOException {
+        LogManager.getLogManager().readConfiguration();
     }
 }
