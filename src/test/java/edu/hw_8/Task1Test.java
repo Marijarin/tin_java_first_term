@@ -20,7 +20,8 @@ public class Task1Test {
         LogManager.getLogManager().readConfiguration();
     }
 
-    @Test void answerFromServerIsCorrectWhenNotCorrectInput(CapturedOutput output)
+    @Test
+    void answerFromServerIsCorrectWhenNotCorrectInput(CapturedOutput output)
         throws InterruptedException, IOException {
         Client client1 = new Client();
         RoutingMessageHandler routingMessageHandler = new RoutingMessageHandler(1024);
@@ -47,6 +48,36 @@ public class Task1Test {
 
         assertThat(output).contains("Не могу");
     }
+
+    @Test
+    void answerFromServerIsCorrectWhenCorrectInput(CapturedOutput output)
+        throws InterruptedException, IOException {
+        Client client1 = new Client();
+        RoutingMessageHandler routingMessageHandler = new RoutingMessageHandler(1024);
+        Server server = new Server(routingMessageHandler);
+        Thread serverTread = new Thread(() -> {
+            try {
+                server.start();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        serverTread.start();
+        Thread.sleep(1000);
+        client1.start();
+
+        String test = "глупый";
+
+        client1.send(test.getBytes());
+        client1.waitResponse();
+        Thread.sleep(100);
+        client1.close();
+        server.isRunning = false;
+        serverTread.interrupt();
+
+        assertThat(output).contains("идиотизма");
+    }
+
 
     @AfterEach
     void resetOnceMore() throws IOException {
