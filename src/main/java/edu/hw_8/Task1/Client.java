@@ -50,9 +50,7 @@ public class Client {
             return Optional.empty();
         }
         selector.select();
-        byteBuffer.clear();
         socketChannel.read(byteBuffer);
-        byteBuffer.clear();
         return Optional.of(byteBuffer.array());
     }
 
