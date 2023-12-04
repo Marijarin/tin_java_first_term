@@ -21,16 +21,9 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
     }
 
     static AbstractFilter globMatches(String s) {
-        Pattern regex = Pattern.compile(s);
         return entry -> {
-            Pattern p = Pattern.compile("\\.\\w+$");
-            Matcher m1 = p.matcher((CharSequence) entry);
-            String extension = "";
-            if (m1.matches()) {
-                extension = m1.group();
-            }
-            Matcher m2 = regex.matcher(extension);
-            return m2.matches();
+            String fileName = entry.getFileName().toString();
+            return fileName.endsWith(s);
         };
     }
 
@@ -38,7 +31,7 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         return entry -> {
             String fileName = entry.getFileName().toString();
             Matcher matcher = regex.matcher(fileName);
-            return matcher.matches();
+            return matcher.find();
         };
     }
 
