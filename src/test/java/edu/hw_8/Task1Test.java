@@ -6,16 +6,19 @@ import edu.hw_8.Task1.Server;
 import java.io.IOException;
 import java.util.logging.LogManager;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @ExtendWith(OutputCaptureExtension.class)
-public class Task1SecondTest {
+public class Task1Test {
 
-    @Test void answerFromServerIsCorrectWhenNotCorrectInput(CapturedOutput output)
+    @Test void answerAFromServerIsCorrectWhenNotCorrectInput(CapturedOutput output)
         throws InterruptedException, IOException {
         Client client1 = new Client();
         RoutingMessageHandler routingMessageHandler = new RoutingMessageHandler(1024);
@@ -42,7 +45,7 @@ public class Task1SecondTest {
     }
 
     @Test
-    void answerFromServerIsCorrectWhenCorrectInput(CapturedOutput output1) throws InterruptedException, IOException {
+    void answerBFromServerIsCorrectWhenCorrectInput(CapturedOutput output1) throws InterruptedException, IOException {
         Client client1 = new Client();
         RoutingMessageHandler routingMessageHandler = new RoutingMessageHandler(1024);
         Server server = new Server(routingMessageHandler);
