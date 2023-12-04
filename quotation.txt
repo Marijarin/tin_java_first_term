@@ -1,1 +1,1 @@
-Programming is learned by writing programs. ― Brian Kernighan
+Testing leads to failure, and failure leads to understanding. - Burt Rutan

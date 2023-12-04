@@ -16,7 +16,7 @@ import java.util.zip.Checksum;
 public class QuotationsWriter {
     String quotation = "Programming is learned by writing programs. ― Brian Kernighan";
 
-    void writeToFile() throws IOException {
+    void writeToFile(String s) throws IOException {
         var file = Files.createFile(Path.of("quotation.txt")).toFile();
         Checksum checksum = new CRC32();
         try (OutputStream fileOutputStream = new FileOutputStream(file);
@@ -27,7 +27,7 @@ public class QuotationsWriter {
                  StandardCharsets.UTF_8
              )) {
             PrintWriter printWriter = new PrintWriter(outputStreamWriter, true);
-            printWriter.write(quotation);
+            printWriter.write(s);
         }
     }
 }

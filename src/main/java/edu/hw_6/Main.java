@@ -19,7 +19,7 @@ public final class Main {
     public static void main(String[] args) throws IOException {
 
         QuotationsWriter quotationsWriter = new QuotationsWriter();
-        quotationsWriter.writeToFile();
+        quotationsWriter.writeToFile(quotationsWriter.quotation);
     }
 
     AbstractFilter filter = isReadable().and(isWritable()).and(globMatches("*.txt"));
