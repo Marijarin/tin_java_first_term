@@ -11,17 +11,14 @@ fun Point.makeLinear1(): Point {
 }
 
 fun Point.makeLinear2(): Point {
-    val newX = x * (-0.625568) + y * (-0.515804)
-    //+ 0.620578
+    val newX = x * (-0.625568) + y * (-0.515804) + 0.620578
     val newY = x * (-0.616063) + y * 0 + 0.0682234
     return copy(x = newX, y = newY)
 }
 
 fun Point.makeLinear3(): Point {
-    val newX = x * (-0.695157) + y * 0.00633793
-    //+ 0.0475732
-    val newY = x * (-0.644204) + y * (-0.270785)
-    //+ 0.892879
+    val newX = x * (-0.695157) + y * 0.00633793 + 0.0475732
+    val newY = x * (-0.644204) + y * (-0.270785) + 0.892879
     return copy(x = newX, y = newY)
 }
 

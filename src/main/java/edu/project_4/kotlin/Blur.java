@@ -4,9 +4,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 public class Blur {
-
-
-
     final int BLUR_SIZE = 4;
     BufferedImage blur(BufferedImage image) {
         int[] destPixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
