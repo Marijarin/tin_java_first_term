@@ -7,7 +7,8 @@ import java.util.concurrent.RecursiveTask;
 import static java.util.Arrays.asList;
 
 /**
- * It works for binary mazes
+ * It works for binary mazes.
+ * Init in ForkJoinPool.
  **/
 public class DFSParallel extends RecursiveTask<List<Cell>> {
     int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
@@ -47,10 +48,10 @@ public class DFSParallel extends RecursiveTask<List<Cell>> {
                 results.set(i, tasksForCell[i].join());
             }
             if (results.get(i) != null) {
-                List<Cell> result = new LinkedList<>();
-                result.add(this.start);
-                result.addAll(results.get(i));
-                return result;
+                    List<Cell> result = new LinkedList<>();
+                    result.add(this.start);
+                    result.addAll(results.get(i));
+                    return result;
             }
         }
         return null;
