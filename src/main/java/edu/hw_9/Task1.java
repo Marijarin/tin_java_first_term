@@ -1,4 +1,4 @@
-package edu.hw_9.task3;
+package edu.hw_9;
 
 public class Task1 {
 }

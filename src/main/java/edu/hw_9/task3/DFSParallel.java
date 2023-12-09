@@ -73,6 +73,6 @@ public class DFSParallel extends RecursiveTask<List<Cell>> {
     }
 
     private boolean isValidLocation(Cell cell) {
-        return cell.y() >= 0 && cell.y() <= maze.length - 1 && cell.x() >= 0 && cell.x() <= maze.length - 1;
+        return cell.y() >= 0 && cell.y() <= maze.length - 1 && cell.x() >= 0 && cell.x() <= maze[0].length - 1;
     }
 }
