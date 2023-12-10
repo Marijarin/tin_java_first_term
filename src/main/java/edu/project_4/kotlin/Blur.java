@@ -3,10 +3,11 @@ package edu.project_4.kotlin;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+@SuppressWarnings("MagicNumber")
 public class Blur {
-    final int BLUR_SIZE = 4;
+    final int blurSize = 4;
 
-    BufferedImage blur(BufferedImage image) {
+    public BufferedImage blur(BufferedImage image) {
         int[] destPixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         int[] sourcePixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         for (int y = 0; y < image.getHeight(); y++) {
@@ -18,7 +19,7 @@ public class Blur {
     }
 
     private int getOutValue(int[] source, int line, int x, int y) {
-        int halfSize = BLUR_SIZE / 2;
+        int halfSize = blurSize / 2;
         int count = 0;
         int rsum = 0;
         int gsum = 0;

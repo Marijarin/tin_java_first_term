@@ -7,7 +7,7 @@ fun main() {
     val samples = 1_000_000
     val executor = ExecutorVariantForkJoin()
     val start = System.currentTimeMillis()
-    executor.withForkJoin(samples, image)
+    executor.withForkJoin(samples, 10000, image)
     val end = System.currentTimeMillis()
     println((end - start) / 1000)
 }

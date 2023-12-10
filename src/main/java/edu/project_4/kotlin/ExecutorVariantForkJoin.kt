@@ -7,16 +7,16 @@ import java.util.concurrent.Executors
 import javax.imageio.ImageIO
 
 class ExecutorVariantForkJoin {
-    fun withForkJoin(samples: Int, image: BufferedImage) {
+    fun withForkJoin(samples: Int, portion: Int, image: BufferedImage) {
         val executorService = Executors.newWorkStealingPool(8)
-        val latch = CountDownLatch(10000)
+        val latch = CountDownLatch(portion)
         val tasks = mutableListOf<Runnable>()
 
-        for (i in 1..10000) {
+        for (i in 1..portion) {
             tasks.add(Runnable {
                 val h = HistogramMaker()
                 val all = ArrayList<Point>()
-                for (j in 1..samples / 10000) {
+                for (j in 1..samples / portion) {
                     h.makeHistogram2()
                     h.deleteFirst()
                     val endPix3 = h.resize(image.width)

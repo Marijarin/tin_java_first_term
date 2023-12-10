@@ -23,10 +23,10 @@ fun main(): Unit = runBlocking {
         }
         job1.join()
     }
-    val blur = Blur()
-    val blurred = blur.blur(image)
+//    val blur = Blur()
+//    val blurred = blur.blur(image)
     FileOutputStream("result15.png").use { out ->
-        ImageIO.write(blurred, "png", out)
+        ImageIO.write(image, "png", out)
     }
     val end = System.currentTimeMillis()
     println((end - start) / 1000)
