@@ -10,8 +10,9 @@ import static java.util.Arrays.asList;
  * It works for binary mazes.
  * Init in ForkJoinPool.
  **/
+@SuppressWarnings("MagicNumber")
 public class DFSParallel extends RecursiveTask<List<Cell>> {
-    int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     public Cell start;
     private final int[][] maze;
     private final boolean[][] visited;
@@ -32,10 +33,10 @@ public class DFSParallel extends RecursiveTask<List<Cell>> {
         if (start.equals(getExit())) {
             return new ArrayList<>(List.of(start));
         }
-        DFSParallel[] tasksForCell = new DFSParallel[DIRECTIONS.length];
+        DFSParallel[] tasksForCell = new DFSParallel[directions.length];
         List<List<Cell>> results = asList(null, null, null, null);
         for (int i = 0; i < 4; i++) {
-            Cell cell = getNextCell(start.y(), start.x(), DIRECTIONS[i][0], DIRECTIONS[i][1]);
+            Cell cell = getNextCell(start.y(), start.x(), directions[i][0], directions[i][1]);
             tasksForCell[i] = new DFSParallel(maze, cell, visited);
             if (i < 3) {
                 tasksForCell[i].fork();

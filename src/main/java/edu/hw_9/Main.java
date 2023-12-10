@@ -1,8 +1,8 @@
 package edu.hw_9;
 
+import edu.hw_9.task2.PredicateFilesFinder;
 import java.nio.file.Path;
 import java.util.concurrent.ForkJoinPool;
-import edu.hw_9.task2.PredicateFilesFinder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,16 +32,17 @@ public final class Main {
             {1, 1, 0, 0, 0, 0, 1, 0, 0, 1}
         };
         var visited = new boolean[maze.length][maze[0].length];
-        try (ForkJoinPool forkJoinPool = new ForkJoinPool(8)) {
-//            var results = forkJoinPool.invoke(new ManyFilesDirFinder(Path.of("/home/marina/test1/"),1000));
-            var results = forkJoinPool.invoke(new PredicateFilesFinder(Path.of("/home/marina/test2/"),(file -> file.isFile() && file.length() > 100)));
+        try (ForkJoinPool forkJoinPool = ForkJoinPool.commonPool()) {
+            //var results = forkJoinPool.invoke(new ManyFilesDirFinder(Path.of("src/test/java/edu/hw_9/test1"),1000));
+            var results = forkJoinPool.invoke(new PredicateFilesFinder(Path.of("src/test/java/edu/hw_9/test2"),
+                (file -> file.isFile() && file.length() > 100)));
 //            var path = forkJoinPool.invoke(new DFSParallel(maze, new Cell(0, 0), visited));
 //            for (Cell step : path) {
 //                System.out.print(step + " ");
 //            }
-            for(Path result: results) {
-                System.out.println(result);
-            }
+//            for (Path result : results) {
+//                System.out.println(result);
+//            }
         }
     }
 }

@@ -20,7 +20,7 @@ public class PredicateFilesFinder extends RecursiveTask<List<Path>> {
     @Override
     protected List<Path> compute() {
         List<Path> results = new ArrayList<>();
-        if(conditioner.isCondition(path.toFile())) {
+        if (conditioner.isCondition(path.toFile())) {
             results.add(path);
         }
         if (path.toFile().isDirectory()) {

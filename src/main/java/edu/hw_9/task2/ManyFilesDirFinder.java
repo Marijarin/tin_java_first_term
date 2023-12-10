@@ -31,9 +31,9 @@ public class ManyFilesDirFinder extends RecursiveTask<List<Path>> {
             for (var task : forks) {
                 results.addAll(task.join());
             }
-           if(Objects.requireNonNull(path.toFile().listFiles()).length >= loLimit) {
-               results.add(path);
-           }
+            if (Objects.requireNonNull(path.toFile().listFiles()).length >= loLimit) {
+                results.add(path);
+            }
         }
         return results;
     }
