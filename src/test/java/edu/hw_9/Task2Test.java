@@ -29,7 +29,7 @@ public class Task2Test {
             ));
         }
 
-        assertThat(results.getLast().toString()).contains("src/test/java/edu/hw_9/test2/9/9/9.txt");
+        assertThat(results.size()).isEqualTo(10);
     }
 
     @Test

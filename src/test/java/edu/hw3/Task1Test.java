@@ -46,9 +46,9 @@ public class Task1Test {
     @DisplayName("Smart words")
     void inputComplexToCipher() {
         String input =
-            "Any fool can write code that y computer can understand. Good programmers write code that humans can understand. ― Martin Fowler";
+            "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. ― Martin Fowler";
         String output =
-            "Zmb ullo xzm dirgv xlwv gszg z xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi";
+            "Zmb ullo xzm dirgv xlwv gszg b xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi";
         Task1 t1 = new Task1();
         String result = t1.atbash(input);
 
