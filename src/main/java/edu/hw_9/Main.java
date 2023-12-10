@@ -1,8 +1,8 @@
 package edu.hw_9;
 
+import java.nio.file.Path;
 import java.util.concurrent.ForkJoinPool;
-import edu.hw_9.task3.Cell;
-import edu.hw_9.task3.DFSParallel;
+import edu.hw_9.task2.PredicateFilesFinder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,9 +33,14 @@ public final class Main {
         };
         var visited = new boolean[maze.length][maze[0].length];
         try (ForkJoinPool forkJoinPool = new ForkJoinPool(8)) {
-            var path = forkJoinPool.invoke(new DFSParallel(maze, new Cell(0, 0), visited));
-            for (Cell step : path) {
-                System.out.print(step + " ");
+//            var results = forkJoinPool.invoke(new ManyFilesDirFinder(Path.of("/home/marina/test1/"),1000));
+            var results = forkJoinPool.invoke(new PredicateFilesFinder(Path.of("/home/marina/test2/"),(file -> file.isFile() && file.length() > 100)));
+//            var path = forkJoinPool.invoke(new DFSParallel(maze, new Cell(0, 0), visited));
+//            for (Cell step : path) {
+//                System.out.print(step + " ");
+//            }
+            for(Path result: results) {
+                System.out.println(result);
             }
         }
     }

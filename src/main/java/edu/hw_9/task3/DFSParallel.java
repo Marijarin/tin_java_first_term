@@ -48,10 +48,12 @@ public class DFSParallel extends RecursiveTask<List<Cell>> {
                 results.set(i, tasksForCell[i].join());
             }
             if (results.get(i) != null) {
+                synchronized (this) {
                     List<Cell> result = new LinkedList<>();
                     result.add(this.start);
                     result.addAll(results.get(i));
                     return result;
+                }
             }
         }
         return null;
