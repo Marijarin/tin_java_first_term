@@ -82,9 +82,14 @@ class HistogramMaker {
         points.add(first)
         for (i in 1..iterations) {
             var next = points[i - 1]
-            next = next.makeLinear1().makeSin()
+            next = when {
+                i % 3 == 0 -> next.makeLinear3().makeSphere()
+                i % 11 == 0 -> next.makeLinear3().makeSin()
+                i % 17 == 0 -> next.makeLinear3().makeSphere()
+                else -> next.makeLinear2().makeSin()
+            }
 
-            next = next.copy(color = RGB(next.color.r + 0.0001, next.color.b + 0.0005, next.color.g + 0.0004))
+            next = next.copy(color = RGB(next.color.r + 0.01, next.color.b + 0.05, next.color.g + 0.04))
             points.add(next)
         }
     }

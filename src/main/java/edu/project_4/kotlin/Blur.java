@@ -5,6 +5,7 @@ import java.awt.image.DataBufferInt;
 
 public class Blur {
     final int BLUR_SIZE = 4;
+
     BufferedImage blur(BufferedImage image) {
         int[] destPixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         int[] sourcePixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -15,6 +16,7 @@ public class Blur {
         }
         return image;
     }
+
     private int getOutValue(int[] source, int line, int x, int y) {
         int halfSize = BLUR_SIZE / 2;
         int count = 0;
@@ -23,7 +25,7 @@ public class Blur {
         int bsum = 0;
         for (int i = y - halfSize; i <= y + halfSize; i++) {
             for (int j = x - halfSize; j <= x + halfSize; j++) {
-                if (j >=0 && i >= 0 && j < line && (i < source.length / line)) {
+                if (j >= 0 && i >= 0 && j < line && (i < source.length / line)) {
                     count += 1;
                     rsum += (source[i * line + j] & 0xff0000) >> 16;
                     gsum += (source[i * line + j] & 0xff00) >> 8;

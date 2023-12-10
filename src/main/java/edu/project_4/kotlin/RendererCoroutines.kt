@@ -9,7 +9,9 @@ import javax.imageio.ImageIO
 
 
 val image = BufferedImage(2500, 2500, BufferedImage.TYPE_INT_RGB)
+
 fun main(): Unit = runBlocking {
+    val start = System.currentTimeMillis()
     repeat(1_000_000) {
         val job1 = launch {
             val h = HistogramMaker()
@@ -22,12 +24,11 @@ fun main(): Unit = runBlocking {
         job1.join()
     }
     val blur = Blur()
-    val result = async {
-        blur.blur(image)
-    }
-    val blurred = result.await()
-    FileOutputStream("result12.png").use { out ->
+    val blurred = blur.blur(image)
+    FileOutputStream("result15.png").use { out ->
         ImageIO.write(blurred, "png", out)
     }
+    val end = System.currentTimeMillis()
+    println((end - start) / 1000)
 }
 

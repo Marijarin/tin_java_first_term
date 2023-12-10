@@ -16,8 +16,8 @@ class ExecutorVariantForkJoin {
             tasks.add(Runnable {
                 val h = HistogramMaker()
                 val all = ArrayList<Point>()
-                for(j in 1..samples/10000) {
-                    h.makeHistogram3()
+                for (j in 1..samples / 10000) {
+                    h.makeHistogram2()
                     h.deleteFirst()
                     val endPix3 = h.resize(image.width)
                     all.addAll(endPix3)
@@ -45,7 +45,7 @@ class ExecutorVariantForkJoin {
             blur.blur(image)
         }
         executorService.shutdown()
-        FileOutputStream("result11.png").use { out ->
+        FileOutputStream("result14.png").use { out ->
             ImageIO.write(image, "png", out)
         }
 
