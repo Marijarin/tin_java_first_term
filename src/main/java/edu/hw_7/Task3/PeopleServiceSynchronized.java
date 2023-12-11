@@ -31,7 +31,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable addPerson(Person person) {
-        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+        PersonDB personDBSynchronized = new PersonDB();
         return (() -> {
             personDBSynchronized.add(person);
             writeToMemory(personDBSynchronized.cash);
@@ -39,7 +39,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable deletePerson(int id) {
-        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+        PersonDB personDBSynchronized = new PersonDB();
         return (() -> {
             personDBSynchronized.delete(id);
             deleteFromMemory(id);
@@ -47,7 +47,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable findByName(String name) {
-        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+        PersonDB personDBSynchronized = new PersonDB();
         return (() -> {
             synchronized (this) {
                 foundByName.clear();
@@ -62,7 +62,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable findByPhone(String phone) {
-        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+        PersonDB personDBSynchronized = new PersonDB();
         return (() -> {
             synchronized (this) {
                 foundByPhone.clear();
@@ -77,7 +77,7 @@ public class PeopleServiceSynchronized {
     }
 
     public Runnable findByAddress(String address) {
-        PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
+        PersonDB personDBSynchronized = new PersonDB();
         return (() -> {
             synchronized (this) {
                 foundByAddress.clear();

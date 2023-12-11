@@ -3,9 +3,10 @@ package edu.hw_7;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 public class MultiThreadCounter {
-    AtomicInteger counter = new AtomicInteger(0);
+    LongAdder counter = new LongAdder();
     List<Thread> threads = new ArrayList<>();
     public final int thNumber;
 
@@ -22,14 +23,14 @@ public class MultiThreadCounter {
     }
 
     void incrementTo1() {
-        counter.addAndGet(1);
+        counter.increment();
     }
 
     void badIncrementTo1() {
         unSafeCounter++;
     }
 
-    int afterIncrement() {
+    long afterIncrement() {
         addThreads();
         for (Thread t : threads) {
             t.start();
@@ -41,6 +42,6 @@ public class MultiThreadCounter {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return counter.get();
+        return counter.sumThenReset();
     }
 }

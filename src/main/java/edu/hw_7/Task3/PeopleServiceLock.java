@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @SuppressWarnings({"MagicNumber", "MultiLineStringLiterals", "RegexpSingleLineJava"})
 public class PeopleServiceLock {
@@ -15,63 +18,109 @@ public class PeopleServiceLock {
     public final List<Person> foundByName = new ArrayList<>();
     public final List<Person> foundByPhone = new ArrayList<>();
     public final Map<Integer, Person> inMemory = new HashMap<>();
+    ReadWriteLock lock = new ReentrantReadWriteLock();
 
+    Lock writeLock = lock.writeLock();
+
+    Lock readLock = lock.readLock();
     List<Runnable> tasks = new ArrayList<>();
 
     public PeopleServiceLock(int threads) {
         this.threads = threads;
     }
 
-    private synchronized void writeToMemory(Map<Integer, Person> cash) {
+    private void writeToMemory(Map<Integer, Person> cash) {
         inMemory.putAll(cash);
     }
 
-    private synchronized void deleteFromMemory(int id) {
+    private void deleteFromMemory(int id) {
         inMemory.remove(id);
     }
 
     public Runnable addPerson(Person person) {
-        PersonDBLock personDBLock = new PersonDBLock();
+        PersonDB PersonDB = new PersonDB();
         return (() -> {
-            personDBLock.add(person);
-            writeToMemory(personDBLock.cash);
+            PersonDB.add(person);
+            try {
+                writeLock.lock();
+                writeToMemory(PersonDB.cash);
+            } finally {
+                writeLock.unlock();
+            }
         });
     }
 
     public Runnable deletePerson(int id) {
-        PersonDBLock personDBLock = new PersonDBLock();
+        PersonDB PersonDB = new PersonDB();
         return (() -> {
-            personDBLock.delete(id);
-            deleteFromMemory(id);
+            PersonDB.delete(id);
+            try {
+                writeLock.lock();
+                deleteFromMemory(id);
+            } finally {
+                writeLock.unlock();
+            }
+
         });
     }
 
     public Runnable findByName(String name) {
-        PersonDBLock personDBLock = new PersonDBLock();
+        PersonDB PersonDB = new PersonDB();
         return (() -> {
-            foundByName.clear();
-            personDBLock.cash.putAll(inMemory);
-            foundByName.addAll(personDBLock.findByName(name));
+            try {
+                readLock.lock();
+                PersonDB.cash.putAll(inMemory);
+            } finally {
+                readLock.unlock();
+            }
+            try {
+                writeLock.lock();
+                foundByName.clear();
+                foundByName.addAll(PersonDB.findByName(name));
+            } finally {
+                writeLock.unlock();
+            }
+
             System.out.println("\u001b[0;93mFound by name: " + name + foundByName);
         });
     }
 
     public Runnable findByPhone(String phone) {
-        PersonDBLock personDBLock = new PersonDBLock();
+        PersonDB PersonDB = new PersonDB();
         return (() -> {
-            foundByPhone.clear();
-            personDBLock.cash.putAll(inMemory);
-            foundByPhone.addAll(personDBLock.findByPhone(phone));
+            try {
+                readLock.lock();
+                PersonDB.cash.putAll(inMemory);
+            } finally {
+                readLock.unlock();
+            }
+            try {
+                writeLock.lock();
+                foundByPhone.clear();
+                foundByPhone.addAll(PersonDB.findByPhone(phone));
+            } finally {
+                writeLock.unlock();
+            }
             System.out.println("\u001b[0;95mFound by phone: " + phone + foundByPhone);
         });
     }
 
     public Runnable findByAddress(String address) {
-        PersonDBLock personDBLock = new PersonDBLock();
+        PersonDB PersonDB = new PersonDB();
         return (() -> {
-            foundByAddress.clear();
-            personDBLock.cash.putAll(inMemory);
-            foundByAddress.addAll(personDBLock.findByAddress(address));
+            try {
+                readLock.lock();
+                PersonDB.cash.putAll(inMemory);
+            } finally {
+                readLock.unlock();
+            }
+            try {
+                writeLock.lock();
+                foundByAddress.clear();
+                foundByAddress.addAll(PersonDB.findByAddress(address));
+            } finally {
+                writeLock.unlock();
+            }
             System.out.println(
                 "\u001b[0;92mFound by address: " + address + foundByAddress);
         });
