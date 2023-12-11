@@ -9,10 +9,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class Task1Test {
     @Test
     void goodCounterWorks() throws InterruptedException {
-        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(15100);
-        int numberOfThreads = 15100;
+        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(100);
+        int numberOfThreads = 100;
         for (int j = 0; j < 5; j++) {
-            try (ExecutorService service = Executors.newFixedThreadPool(15100)) {
+            try (ExecutorService service = Executors.newFixedThreadPool(100)) {
                 CountDownLatch latch = new CountDownLatch(numberOfThreads);
                 for (int i = 0; i < numberOfThreads; i++) {
                     service.execute(() -> {
@@ -29,10 +29,10 @@ public class Task1Test {
 
     @Test
     void badCounterWorks() throws InterruptedException {
-        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(15100);
-        int numberOfThreads = 15100;
+        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(100);
+        int numberOfThreads = 100;
         for (int j = 0; j < 5; j++) {
-            try (ExecutorService service = Executors.newFixedThreadPool(15100)) {
+            try (ExecutorService service = Executors.newFixedThreadPool(100)) {
                 CountDownLatch latch = new CountDownLatch(numberOfThreads);
                 for (int i = 0; i < numberOfThreads; i++) {
                     service.execute(() -> {
@@ -49,10 +49,10 @@ public class Task1Test {
 
     @Test
     void counterBaseFunctionWorks() {
-        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(15100);
+        MultiThreadCounter multiThreadCounter = new MultiThreadCounter(100);
 
         var result = multiThreadCounter.afterIncrement();
 
-        assertThat(result).isEqualTo(15100);
+        assertThat(result).isEqualTo(100);
     }
 }

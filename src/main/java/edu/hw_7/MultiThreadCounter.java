@@ -2,6 +2,7 @@ package edu.hw_7;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAdder;
 
@@ -9,6 +10,8 @@ public class MultiThreadCounter {
     LongAdder counter = new LongAdder();
     List<Thread> threads = new ArrayList<>();
     public final int thNumber;
+
+    final CountDownLatch startGate = new CountDownLatch(1);
 
     public int unSafeCounter = 0;
 
@@ -18,7 +21,14 @@ public class MultiThreadCounter {
 
     private void addThreads() {
         for (int i = 0; i < thNumber; i++) {
-            threads.add(new Thread(this::incrementTo1));
+            threads.add(new Thread(() -> {
+                try {
+                    startGate.await();
+                    incrementTo1();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
         }
     }
 
@@ -35,6 +45,7 @@ public class MultiThreadCounter {
         for (Thread t : threads) {
             t.start();
         }
+        startGate.countDown();
         try {
             for (Thread t : threads) {
                 t.join();
