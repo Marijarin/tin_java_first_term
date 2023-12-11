@@ -5,15 +5,10 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("MagicNumber")
 public record Person(int id, String name, String address, String phoneNumber) {
-    public Person(int id, String name, String address, String phoneNumber) {
+    public Person {
         Pattern pattern = Pattern.compile("^.([0-9]{10,12})$");
         Matcher matcher = pattern.matcher(phoneNumber);
-        if (matcher.find() && !name.isBlank() && !address.isBlank() && !phoneNumber.isBlank()) {
-            this.id = id;
-            this.name = name;
-            this.address = address;
-            this.phoneNumber = phoneNumber;
-        } else {
+        if (!matcher.find() && name.isBlank() && address.isBlank() && phoneNumber.isBlank()) {
             throw new RuntimeException("some data are empty or phoneNumber is not correct: " + phoneNumber);
         }
     }

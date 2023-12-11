@@ -49,9 +49,11 @@ public class PeopleServiceSynchronized {
     public Runnable findByName(String name) {
         PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
-            foundByName.clear();
-            personDBSynchronized.cash.putAll(inMemory);
-            foundByName.addAll(personDBSynchronized.findByName(name));
+            synchronized (this) {
+                foundByName.clear();
+                personDBSynchronized.cash.putAll(inMemory);
+                foundByName.addAll(personDBSynchronized.findByName(name));
+            }
             if (foundByName.isEmpty()) {
                 tasks.add(findByName(name));
             }
@@ -62,9 +64,11 @@ public class PeopleServiceSynchronized {
     public Runnable findByPhone(String phone) {
         PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
-            foundByPhone.clear();
-            personDBSynchronized.cash.putAll(inMemory);
-            foundByPhone.addAll(personDBSynchronized.findByPhone(phone));
+            synchronized (this) {
+                foundByPhone.clear();
+                personDBSynchronized.cash.putAll(inMemory);
+                foundByPhone.addAll(personDBSynchronized.findByPhone(phone));
+            }
             if (foundByPhone.isEmpty()) {
                 tasks.add(findByAddress(phone));
             }
@@ -75,11 +79,13 @@ public class PeopleServiceSynchronized {
     public Runnable findByAddress(String address) {
         PersonDBSynchronized personDBSynchronized = new PersonDBSynchronized();
         return (() -> {
-            foundByAddress.clear();
-            personDBSynchronized.cash.putAll(inMemory);
-            foundByAddress.addAll(personDBSynchronized.findByAddress(address));
+            synchronized (this) {
+                foundByAddress.clear();
+                personDBSynchronized.cash.putAll(inMemory);
+                foundByAddress.addAll(personDBSynchronized.findByAddress(address));
+            }
             if (foundByAddress.isEmpty()) {
-               tasks.add(findByAddress(address));
+                tasks.add(findByAddress(address));
             }
             System.out.println(
                 "\u001b[0;92mFound by address: " + address + foundByAddress);

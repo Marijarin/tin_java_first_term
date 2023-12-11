@@ -16,8 +16,9 @@ public class Task1Test {
                 CountDownLatch latch = new CountDownLatch(numberOfThreads);
                 for (int i = 0; i < numberOfThreads; i++) {
                     service.execute(() -> {
-                        multiThreadCounter.incrementTo1();
                         latch.countDown();
+                        multiThreadCounter.incrementTo1();
+
                     });
                 }
                 latch.await();
@@ -35,8 +36,9 @@ public class Task1Test {
                 CountDownLatch latch = new CountDownLatch(numberOfThreads);
                 for (int i = 0; i < numberOfThreads; i++) {
                     service.execute(() -> {
-                        multiThreadCounter.badIncrementTo1();
                         latch.countDown();
+                        multiThreadCounter.badIncrementTo1();
+
                     });
                 }
                 latch.await();
