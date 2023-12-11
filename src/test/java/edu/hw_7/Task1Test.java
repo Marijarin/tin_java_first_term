@@ -13,15 +13,9 @@ public class Task1Test {
         int numberOfThreads = 100;
         for (int j = 0; j < 5; j++) {
             try (ExecutorService service = Executors.newFixedThreadPool(100)) {
-                CountDownLatch latch = new CountDownLatch(numberOfThreads);
                 for (int i = 0; i < numberOfThreads; i++) {
-                    service.execute(() -> {
-                        latch.countDown();
-                        multiThreadCounter.incrementTo1();
-
-                    });
+                    service.execute(multiThreadCounter::incrementTo1);
                 }
-                latch.await();
             }
         }
         assertThat(numberOfThreads).isEqualTo(multiThreadCounter.thNumber);
@@ -33,15 +27,9 @@ public class Task1Test {
         int numberOfThreads = 100;
         for (int j = 0; j < 5; j++) {
             try (ExecutorService service = Executors.newFixedThreadPool(100)) {
-                CountDownLatch latch = new CountDownLatch(numberOfThreads);
                 for (int i = 0; i < numberOfThreads; i++) {
-                    service.execute(() -> {
-                        latch.countDown();
-                        multiThreadCounter.badIncrementTo1();
-
-                    });
+                    service.execute(multiThreadCounter::badIncrementTo1);
                 }
-                latch.await();
             }
         }
         assertThat(numberOfThreads).isNotEqualTo(multiThreadCounter.unSafeCounter);
