@@ -38,12 +38,12 @@ public class PeopleServiceLock {
     }
 
     public Runnable addPerson(Person person) {
-        PersonDB PersonDB = new PersonDB();
+        PersonDB personDb = new PersonDB();
         return (() -> {
-            PersonDB.add(person);
+            personDb.add(person);
             try {
                 writeLock.lock();
-                writeToMemory(PersonDB.cash);
+                writeToMemory(personDb.cash);
             } finally {
                 writeLock.unlock();
             }
@@ -51,9 +51,9 @@ public class PeopleServiceLock {
     }
 
     public Runnable deletePerson(int id) {
-        PersonDB PersonDB = new PersonDB();
+        PersonDB personDb = new PersonDB();
         return (() -> {
-            PersonDB.delete(id);
+            personDb.delete(id);
             try {
                 writeLock.lock();
                 deleteFromMemory(id);
@@ -65,18 +65,18 @@ public class PeopleServiceLock {
     }
 
     public Runnable findByName(String name) {
-        PersonDB PersonDB = new PersonDB();
+        PersonDB personDb = new PersonDB();
         return (() -> {
             try {
                 readLock.lock();
-                PersonDB.cash.putAll(inMemory);
+                personDb.cash.putAll(inMemory);
             } finally {
                 readLock.unlock();
             }
             try {
                 writeLock.lock();
                 foundByName.clear();
-                foundByName.addAll(PersonDB.findByName(name));
+                foundByName.addAll(personDb.findByName(name));
             } finally {
                 writeLock.unlock();
             }
@@ -86,18 +86,18 @@ public class PeopleServiceLock {
     }
 
     public Runnable findByPhone(String phone) {
-        PersonDB PersonDB = new PersonDB();
+        PersonDB personDb = new PersonDB();
         return (() -> {
             try {
                 readLock.lock();
-                PersonDB.cash.putAll(inMemory);
+                personDb.cash.putAll(inMemory);
             } finally {
                 readLock.unlock();
             }
             try {
                 writeLock.lock();
                 foundByPhone.clear();
-                foundByPhone.addAll(PersonDB.findByPhone(phone));
+                foundByPhone.addAll(personDb.findByPhone(phone));
             } finally {
                 writeLock.unlock();
             }
@@ -106,18 +106,18 @@ public class PeopleServiceLock {
     }
 
     public Runnable findByAddress(String address) {
-        PersonDB PersonDB = new PersonDB();
+        PersonDB personDb = new PersonDB();
         return (() -> {
             try {
                 readLock.lock();
-                PersonDB.cash.putAll(inMemory);
+                personDb.cash.putAll(inMemory);
             } finally {
                 readLock.unlock();
             }
             try {
                 writeLock.lock();
                 foundByAddress.clear();
-                foundByAddress.addAll(PersonDB.findByAddress(address));
+                foundByAddress.addAll(personDb.findByAddress(address));
             } finally {
                 writeLock.unlock();
             }
