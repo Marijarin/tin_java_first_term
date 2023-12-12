@@ -25,17 +25,24 @@ public class BFSSolver implements Solver {
         backtrackPath[start.x()][start.y()] = start;
         while (!nextToVisit.isEmpty()) {
             Cell current = nextToVisit.pollFirst();
-
-            for (int[] direction : DIRECTIONS) {
-                Cell next = new Cell(current.x() + direction[0], current.y() + direction[1]);
-                if (!isValidLocation(next.x(), next.y()) || isWall(next.x(), next.y())
-                    || backtrackPath[next.x()][next.y()] != null) {
-                    continue;
-                }
-                nextToVisit.addLast(next);
-                backtrackPath[next.x()][next.y()] = current;
-            }
+            goToDirections(nextToVisit, current);
         }
+        return showPath();
+    }
+
+    private void goToDirections(Deque<Cell> nextToVisit, Cell current) {
+        for (int[] direction : DIRECTIONS) {
+            Cell next = new Cell(current.x() + direction[0], current.y() + direction[1]);
+            if (!isValidLocation(next.x(), next.y()) || isWall(next.x(), next.y())
+                || backtrackPath[next.x()][next.y()] != null) {
+                continue;
+            }
+            nextToVisit.addLast(next);
+            backtrackPath[next.x()][next.y()] = current;
+        }
+    }
+
+    private List<Cell> showPath() {
         Deque<Cell> path = new ArrayDeque<>();
         Cell now = getExit();
         while (!(now == null || now.equals(getEntry()))) {
