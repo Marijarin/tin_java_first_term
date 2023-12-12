@@ -1,12 +1,13 @@
 package edu.project_2;
 
-import edu.project_2.dfs.BFSSolver;
-import edu.project_2.dfs.DFSSolverRec;
-import edu.project_2.dfs.Maze;
-import edu.project_2.dfs.MazeGenerator;
+import edu.project_2.solvers.AStarSolver;
+import edu.project_2.solvers.BFSSolver;
+import edu.project_2.solvers.DFSSolverRec;
+import edu.project_2.solvers.Maze;
+import edu.project_2.solvers.MazeGenerator;
+import java.util.List;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ProjectTest {
@@ -75,6 +76,32 @@ public class ProjectTest {
         DFSSolverRec bfs = new DFSSolverRec(m);
 
         var result = bfs.solve();
+
+        assertThat(result).isEqualTo(List.of());
+    }
+
+    @Test
+    void findsSolutionAStar() {
+        int[][] m = {
+            {1, 0},
+            {1, 1}
+        };
+        var aStar = new AStarSolver(m);
+
+        var result = aStar.solve();
+
+        assertThat(result).isEqualTo(List.of(new Cell(0, 0), new Cell(1, 0), new Cell(1, 1)));
+    }
+
+    @Test
+    void findsNoSolutionAStar() {
+        int[][] m = {
+            {1, 0},
+            {0, 1}
+        };
+        var aStar = new AStarSolver(m);
+
+        var result = aStar.solve();
 
         assertThat(result).isEqualTo(List.of());
     }

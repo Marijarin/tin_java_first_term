@@ -1,4 +1,4 @@
-package edu.project_2.dfs;
+package edu.project_2.solvers;
 
 import edu.project_2.Cell;
 import java.util.ArrayDeque;

@@ -1,4 +1,4 @@
-package edu.project_2.dfs;
+package edu.project_2.solvers;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -16,6 +16,7 @@ public class Renderer {
         Maze maze = new Maze(new MazeGenerator(10));
         BFSSolver bfsSolver = new BFSSolver(maze.maze);
         DFSSolverRec dfsSolverRec = new DFSSolverRec(maze.maze);
+        AStarSolver aStarSolver = new AStarSolver(maze.maze);
         frame.add(label, BorderLayout.NORTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(maze);
@@ -28,6 +29,7 @@ public class Renderer {
         System.out.println(maze.printMaze());
         System.out.println("BFS: \n" + maze.showExitPath(bfsSolver.solve()));
         System.out.println("DFS: \n" + maze.showExitPath(dfsSolverRec.solve()));
+        System.out.println("AStar: \n" + maze.showExitPath(aStarSolver.solve()));
     }
 }
 
