@@ -1,9 +1,16 @@
 package edu.hw_10.task1;
 
-public class UserPOJO implements User{
+import edu.hw_10.task1.annotations_util.MinValue;
+import edu.hw_10.task1.annotations_util.NotNull;
+
+public class UserPOJO implements User {
+    @NotNull
     private String name;
+    @MinValue(value = 50)
     private int age;
-    public UserPOJO(){}
+
+    public UserPOJO() {
+    }
 
     public UserPOJO(String name, int age) {
         this.name = name;
@@ -22,8 +29,9 @@ public class UserPOJO implements User{
     public void sayHello() {
         System.out.println("Hello from UserPOJO instance");
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.name + "-" + this.age;
     }
 

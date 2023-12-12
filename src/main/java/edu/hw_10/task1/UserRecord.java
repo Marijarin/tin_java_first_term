@@ -1,6 +1,14 @@
 package edu.hw_10.task1;
 
-public record UserRecord(String name, int age) implements User {
+import edu.hw_10.task1.annotations_util.MaxValue;
+import edu.hw_10.task1.annotations_util.NotNull;
+
+public record UserRecord(
+    @NotNull
+    String name,
+    @MaxValue(value = 14)
+    int age
+) implements User {
     @Override
     public void sayHello() {
         System.out.println("Hello from UserRecord instance");
