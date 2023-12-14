@@ -22,7 +22,7 @@ enum FibNumber implements StackManipulation {
         MethodVisitor methodVisitor,
         Implementation.@NotNull Context implementationContext
     ) {
-        methodVisitor.visitCode();
+        //methodVisitor.visitCode();
         Label label0 = new Label();
         methodVisitor.visitLabel(label0);
         methodVisitor.visitLineNumber(5, label0);
@@ -39,10 +39,11 @@ enum FibNumber implements StackManipulation {
         methodVisitor.visitVarInsn(Opcodes.ISTORE, 3);
         Label label3 = new Label();
         methodVisitor.visitLabel(label3);
-        methodVisitor.visitFrame(Opcodes.F_APPEND, 3, new Object[] {"I", "I", "I"}, 0, null);
+        methodVisitor.visitFrame(Opcodes.F_APPEND, 3, new Object[] {"I", "I", "I"}, 2, null);
         methodVisitor.visitVarInsn(Opcodes.ILOAD, 3);
         methodVisitor.visitVarInsn(Opcodes.ILOAD, 0);
-        methodVisitor.visitMethodInsn(Opcodes.IF_ICMPGE, "FibExample", "label4", "()I", false);
+        Label label4 = new Label();
+        methodVisitor.visitJumpInsn(Opcodes.IF_ICMPGE, label4);
         Label label5 = new Label();
         methodVisitor.visitLabel(label5);
         methodVisitor.visitLineNumber(7, label5);
@@ -63,24 +64,25 @@ enum FibNumber implements StackManipulation {
         Label label8 = new Label();
         methodVisitor.visitLabel(label8);
         methodVisitor.visitLineNumber(6, label8);
-        methodVisitor.visitInsn(Opcodes.IINC);
+        methodVisitor.visitVarInsn(Opcodes.IINC, 3);
         methodVisitor.visitJumpInsn(Opcodes.GOTO, label3);
-        Label label4 = new Label();
         methodVisitor.visitLabel(label4);
         methodVisitor.visitLineNumber(11, label4);
-        methodVisitor.visitFrame(Opcodes.F_CHOP, 1, null, 0, null);
+        methodVisitor.visitVarInsn(Opcodes.F_CHOP, 1);
         methodVisitor.visitVarInsn(Opcodes.ILOAD, 1);
         methodVisitor.visitInsn(Opcodes.I2L);
         methodVisitor.visitInsn(Opcodes.LRETURN);
         Label label9 = new Label();
         methodVisitor.visitLabel(label9);
-        methodVisitor.visitLocalVariable("oldLast", Type.getType(int.class).getDescriptor(), "I", label6, label8, 4);
-        methodVisitor.visitLocalVariable("i", Type.getType(int.class).getDescriptor(), "I", label3, label4, 3);
-        methodVisitor.visitLocalVariable("n", Type.getType(int.class).getDescriptor(), "I", label0, label9, 0);
-        methodVisitor.visitLocalVariable("last", Type.getType(int.class).getDescriptor(), "I", label1, label9, 1);
-        methodVisitor.visitLocalVariable("next", Type.getType(int.class).getDescriptor(), "I", label2, label9, 2);
+        methodVisitor.visitLocalVariable("n", "I", null, label0, label9, 0);
+        methodVisitor.visitLocalVariable("last", "I", null, label1, label9, 1);
+        methodVisitor.visitLocalVariable("next", "I", null, label2, label9, 2);
+        methodVisitor.visitLocalVariable("i", "I", null, label3, label4, 3);
+        methodVisitor.visitLocalVariable("oldLast","I", null, label6, label8, 4);
+
+
         methodVisitor.visitMaxs(2, 5);
         methodVisitor.visitEnd();
-        return new Size(-3, 2);
+        return new Size(-2, 5);
     }
 }

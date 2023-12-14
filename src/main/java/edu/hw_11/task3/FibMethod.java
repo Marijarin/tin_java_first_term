@@ -18,12 +18,12 @@ public enum FibMethod implements ByteCodeAppender {
         Implementation.@NotNull Context implementationContext,
         MethodDescription instrumentedMethod
     ) {
-        if (!instrumentedMethod.getReturnType().asErasure().represents(long.class)) {
+        if (!instrumentedMethod.getReturnType().asErasure().represents(int.class)) {
             throw new IllegalArgumentException(instrumentedMethod + " must return int");
         }
         StackManipulation.Size operandStackSize = new StackManipulation.Compound(
             FibNumber.INSTANCE,
-            MethodReturn.LONG
+            MethodReturn.INTEGER
         ).apply(mv, implementationContext);
         return new Size(operandStackSize.getMaximalSize(),
             instrumentedMethod.getStackSize());
