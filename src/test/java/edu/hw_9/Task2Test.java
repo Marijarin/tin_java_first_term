@@ -10,26 +10,26 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
     @Test
-    void findsDirectoryNotLessThan1000Files() {
+    void findsDirectoryNotLessThan5Files() {
         List<Path> results;
         try (ForkJoinPool forkJoinPool = ForkJoinPool.commonPool()) {
-            results = forkJoinPool.invoke(new ManyFilesDirFinder(Path.of("src/test/java/edu/hw_9/test1/7/6"), 1000));
+            results = forkJoinPool.invoke(new ManyFilesDirFinder(Path.of("src/test/java/edu/hw_9/test1"), 5));
         }
 
-        assertThat(results.getFirst().toString()).contains("/hw_9/test1/7/6");
+        assertThat(results.getFirst().toString()).contains("/hw_9/test1/3/9");
     }
 
     @Test
-    void findsFilesMoreThan100Bytes() {
+    void findsFilesMoreThan70Bytes() {
         List<Path> results;
         try (ForkJoinPool forkJoinPool = ForkJoinPool.commonPool()) {
             results = forkJoinPool.invoke(new PredicateFilesFinder(
                 Path.of("src/test/java/edu/hw_9/test2"),
-                (file -> file.isFile() && file.length() > 100)
+                (file -> file.isFile() && file.length() > 70)
             ));
         }
 
-        assertThat(results.size()).isEqualTo(10);
+        assertThat(results.size()).isEqualTo(2);
     }
 
     @Test
