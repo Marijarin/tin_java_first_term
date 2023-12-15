@@ -1,6 +1,5 @@
 package edu.hw_10.task1.annotations_util;
 
-import edu.hw_10.task1.annotations_util.MinValue;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

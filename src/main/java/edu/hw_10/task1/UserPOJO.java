@@ -3,6 +3,7 @@ package edu.hw_10.task1;
 import edu.hw_10.task1.annotations_util.MinValue;
 import edu.hw_10.task1.annotations_util.NotNull;
 
+@SuppressWarnings("RegexpSingleLineJava")
 public class UserPOJO implements User {
     @NotNull
     private String name;

@@ -7,8 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
+@SuppressWarnings("MagicNumber")
 public class RandomObjectGenerator {
-    String[] randomNames = {null, "Andrew", "Masha", "Slava", null,  "Ann", "Jane"};
+    String[] randomNames = {null, "Andrew", "Masha", "Slava", null, "Ann", "Jane"};
     int[] randomAges = {3, 51, 5, 16, 78, -11, 0};
 
     public Object nextObject(Class<?> objectClass, String methodName)
