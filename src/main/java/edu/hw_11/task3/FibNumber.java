@@ -22,11 +22,11 @@ enum FibNumber implements StackManipulation {
         MethodVisitor methodVisitor,
         Implementation.@NotNull Context implementationContext
     ) {
-        //methodVisitor.visitCode();
+        methodVisitor.visitCode();
         Label label0 = new Label();
         methodVisitor.visitLabel(label0);
-        methodVisitor.visitLineNumber(5, label0);
-        methodVisitor.visitInsn(Opcodes.ICONST_0);
+        methodVisitor.visitLineNumber(3, label0);
+        methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
         methodVisitor.visitVarInsn(Opcodes.ISTORE, 1);
         Label label1 = new Label();
         methodVisitor.visitLabel(label1);
@@ -79,7 +79,6 @@ enum FibNumber implements StackManipulation {
         methodVisitor.visitLocalVariable("next", "I", null, label2, label9, 2);
         methodVisitor.visitLocalVariable("i", "I", null, label3, label4, 3);
         methodVisitor.visitLocalVariable("oldLast","I", null, label6, label8, 4);
-
 
         methodVisitor.visitMaxs(2, 5);
         methodVisitor.visitEnd();
