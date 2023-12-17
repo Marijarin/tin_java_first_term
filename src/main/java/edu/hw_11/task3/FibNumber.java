@@ -5,9 +5,9 @@ import net.bytebuddy.implementation.bytecode.StackManipulation;
 import net.bytebuddy.jar.asm.Label;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
-import net.bytebuddy.jar.asm.Type;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("MagicNumber")
 enum FibNumber implements StackManipulation {
 
     INSTANCE; // singleton
@@ -78,7 +78,7 @@ enum FibNumber implements StackManipulation {
         methodVisitor.visitLocalVariable("last", "I", null, label1, label9, 1);
         methodVisitor.visitLocalVariable("next", "I", null, label2, label9, 2);
         methodVisitor.visitLocalVariable("i", "I", null, label3, label4, 3);
-        methodVisitor.visitLocalVariable("oldLast","I", null, label6, label8, 4);
+        methodVisitor.visitLocalVariable("oldLast", "I", null, label6, label8, 4);
 
         methodVisitor.visitMaxs(2, 5);
         methodVisitor.visitEnd();

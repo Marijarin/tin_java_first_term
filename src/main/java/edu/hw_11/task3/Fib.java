@@ -1,6 +1,10 @@
 package edu.hw_11.task3;
 
 public class Fib {
+
+    private Fib() {
+    }
+
     public static long fib(int n) {
         long last = 0;
         long next = 1;
