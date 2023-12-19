@@ -26,7 +26,6 @@ public class FixedThreadPool implements ThreadPool {
     public void execute(Runnable runnable) throws InterruptedException {
         tasksQueue.offer(runnable);
         this.start();
-        Thread.sleep(1);
     }
 
     @Override
