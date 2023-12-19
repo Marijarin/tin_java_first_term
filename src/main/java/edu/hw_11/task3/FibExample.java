@@ -4,8 +4,15 @@ public class FibExample {
     private FibExample() {
     }
 
-    public static int fib(int n) {
-        return 0;
+    public static long fib(int n){
+        long last = 10;
+        long next = 111;
+        for (int i = 0; i < n; i++) {
+            long oldLast = last;
+            last = next;
+            next = oldLast - next;
+        }
+        return last;
     }
 
 }

@@ -26,10 +26,8 @@ public class Task3Test {
             .method(named("fib")).intercept(FibImplementation.INSTANCE)
             .make()
             .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.INJECTION);
-//            .getLoaded()
-//            .getDeclaredConstructor()
-//            .newInstance()
-            assertThat(FibExample.fib(5)).isEqualTo(5);
+
+            assertThat(FibExample.fib(5)).isEqualTo(5L);
 
     }
 }

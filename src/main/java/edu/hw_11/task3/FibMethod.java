@@ -4,7 +4,9 @@ import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.implementation.Implementation;
 import net.bytebuddy.implementation.bytecode.ByteCodeAppender;
 import net.bytebuddy.implementation.bytecode.StackManipulation;
+import net.bytebuddy.implementation.bytecode.constant.LongConstant;
 import net.bytebuddy.implementation.bytecode.member.MethodReturn;
+import net.bytebuddy.implementation.bytecode.member.MethodVariableAccess;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,12 +19,11 @@ public enum FibMethod implements ByteCodeAppender {
         Implementation.@NotNull Context implementationContext,
         MethodDescription instrumentedMethod
     ) {
-        if (!instrumentedMethod.getReturnType().asErasure().represents(int.class)) {
-            throw new IllegalArgumentException(instrumentedMethod + " must return int");
+        if (!instrumentedMethod.getReturnType().asErasure().represents(long.class)) {
+            throw new IllegalArgumentException(instrumentedMethod + " must return long");
         }
         StackManipulation.Size operandStackSize = new StackManipulation.Compound(
-            FibNumber.INSTANCE,
-            MethodReturn.INTEGER
+            FibNumber.INSTANCE
         ).apply(mv, implementationContext);
         return new Size(
             operandStackSize.getMaximalSize(),
