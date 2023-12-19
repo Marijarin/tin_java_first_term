@@ -12,10 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(OutputCaptureExtension.class)
 public class Task2TPAnotherTest {
     @Test
-    void FibTaskCountsCorrectly(CapturedOutput output) {
+    void FibTaskCountsCorrectly(CapturedOutput output) throws InterruptedException {
         int n = 5;
         Runnable r = new FibTask(n);
         r.run();
+        Thread.sleep(10);
         assertThat(output.getOut()).containsOnlyOnce("5");
     }
 

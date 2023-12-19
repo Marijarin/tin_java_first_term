@@ -4,6 +4,7 @@ import edu.hw_8.Task2.thread_pool_one.FixedThreadPool;
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 public class FibonacciCounter {
     public final Map<Integer, BigInteger> memoize = new ConcurrentHashMap<>();
@@ -16,9 +17,7 @@ public class FibonacciCounter {
     }
 
     public BigInteger count(int n) {
-        if (!memoize.containsKey(n)) {
-            memoize.put(n, count(n - 1).add(count(n - 2)));
-        }
+        memoize.computeIfAbsent(n, integer -> count(n - 1).add(count(n - 2)));
         return memoize.get(n);
     }
 
