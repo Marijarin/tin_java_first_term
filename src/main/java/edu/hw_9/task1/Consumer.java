@@ -1,21 +1,32 @@
 package edu.hw_9.task1;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.function.Function;
 
+@SuppressWarnings("ReturnCount")
 public class Consumer implements Runnable {
-    final BlockingQueue<Integer> queue;
+    final BlockingQueue<PTask> queue;
     final CTask cTask;
+    final Map<PTask, Answer> stats;
 
-    public Consumer(BlockingQueue<Integer> queue, CTask cTask) {
+    public Consumer(Map<PTask, Answer> stats, BlockingQueue<PTask> queue, CTask cTask) {
+        this.stats = stats;
         this.queue = queue;
         this.cTask = cTask;
+
     }
 
     @Override
     public void run() {
-
+        try {
+            if (!queue.isEmpty()) {
+                var data = queue.poll();
+                stats.put(data, new Answer(makeOperation(data.data), this.cTask));
+            }
+        } catch (Exception ex) {
+            System.err.println("producer terminates early: " + ex);
+        }
     }
 
     private double sum(double[] data) {
