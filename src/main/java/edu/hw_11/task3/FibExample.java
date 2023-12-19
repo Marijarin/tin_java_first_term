@@ -4,7 +4,8 @@ public class FibExample {
     private FibExample() {
     }
 
-    public static long fib(int n){
+    @SuppressWarnings("MagicNumber")
+    public static long fib(int n) {
         long last = 10;
         long next = 111;
         for (int i = 0; i < n; i++) {

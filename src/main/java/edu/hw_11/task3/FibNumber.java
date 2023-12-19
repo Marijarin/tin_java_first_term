@@ -17,6 +17,7 @@ enum FibNumber implements StackManipulation {
         return true;
     }
 
+    @SuppressWarnings({"LineLength", "MultipleStringLiterals"})
     @Override
     public @NotNull Size apply(
         MethodVisitor methodVisitor,
@@ -39,7 +40,13 @@ enum FibNumber implements StackManipulation {
         methodVisitor.visitVarInsn(Opcodes.LSTORE, 5);
         Label l3 = new Label();
         methodVisitor.visitLabel(l3);
-        methodVisitor.visitFrame(Opcodes.F_APPEND, 3, new Object[] {Opcodes.LONG, Opcodes.LONG, Opcodes.INTEGER}, 0, null);
+        methodVisitor.visitFrame(
+            Opcodes.F_APPEND,
+            3,
+            new Object[] {Opcodes.LONG, Opcodes.LONG, Opcodes.INTEGER},
+            0,
+            null
+        );
         methodVisitor.visitVarInsn(Opcodes.ILOAD, 5);
         methodVisitor.visitVarInsn(Opcodes.ILOAD, 0);
         Label l4 = new Label();
