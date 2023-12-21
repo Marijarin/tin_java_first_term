@@ -84,7 +84,7 @@ public class HangmanTest {
     @Test
     @DisplayName("Not successful guess case")
     void failedInput() {
-        Scanner sc = new Scanner("a");
+        Scanner sc = new Scanner("y");
         SessionManager sm = new SessionManager("no", 5, sc);
         GuessResult result = sm.checkGuess("**", 1);
         assertThat(result).isEqualTo(new FailedGuess(1, 5, "**"));
@@ -93,16 +93,16 @@ public class HangmanTest {
     @Test
     @DisplayName("Win case")
     void winInput() {
-        Scanner sc = new Scanner("a");
-        SessionManager sm = new SessionManager("a", 5, sc);
+        Scanner sc = new Scanner("y");
+        SessionManager sm = new SessionManager("y", 5, sc);
         GuessResult result = sm.checkGuess("*", 1);
-        assertThat(result).isEqualTo(new Win(0, 5, "a"));
+        assertThat(result).isEqualTo(new Win(0, 5, "y"));
     }
 
     @Test
     @DisplayName("Defeat case")
     void defeatInput() {
-        Scanner sc = new Scanner("a");
+        Scanner sc = new Scanner("y");
         SessionManager sm = new SessionManager("v", 0, sc);
         GuessResult g = sm.checkGuess("*", 1);
         sm.proceedGame(g);
