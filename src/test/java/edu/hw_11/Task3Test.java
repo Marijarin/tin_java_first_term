@@ -1,6 +1,5 @@
 package edu.hw_11;
 
-import edu.hw_11.task3.FibExample;
 import edu.hw_11.task3.FibImplementation;
 import java.lang.reflect.InvocationTargetException;
 import net.bytebuddy.ByteBuddy;
@@ -14,10 +13,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task3Test {
     @Test
-    void countsFibGenerated()
-        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    void countsFibGenerated() {
         TypeDescription typeDescription = TypePool.Default.ofSystemLoader()
-            .describe("edu.hw_11.task3.FibExample")
+            .describe("edu.hw_11.FibExample")
             .resolve();
 
 
@@ -27,7 +25,7 @@ public class Task3Test {
             .make()
             .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.INJECTION);
 
-            assertThat(FibExample.fib(5)).isEqualTo(5L);
+            assertThat(FibExample.fib(7)).isEqualTo(13L);
 
     }
 }

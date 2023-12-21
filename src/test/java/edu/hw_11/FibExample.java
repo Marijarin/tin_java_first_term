@@ -1,4 +1,4 @@
-package edu.hw_11.task3;
+package edu.hw_11;
 
 public class FibExample {
     private FibExample() {
