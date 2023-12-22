@@ -12,24 +12,32 @@ import java.util.Map;
 @SuppressWarnings("RegexpSingleLineJava")
 public class CustomInvocator implements InvocationHandler {
     final Map<Args, Object> argsToOutput;
+
+    final Map<Method, Boolean> saveModeInfo;
     final Class<?> cl;
     final Object code;
 
-    public CustomInvocator(Map<Args, Object> argsToOutput, Class<?> cl, Object code) {
+    public CustomInvocator(
+        Map<Args, Object> argsToOutput,
+        Map<Method, Boolean> saveModeInfo,
+        Class<?> cl,
+        Object code
+    ) {
         this.argsToOutput = argsToOutput;
+        this.saveModeInfo = saveModeInfo;
         this.cl = cl;
         this.code = code;
     }
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        final Args input = new Args(method, args);
+        Args input = new Args(method, args);
         Object result = argsToOutput.get(input);
         System.out.println(result);
         if (result == null && !argsToOutput.containsKey(input)) {
             try {
                 result = method.invoke(code, args);
-                if (areResultsToDisk(method)) {
+                if (saveModeDisk(method)) {
                     synchronized (this) {
                         saveToDisk(result);
                     }
@@ -58,11 +66,15 @@ public class CustomInvocator implements InvocationHandler {
         }
     }
 
-    public static boolean areResultsToDisk(Method md) {
-            if (md.isAnnotationPresent(Cache.class)) {
-                Cache annotation = md.getAnnotation(Cache.class);
-                return annotation.persist();
+    private boolean areResultsToDiskCheck(Method md) {
+        if (md.isAnnotationPresent(Cache.class)) {
+            Cache annotation = md.getAnnotation(Cache.class);
+            return annotation.persist();
         }
         return false;
+    }
+
+    private boolean saveModeDisk(Method md) {
+        return saveModeInfo.computeIfAbsent(md, this::areResultsToDiskCheck);
     }
 }

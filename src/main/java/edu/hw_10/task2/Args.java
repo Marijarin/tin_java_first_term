@@ -12,10 +12,10 @@ public final class Args {
     private final int mHash;
 
     Args(final Method m, final Object[] args) {
-        mMethod = m;
-        mArgs = args;
+        this.mMethod = m;
+        this.mArgs = args;
         // precalculate hash
-        mHash = calcHash();
+        this.mHash = calcHash();
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass") @Override
