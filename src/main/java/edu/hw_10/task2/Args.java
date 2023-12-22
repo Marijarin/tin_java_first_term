@@ -3,7 +3,8 @@ package edu.hw_10.task2;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
-@SuppressWarnings("MagicNumber") final class Args {
+@SuppressWarnings("MagicNumber")
+public final class Args {
     private final Method mMethod;
 
     private final Object[] mArgs;

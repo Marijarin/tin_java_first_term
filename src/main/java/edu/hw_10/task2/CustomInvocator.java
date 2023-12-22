@@ -29,12 +29,12 @@ public class CustomInvocator implements InvocationHandler {
         if (result == null && !argsToOutput.containsKey(input)) {
             try {
                 result = method.invoke(code, args);
-                if (areResultsToDisk(cl)) {
-                    saveToDisk(result);
-                    argsToOutput.put(input, result);
-                } else {
-                    argsToOutput.put(input, result);
+                if (areResultsToDisk(method)) {
+                    synchronized (this) {
+                        saveToDisk(result);
+                    }
                 }
+                argsToOutput.put(input, result);
             } catch (InvocationTargetException e) {
                 throw e.getTargetException();
             }
@@ -58,15 +58,10 @@ public class CustomInvocator implements InvocationHandler {
         }
     }
 
-    public static boolean areResultsToDisk(Class<?> clazz) {
-        Method[] method = clazz.getDeclaredMethods();
-        for (Method md : method) {
+    public static boolean areResultsToDisk(Method md) {
             if (md.isAnnotationPresent(Cache.class)) {
                 Cache annotation = md.getAnnotation(Cache.class);
-                if (annotation.persist()) {
-                    return true;
-                }
-            }
+                return annotation.persist();
         }
         return false;
     }
