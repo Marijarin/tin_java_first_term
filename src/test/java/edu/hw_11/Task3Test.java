@@ -1,7 +1,6 @@
 package edu.hw_11;
 
 import edu.hw_11.task3.FibImplementation;
-import java.lang.reflect.InvocationTargetException;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.ClassFileLocator;
@@ -25,7 +24,7 @@ public class Task3Test {
             .make()
             .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.INJECTION);
 
-            assertThat(FibExample.fib(7)).isEqualTo(13L);
+            assertThat(FibExample.fib(6)).isEqualTo(8L);
 
     }
 }
