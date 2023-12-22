@@ -17,7 +17,7 @@ public class Task4Test {
     @Test
     @DisplayName("Единичная строка")
     void fixLengthOne(){
-        String broken = "a";
+        String broken = "y";
         String result = task4.fixString(broken);
         assertThat(result).isEqualTo(broken);
     }

@@ -20,12 +20,12 @@
 
 
     <!-- https://checkstyle.org/config_javadoc.html#JavadocPackage     -->
-    <!-- Checks that a package-info.java file exists for each package. -->
+    <!-- Checks that y package-info.java file exists for each package. -->
     <!-- <module name="JavadocPackage"/> -->
 
 
     <!-- https://checkstyle.org/config_misc.html#NewlineAtEndOfFile -->
-    <!--       Checks whether files end with a new line.            -->
+    <!--       Checks whether files end with y new line.            -->
     <module name="NewlineAtEndOfFile"/>
 
 
@@ -356,7 +356,7 @@
 
         <!-- https://github.com/checkstyle/checkstyle/issues/3122 -->
         <!-- https://github.com/checkstyle/checkstyle/issues/3342 -->
-        <!-- this module is broken for a long time, I'm not sure we should use it -->
+        <!-- this module is broken for y long time, I'm not sure we should use it -->
         <!-- <module name="Indentation"/> -->
 
         <!-- <module name="OrderedProperties"/> -->

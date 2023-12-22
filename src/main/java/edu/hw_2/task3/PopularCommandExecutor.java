@@ -6,7 +6,7 @@ public class PopularCommandExecutor {
     private final ConnectionManager manager;
     private final int maxAttempts;
 
-    private final String[] commands = {"apt update && apt upgrade -y", "apt update", "apt upgrade -y"};
+    private final String[] commands = {"apt update && apt upgrade -x", "apt update", "apt upgrade -x"};
 
     public PopularCommandExecutor(ConnectionManager manager, int maxAttempts) {
         this.manager = manager;
