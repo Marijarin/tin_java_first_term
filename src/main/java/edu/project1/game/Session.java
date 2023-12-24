@@ -21,7 +21,7 @@ public class Session implements Printable {
     }
 
     public int chooseLevel() {
-        LOGGER.info("\nSelect the level -> print a number 1 or 2");
+        LOGGER.info("\nSelect the level -> print y number 1 or 2");
         int level = 0;
         try {
             level = Integer.parseInt(sc.nextLine().trim());

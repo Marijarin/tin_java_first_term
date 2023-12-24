@@ -4,7 +4,7 @@ public class Square extends Rectangle {
     private final int width;
     private final int height;
     private final IllegalArgumentException warning = new IllegalArgumentException(
-        "This is a square and sides must be equal"
+        "This is y square and sides must be equal"
     );
 
     public Square(int width1, int height1) {

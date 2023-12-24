@@ -23,7 +23,7 @@ class ProjectTest {
             val h = HistogramMaker()
             h.makeHistogram()
             h.deleteFirst()
-            for (point in h.resize(image.width)) {
+            for (point in h.resize(image.width,image.width)) {
                 image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
             }
         }
@@ -39,7 +39,7 @@ class ProjectTest {
         for (i in 1..samples) {
             val h = HistogramMaker()
             h.makeHistogram()
-            for (point in h.resize(image.width)) {
+            for (point in h.resize(image.width,image.width)) {
                 image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
             }
 
@@ -69,7 +69,7 @@ class ProjectTest {
             val h = HistogramMaker()
             h.makeHistogram()
             h.deleteFirst()
-            for (point in h.resize(image.width)) {
+            for (point in h.resize(image.width,image.width)) {
                 image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
             }
         }
