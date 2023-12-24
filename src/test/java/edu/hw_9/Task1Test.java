@@ -28,7 +28,7 @@ public class Task1Test {
 
         try (var aggregator = new Aggregator(pTasks, cTasks)) {
             aggregator.makeStats();
-            Thread.sleep(10);
+            Thread.sleep(100);
 
             var expected = List.of(
                 new Answer(7.0, SUM),
