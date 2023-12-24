@@ -17,16 +17,15 @@ class ExecutorVariantForkJoin {
                 val h = HistogramMaker()
                 val all = ArrayList<Point>()
                 for (j in 1..samples / portion) {
-                    h.makeHistogram2()
+                    h.makeHistogram()
                     h.deleteFirst()
-                    val endPix3 = h.resize(image.width)
+                    val endPix3 = h.resize(2000, image.width)
                     all.addAll(endPix3)
                 }
                 synchronized(this) {
                     for (point in all) {
                         image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
                     }
-
                 }
                 latch.countDown()
             })
@@ -35,7 +34,6 @@ class ExecutorVariantForkJoin {
             executorService.submit(task1)
         }
         try {
-
             latch.await()
         } catch (e: InterruptedException) {
             e.printStackTrace()
@@ -45,7 +43,7 @@ class ExecutorVariantForkJoin {
             blur.blur(image)
         }
         executorService.shutdown()
-        FileOutputStream("result14.png").use { out ->
+        FileOutputStream("result21.png").use { out ->
             ImageIO.write(image, "png", out)
         }
 

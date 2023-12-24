@@ -21,7 +21,7 @@ class ProjectTest {
         val samples = 10
         for (i in 1..samples) {
             val h = HistogramMaker()
-            h.makeHistogram2()
+            h.makeHistogram()
             h.deleteFirst()
             for (point in h.resize(image.width)) {
                 image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
@@ -38,7 +38,7 @@ class ProjectTest {
         val samples = 10
         for (i in 1..samples) {
             val h = HistogramMaker()
-            h.makeHistogram2()
+            h.makeHistogram()
             for (point in h.resize(image.width)) {
                 image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
             }
@@ -67,7 +67,7 @@ class ProjectTest {
         val samples = 100000
         for (i in 1..samples) {
             val h = HistogramMaker()
-            h.makeHistogram2()
+            h.makeHistogram()
             h.deleteFirst()
             for (point in h.resize(image.width)) {
                 image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
