@@ -37,7 +37,7 @@ public class CustomInvocator implements InvocationHandler {
         if (result == null && !argsToOutput.containsKey(input)) {
             try {
                 result = method.invoke(code, args);
-                if (saveModeDisk(method)) {
+                if (isSaveModeDisk(method)) {
                     synchronized (this) {
                         saveToDisk(result);
                     }
@@ -66,7 +66,7 @@ public class CustomInvocator implements InvocationHandler {
         }
     }
 
-    private boolean areResultsToDiskCheck(Method md) {
+    private boolean isResultToDiskCheck(Method md) {
         if (md.isAnnotationPresent(Cache.class)) {
             Cache annotation = md.getAnnotation(Cache.class);
             return annotation.persist();
@@ -74,7 +74,7 @@ public class CustomInvocator implements InvocationHandler {
         return false;
     }
 
-    private boolean saveModeDisk(Method md) {
-        return saveModeInfo.computeIfAbsent(md, this::areResultsToDiskCheck);
+    private boolean isSaveModeDisk(Method md) {
+        return saveModeInfo.computeIfAbsent(md, this::isResultToDiskCheck);
     }
 }
