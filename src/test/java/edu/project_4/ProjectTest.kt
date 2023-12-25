@@ -4,6 +4,13 @@ import edu.project_4.kotlin.Blur
 import edu.project_4.kotlin.ExecutorVariantForkJoin
 import edu.project_4.kotlin.HistogramMaker
 import edu.project_4.kotlin.RGB
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.currentTime
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import java.awt.Color
@@ -12,6 +19,8 @@ import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import javax.imageio.ImageIO
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class ProjectTest {
     @Test
@@ -70,5 +79,28 @@ class ProjectTest {
         val bytesOld = Files.readAllBytes(Path.of("resultTest3.png"))
         val bytesNew = Files.readAllBytes(Path.of("resultTest4.png"))
         assertThat(bytesOld.equals(bytesNew)).isFalse()
+    }
+
+    @Test
+    fun notBlackImageWithCoroutines(): Unit = runBlocking {
+        val image = BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB)
+        repeat(10) {
+            val job = launch {
+                val h = HistogramMaker()
+                h.makeHistogram()
+                h.deleteFirst()
+                for (point in h.resize(image.width, image.width)) {
+                    image.setRGB(point.x.toInt(), point.y.toInt(), point.color.value)
+                }
+            }
+            job.join()
+        }
+        FileOutputStream("resultTest5.png").use { out ->
+            ImageIO.write(image, "png", out)
+        }
+
+        val colorCoroutines = Color(image.getRGB(0, 0))
+
+        assertThat(Color.BLACK).isNotEqualTo(colorCoroutines)
     }
 }
